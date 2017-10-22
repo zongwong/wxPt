@@ -1,0 +1,53 @@
+<!--pages/pay/pay.wxml-->
+<view class='common detail'>
+  <view class='one'>
+    <text>金钱豹子汽车摆件时钟</text>
+    <text class='price'>￥{{price}}</text>
+  </view>
+  <view class='one'>
+    <view class='textgroup'>
+      <text>数量</text>
+    </view>
+    <view class='inputgroup'>
+      <text class='option' data-type='minus' bindtap='changeCount'>-</text>
+      <text class='numbershow'>{{counts}}</text>
+      <text class='option' data-type='plus' bindtap='changeCount'>+</text>
+    </view>
+  </view>
+  <view class='one'>
+    <text>合计</text>
+    <text>￥{{total}}</text>
+  </view>
+</view>
+<view class='title'>
+  <text>支付方式</text>
+</view>
+<view class='common payway'>
+  <view data-type="wechat" bindtap='checkPay' class='one'>
+    <view class='textgroup'>
+      <image class='wechatIcon' src='{{wechatIcon}}'></image>
+      <text>微信支付</text>
+    </view>
+    <view class='inputgroup'>
+      <image class='checkIcon' src='{{check == "wechat"?checkImg:uncheckedImg}}'></image>
+    </view>
+  </view>
+  <view data-type="huiyuan" bindtap='checkPay' class='one'>
+    <view class='textgroup'>
+      <image class='huiyuanIcon' src='{{huiyuanIcon}}'></image>
+      <text>会员支付</text>
+    </view>
+    <view class='inputgroup'>
+      <image class='checkIcon' src='{{check == "huiyuan"?checkImg:uncheckedImg}}'></image>
+    </view>
+  </view>
+</view>
+<view class='common remarks'>
+  <view class='remark'>
+    <text>备注：</text>
+  </view>
+  <textarea placeholder='如有其它要求请填写'></textarea>
+</view>
+<view class='footer'>
+  <button bindtap='payComplate' type='warn'>支付</button>
+</view>

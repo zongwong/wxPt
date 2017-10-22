@@ -1,0 +1,70 @@
+/* pages/user/award/award.wxss */
+page{
+  font-size: 32rpx;
+  background-color: #F2F2F2;
+  color: #454545;
+}
+
+.top{
+  padding: 40rpx 20rpx;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  color: 
+}
+
+.top .left{
+  display: inline-block;
+  width: 30%;
+  height: 160rpx;
+  margin-right: 5%;
+}
+.top .left .img{
+  width: 100%;
+  height: 100%;
+}
+.top .right{
+  display: inline-block;
+  width: 65%;
+}
+.top .userName{
+  font-size: 34rpx;
+}
+.top .goodTitle{
+  color: #6C4176;
+}
+.getward{
+  margin-top: 20rpx;
+  background: #fff;
+  padding: 40rpx 20rpx;
+}
+.getward .congratulate{
+  text-align: center;
+  margin-bottom: 40rpx;
+  display: flex;
+  justify-content: space-between;
+}
+.getward .congratulate .title{
+  font-size: 28rpx;
+  color: #fff;
+  background-color: #6C4176;
+  padding: 2rpx 5rpx;
+}
+.getward .congratulate .ganxie{
+  font-size: 30rpx;
+}
+.getward .congratulate .giftName{
+  color: #6C4176;
+}
+.getward .img{
+  width: 100%;
+  height: 400rpx;
+}
+.getward .btn-award{
+  color: #fff;
+  background-color: #6C4176;
+  font-size: 30rpx;
+  margin-top: 40rpx;
+}
+
+

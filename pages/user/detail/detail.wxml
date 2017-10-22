@@ -1,0 +1,78 @@
+<!--pages/purchase/purchase.wxml-->
+<view class="container">
+  <scroll-view class="container-body" scroll-y="true" scroll-top="{{scrolltop}}" bindscroll="scrollHandle" lower-threshold="50" bindscrolltolower="scrollLoading">
+    <view class="detail-1" style='background-image:url({{detailInfo.imgUrl}});'>
+      <view class='bottom'>
+        <view>
+          <text class='price'>{{detailInfo.price}}</text>
+          <text class='title'>{{detailInfo.title}}</text>
+        </view>
+        <view>
+          <text class='peple'>{{detailInfo.peple}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class='detail-2'>
+      <view class='top'>
+        <text class='left'>中奖记录</text>
+        <text bindtap='lookMyAward' class='right'>我的奖品</text>
+      </view>
+      <view class='bottom'>
+        <view wx:for="{{awards}}" wx:key="{{item.id}}" class='item'>
+          <text>{{item.telNum}}</text>
+          <text>{{item.goodName}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class='detail-3'>
+      <view class='top' wx:for="{{allSelects}}" wx:for-index="index" wx:key="item.id">
+        <text class='title'>{{index}}.{{item.title}}</text>
+        <view class='cell' wx:for="{{item.items}}" wx:for-item="cell" wx:key="{{cell.id}}">
+          <image data-parentId="{{item.id}}" data-id="{{cell.id}}" data-check="{{cell.checked}}" bindtap='changeState' class='icon' src='{{cell.checked?ckeckImg:unckeckImg}}'></image>
+          <text>{{cell.name}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class='detail-4'>
+      <text>支付{{needToPay}}元,立即参与</text>
+      <text data-statu="open" bindtap='powerDrawer' class='submit' type='submit'>提交</text>
+    </view>
+
+    <view class="gototop {{scrolltop>200?'active':''}}" bindtap="goToTop"></view>
+  </scroll-view>
+</view>
+
+<!--使用animation属性指定需要执行的动画-->
+<!--button-->
+<!-- <view class="btn" bindtap="powerDrawer" data-statu="open">button</view> -->
+<!--mask-->
+<view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}"></view>
+<view animation="{{animationData}}" class="drawer_box" wx:if="{{showModalStatus}}">
+  <!--drawer content-->
+  <view class='imgBox'>
+    <view class='tipTitle'>恭喜您已获奖</view>
+    <image class='liwu' mode='aspectFit' src='{{liwuIcon}}'></image>
+  </view>
+  <view class='inputGroup'>
+    <view class="drawer_title">输入车牌和手机号，立即领取</view>
+    <view class="drawer_content">
+      <view class="top grid">
+        <label class="title col-0">车牌号：</label>
+        <input class="input_base input_h30 col-1" name="carNum" value="" placeholder='请填写车牌号'></input>
+      </view>
+      <view class="top grid">
+        <label class="title col-0">手机号码：</label>
+        <input class="input_base input_h30 col-1" name="mobile" value="" placeholder='请填写手机号'></input>
+      </view>
+      <view class="top grid">
+        <input class="input_base input_h30 col-1" name="vcode" value="" placeholder='请填写验证码'></input>
+      </view>
+    </view>
+    <view class='btnBox'>
+      <view class="btn_ok" bindtap="powerDrawer" data-statu="close">立即抽奖</view>
+    </view>
+  </view>
+</view>

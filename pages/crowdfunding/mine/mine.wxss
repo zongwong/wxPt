@@ -1,0 +1,49 @@
+/* pages/purchase/my/my.wxss */
+@import '../../purchase/purchase.wxss';
+
+page {
+  background-color: #f2f2f2;
+}
+
+.tabs {
+  background-color: #fff;
+  color: #333;
+  font-size: 32rpx;
+  height: 50px;
+  line-height: 50px;
+}
+
+.tabs .tab {
+  display: inline-block;
+  text-align: center;
+  width: 25%;
+}
+
+.tabs .active {
+  color: #FF7900;
+  border-bottom: 1px solid #FF7900;
+}
+
+.purchase-item-info .icon-price {
+  color: #FF7900;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.purchase-item-info .left {
+  color: #acacac;
+  font-size: 13px;
+}
+
+.purchase-item-info .btn-check-code {
+  color: #FF7900;
+  border: 1px solid #FF7900;
+  background-color: #fff;
+  line-height: 76rpx;
+  margin-top: 8rpx;
+  font-size: 36rpx;
+}
+
+.btn-group .btn-purchase{
+  background-color: #FF7900;
+}

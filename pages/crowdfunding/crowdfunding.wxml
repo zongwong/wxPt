@@ -1,0 +1,26 @@
+<!--pages/purchase/purchase.wxml-->
+<view class="container">
+  <scroll-view class="container-body" scroll-y="true" scroll-top="{{scrolltop}}" bindscroll="scrollHandle" lower-threshold="50" bindscrolltolower="scrollLoading">
+    <view class="purchase-list">
+      <navigator class="purchase-item" wx:for="{{activitylist}}" wx:key="{{item.id}}" url="./detail/detail?id={{item.id}}&name={{item.name}}">
+        <view class="purchase-item-img">
+          <image class='image' src="{{item.imgurl}}" mode="aspectFill"></image>
+          <text class='status'>{{item.status}}</text>
+        </view>
+        <view class="purchase-item-text">
+          <view class="purchase-item-title">{{item.desc}}</view>
+          <view class="purchase-item-info btn-group">
+            <view class='left'>
+              <text class="icon-price">{{item.price}}</text>
+              <text class="icon-count">{{item.saledCount}}</text>
+            </view>
+            <view class='right'>
+              <button type='warn' class='{{item.disabled?"btn-purchase-disabled":"btn-purchase"}}'>马上众筹 {{item.char_gt}}</button>
+            </view>
+          </view>
+        </view>
+      </navigator>
+    </view>
+    <view class="gototop {{scrolltop>200?'active':''}}" bindtap="goToTop"></view>
+  </scroll-view>
+</view>

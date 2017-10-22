@@ -1,0 +1,183 @@
+/* pages/user/detail/detail.wxss */
+
+page {
+  font-size: 30rpx;
+  background-color: #f2f2f2;
+}
+
+.container {
+  padding: 30rpx 20rpx;
+}
+
+.detail-1 {
+  background-size: auto 100%;
+  height: 400rpx;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+.detail-1 .bottom {
+  position: absolute;
+  bottom: 0rpx;
+  display: flex;
+  justify-content: space-between;
+  color: #fff;
+  background-color: #6c4176;
+  width: 100%;
+  height: 80rpx;
+  align-items: center;
+}
+
+.detail-1 .bottom .price {
+  font-size: 32rpx;
+  padding: 10rpx 20rpx;
+  border: 2rpx solid #fff;
+  border-radius: 8rpx;
+  margin: 0 20rpx;
+}
+
+.detail-1 .bottom .title {
+  font-weight: 600;
+}
+
+.detail-1 .bottom .peple {
+  margin-right: 20rpx;
+}
+
+.detail-2 {
+  background-color: #fff;
+  border: 2rpx solid #6c4176;
+  margin: 20rpx 0 30rpx;
+  border-radius: 10rpx;
+  padding: 20rpx;
+  font-size: 32rpx;
+}
+
+.detail-2 .top {
+  height: 100rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1rpx solid #6c4176;
+}
+
+.detail-2 .top .left {
+  background-color: #6c4176;
+  color: #fff;
+  padding: 8rpx 20rpx;
+  border-radius: 10rpx;
+}
+
+.detail-2 .top .right {
+  color: #6c4176;
+  padding: 8rpx 20rpx;
+  border: 1rpx solid #6c4176;
+  border-radius: 10rpx;
+}
+
+.detail-2 .bottom .item {
+  height: 100rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.detail-3 {
+  background-color: #fff;
+  border: 2rpx solid #6c4176;
+  margin: 20rpx 0 30rpx;
+  border-radius: 10rpx;
+  padding: 20rpx;
+  font-size: 32rpx;
+}
+
+.detail-3 .top {
+  height: 200rpx;
+  border-bottom: 1rpx solid #6c4176;
+}
+
+.detail-3 .top .left {
+  background-color: #6c4176;
+  color: #fff;
+  padding: 8rpx 20rpx;
+  border-radius: 10rpx;
+}
+
+.detail-3 .top .right {
+  color: #6c4176;
+  padding: 8rpx 20rpx;
+  border: 1rpx solid #6c4176;
+  border-radius: 10rpx;
+}
+
+.detail-3 .top .icon {
+  height: 40rpx;
+  width: 40rpx;
+}
+
+.detail-3 .top .cell {
+  display: flex;
+  align-items: center;
+  margin: 30rpx 0;
+  color: #818181;
+}
+
+.detail-4 {
+  background-color: #fff;
+  margin-top: 30rpx;
+  padding: 20rpx;
+  font-size: 32rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #818181;
+}
+
+.detail-4 .submit {
+  color: #fff;
+  background-color: #6c4176;
+  padding: 10rpx 60rpx;
+  font-size: 32rpx;
+  border-radius: 10rpx;
+}
+
+.detail-4 .disabled {
+  color: #fff;
+  background-color: #9C9C9C;
+  padding: 10rpx 60rpx;
+  font-size: 32rpx;
+  border-radius: 10rpx;
+}
+
+.detail-4 .hide{
+  display: none;
+}
+
+.drawer_box {
+  background: transparent;
+}
+
+.drawer_box .inputGroup {
+  background-color: #fff;
+  border-radius: 10rpx;
+}
+
+.drawer_box .imgBox {
+  width: 100%;
+  text-align: center;
+}
+
+.drawer_box .imgBox .tipTitle {
+  font-size: 32rpx;
+  color: #fff;
+  margin-bottom: 30rpx;
+}
+
+.drawer_box .imgBox .liwu {
+  width: 190rpx;
+  height: 183rpx;
+  margin-bottom: 30rpx;
+}
+.drawer_box .btnBox{
+  padding: 30rpx;
+}

@@ -1,0 +1,67 @@
+{
+  "pages": [
+    "pages/purchase/purchase",
+    "pages/draw/draw",
+    "pages/crowdfunding/crowdfunding",
+    "pages/user/user",
+    "pages/purchase/purchaseDetail/purchaseDetail",
+    "pages/purchase/takeorder/takeorder",
+    "pages/purchase/pay/pay",
+    "pages/purchase/paycomplete/paycomplate",
+    "pages/purchase/pintuan/pintuan",
+    "pages/purchase/my/my",
+    "pages/purchase/immediately/immediately",
+    "pages/user/detail/detail",
+    "pages/user/mine/mine",
+    "pages/user/award/award",
+    "pages/user/replace/replace",
+    "pages/user/replaceAward/replaceAward",
+    "pages/draw/detail/detail",
+    "pages/draw/mine/mine",
+    "pages/crowdfunding/detail/detail",
+    "pages/crowdfunding/friendPay/friendPay",
+    "pages/crowdfunding/pay/pay",
+    "pages/crowdfunding/buy/buy",
+    "pages/crowdfunding/mine/mine",
+    "pages/crowdfunding/fpay/fpay",
+    "pages/crowdfunding/center/center",
+    "pages/purchase/center/center"
+  ],
+  "tabBar": {
+    "color": "#B2B2B2",
+    "selectedColor": "#838383",
+    "list": [
+      {
+        "pagePath": "pages/purchase/purchase",
+        "text": "拼团",
+        "iconPath": "images/pintuan.png",
+        "selectedIconPath": "images/pintuanfull.png"
+      },
+      {
+        "pagePath": "pages/draw/draw",
+        "text": "抽奖",
+        "iconPath": "images/choujiang.png",
+        "selectedIconPath": "images/choujiangfull.png"
+      },
+      {
+        "pagePath": "pages/crowdfunding/crowdfunding",
+        "text": "众筹",
+        "iconPath": "images/zhongchou.png",
+        "selectedIconPath": "images/zhongchoufull.png"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "text": "用户画像",
+        "iconPath": "images/user.png",
+        "selectedIconPath": "images/userfull.png"
+      }
+    ]
+  },
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#E02E24",
+    "navigationBarTitleText": "拼团活动列表",
+    "navigationBarTextStyle": "white",
+    "enablePullDownRefresh": true
+  }
+}

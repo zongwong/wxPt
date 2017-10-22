@@ -1,0 +1,46 @@
+/* pages/user/award/award.wxss */
+page{
+  font-size: 30rpx;
+}
+.getward{
+  width: 90%;
+  margin: 20rpx auto;
+}
+.getward .congratulate{
+  font-size: 32rpx;
+  color: #454545;
+  text-align: center;
+  margin-bottom: 20rpx;
+}
+
+.getward .goodTitle{
+  font-size: 32rpx;
+  color: #6C4176;
+  text-align: center;
+  margin-top: 20rpx;
+  margin-bottom: 30rpx;
+}
+.getward .img{
+  width: 100%;
+  height: 600rpx;
+}
+.getward .btn-award{
+  color: #fff;
+  background-color: #6C4176;
+  font-size: 30rpx;
+}
+.getward .invite{
+  text-align: center;
+  color: #6C4176;
+  margin: 20rpx;
+}
+.getward .btn-award-other{
+  color: #6C4176;
+  background-color: #fff;
+  font-size: 30rpx;
+  border: 2rpx solid #6C4176;
+  margin-top: 20rpx;
+}
+.hide{
+  display: none;
+}

@@ -1,0 +1,33 @@
+<view class="out">
+  <view class='in'>
+    <view class='userinfo'>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </view>
+    <view class='cardinfo'>
+      <text>{{money}}元吃货专享卡</text>
+      <text>黑金卡</text>
+    </view>
+  </view>
+</view>
+
+<view class='bottom'>
+  <view class='item'>
+    <view class='mid'>
+      <image class='img' mode='aspectFit' src='../../../images/pintuan/my.png'></image>
+      <text>我的拼团</text>
+    </view>
+    <view class='mid'>
+      <text>2</text>
+      <image class='img' mode='aspectFit' src='../../../images/funding/r.png'></image>
+    </view>
+  </view>
+  <view bindtap='goToMyFunding' class='item'>
+    <view class='mid'>
+      
+    </view>
+    <view class='mid'>
+      <image class='img' mode='aspectFit' src='../../../images/funding/r.png'></image>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,16 @@
+<!--pages/purchase/purchase.wxml-->
+<view class="container">
+  <scroll-view class="container-body" scroll-y="true" scroll-top="{{scrolltop}}" bindscroll="scrollHandle" lower-threshold="50" bindscrolltolower="scrollLoading">
+    <view class="purchase-list">
+      <navigator class="purchase-item" wx:for="{{activitylist}}" wx:key="{{item.id}}" url="./detail/detail?id={{item.id}}">
+        <view class='ac-item'>
+         <text class='title'>{{item.title}}</text>
+        </view>
+        <view class="purchase-item-img">
+          <image class='image' src="{{item.imgurl}}" mode="aspectFill"></image>
+        </view>
+      </navigator>
+    </view>
+    <view class="gototop {{scrolltop>200?'active':''}}" bindtap="goToTop"></view>
+  </scroll-view>
+</view>

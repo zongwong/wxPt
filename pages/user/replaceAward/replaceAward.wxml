@@ -1,0 +1,17 @@
+<view class="top">
+  <view class='left'>
+    <image class='img' mode='aspectFill' src='{{goodInfo.goodImg}}'></image>
+  </view>
+  <view class='right'>
+    <view>恭喜您为[<text class='userName'>{{userName}}</text>]抽中</view>
+    <view class='goodTitle'>{{goodInfo.goodTitle}}</view>
+  </view>
+</view>
+<view class="getward">
+  <view class='congratulate'>
+  <text class='title'>代替抽奖</text>
+  <view class='ganxie'>为感谢您的支持,赠送您<text class='giftName'>{{giftName}}</text></view>
+  </view>
+  <image class='img' mode='aspectFill' src='{{goodInfo.goodImg}}'></image>
+  <button bindtap='lookMine' class='btn-award'>查看奖品</button>
+</view>

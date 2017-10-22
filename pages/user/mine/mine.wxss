@@ -1,0 +1,100 @@
+/* pages/user/mine/mine.wxss */
+
+page {
+  font-size: 30rpx;
+  background-color: #f2f2f2;
+}
+
+.header {
+  background-color: #fff;
+  height: 80rpx;
+  line-height: 80rpx;
+  width: 100%;
+  font-size: 32rpx;
+}
+
+.header .tab {
+  width: 50%;
+  text-align: center;
+  display: inline-block;
+}
+
+.header .tab-active {
+  color: #6c4176;
+  border-bottom: 2rpx solid #6c4176;
+  padding: 0 30rpx;
+}
+
+.header .my {
+  display: inline-block;
+}
+
+.myItems {
+  background-color: #fff;
+  margin-top: 20rpx;
+  width: 100%;
+}
+
+.myItems .top {
+  display: flex;
+  justify-content: space-between;
+  height: 100rpx;
+  align-items: center;
+  padding: 0 40rpx;
+}
+
+.myItems .top .qrcodeImg {
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.myItems .bottom {
+  height: 200rpx;
+  padding: 0 40rpx;
+  display: flex;
+  align-items: center;
+}
+
+.myItems .top .left {
+  width: 50%;
+  height: 90rpx;
+  display: flex;
+  align-items: center;  
+}
+.myItems .bottom .left {
+  width: 30%;
+  display: inline-block;
+}
+
+.myItems .bottom .right {
+  width: 70%;
+  height: 140rpx;
+  display: inline-block;
+}
+.myItems .bottom .right-1{
+  font-size: 32rpx;
+  display: block;
+  padding-left: 30rpx;
+}
+.myItems .bottom .right-2{
+  display: block;
+  padding-left: 30rpx;
+  margin-top: 20rpx;
+}
+.myItems .bottom .right-3{
+  display: block;
+  text-align: right;
+  color: #F33736;
+}
+.myItems .top .code{
+  margin-left: 20rpx;
+}
+
+.myItems .top .date{
+  color: #838383;
+}
+
+.myItems .bottom .myImg {
+  height: 140rpx;
+  width: 100%;
+}

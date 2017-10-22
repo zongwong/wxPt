@@ -1,0 +1,74 @@
+@import "../../purchase/takeorder/takeorder.wxss";
+
+.goodInfoBox .infoLeft {
+  background-color: #ff7900;
+  padding: 20rpx 10rpx;
+}
+
+.priceBox .priceRight .text:last-child {
+  background-color: #f60;
+}
+
+.goodInfoBox .infoLeft .zhongchou {
+  color: #fff000;
+  border: 2rpx solid #fff000;
+  font-size: 28rpx;
+  padding: 4rpx 8rpx;
+  margin-right: 10rpx;
+  border-radius: 10rpx;
+}
+
+.shuoming {
+  background-color: #fff;
+  padding: 30rpx 40rpx;
+  margin-top: 20rpx;
+}
+
+.shuoming .tip {
+  height: 90rpx;
+  line-height: 90rpx;
+}
+
+.shuoming .tip:first-child {
+  border-bottom: 2rpx solid #dbdbdb;
+}
+
+.faceName .pay {
+  margin-left: 20rpx;
+  color: #ff7900;
+}
+
+.menber .right {
+  color: #ff7900;
+}
+
+.menber .right .text:first-child {
+  border: 2rpx solid #ff7900;
+  margin-right: 10rpx;
+  padding: 4rpx 8rpx;
+  border-radius: 5rpx;
+}
+
+.footer .left {
+  width: 33%;
+  display: inline-block;
+  font-size: 28rpx;
+  color: #979797;
+  padding-left: 0;
+  text-align:center;
+}
+
+.footer .right {
+  width: 33%;
+  display: inline-block;
+  background-color: #ff7900;
+  color: #fff;
+  text-align: center;
+}
+.footer .right.first {
+  background-color: #FFD413;
+}
+
+.footer .left wx-text{
+  color: #ff7900;
+}

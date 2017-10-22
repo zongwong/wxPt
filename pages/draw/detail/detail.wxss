@@ -1,0 +1,170 @@
+page {
+  font-size: 32rpx;
+  color: #262626;
+  background-image: url('http://bryanly.oss-cn-shenzhen.aliyuncs.com/choubg.png');
+  height: 100%;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.description {
+  width: 95%;
+  height: 300rpx;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  margin: 0 auto;
+  position: relative;
+  text-align: center;
+}
+
+.description .time {
+  position: absolute;
+  bottom: 11%;
+  width: 100%;
+  color: #fff;
+}
+
+.description .desc {
+  position: absolute;
+  bottom: 30%;
+  width: 100%;
+  font-size: 30rpx;
+}
+
+.description .title {
+  position: absolute;
+  bottom: 60%;
+  width: 100%;
+  color: #f3365e;
+}
+
+.chanceCount {
+  width: 95%;
+  margin: 0rpx auto;
+  margin-bottom: 30rpx;
+  text-align: center;
+  font-weight: 600;
+}
+
+.chanceCount .count {
+  color: #f3365e;
+}
+
+/**大转盘实现start**/
+
+.container-out {
+  height: 600rpx;
+  width: 650rpx;
+  background-color: #FF5C5D;
+  margin: 0rpx auto;
+  border-radius: 40rpx;
+  box-shadow: 0 10px 0 #E81B54;
+  position: relative;
+}
+
+.container-in {
+  width: 580rpx;
+  height: 530rpx;
+  background-color: #FE9F67;
+  border-radius: 40rpx;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+/**小圆球
+box-shadow: inset 3px 3px 3px #fff2af;*/
+
+.circle {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  height: 20rpx;
+  width: 20rpx;
+}
+
+.content-out {
+  position: absolute;
+  height: 150rpx;
+  width: 166.6666rpx;
+  /* background-color: #f5f0fc; */
+  border-radius: 15rpx;
+  /* box-shadow: 0 5px 0 #d87fde; */
+}
+
+/**居中 加粗*/
+
+.start-btn {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  border-radius: 15rpx;
+  height: 150rpx;
+  width: 166.6666rpx;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  color: #F3365E;
+  text-align: center;
+  font-weight: bolder;
+  line-height: 150rpx;
+}
+
+.start-btn .text{
+  position: relative;
+  bottom: 10rpx;
+}
+
+.award-image {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 140rpx;
+  width: 130rpx;
+}
+
+/**大转盘结束end****/
+
+.records{
+  width: 95%;
+  margin: 0rpx auto;
+  margin-top: 50rpx;
+  border: 4rpx solid #F3365E;
+  border-radius: 10rpx;
+}
+.records .header{
+  display: flex;
+  justify-content: space-between;
+  height: 80rpx;
+  align-items: center;
+  border-bottom: 1rpx solid #F3365E;
+  margin: 0 20rpx;
+}
+.records .record{
+  display: flex;
+  justify-content: space-between;
+  height: 80rpx;
+  align-items: center;
+  margin: 0 20rpx;
+}
+
+.records .title{
+  color: #fff;
+  background-color: #F3365E;
+  border-radius: 20rpx;
+  padding: 6rpx 20rpx;
+}
+.records .myaward{
+  color: #F3365E;
+  border-radius: 20rpx;
+  padding: 6rpx 20rpx;
+  border: 2rpx solid #F3365E;
+}

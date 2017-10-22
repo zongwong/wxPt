@@ -1,0 +1,60 @@
+<swiper indicator-dots="{{indicatorDots}}" indicator-active-color='{{indicatorActivColor}}' autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+  <block wx:for="{{imgUrls}}" wx:key>
+    <swiper-item>
+      <image src="{{item}}" class="slide-image" width="355" height="150" />
+    </swiper-item>
+  </block>
+</swiper>
+<view class='goodInfoBox'>
+  <view class='infoLeft'>
+    <text>金钱豹子汽车摆件时钟</text>
+    <view class='priceBox'>
+      <view class='priceLeft'>
+        ￥
+        <text class='text'>9.9</text>
+      </view>
+      <view class='priceRight'>
+        <text class='text'>原价￥89.5</text>
+        <text class='text'>已售232</text>
+      </view>
+    </view>
+  </view>
+  <view class='infoRight'>
+    <text class='text'>距离结束还剩</text>
+    <text class='text'>2天 09:09:32</text>
+  </view>
+</view>
+
+<view class='contactInfo'>
+  <view class='left'>
+    <view class='contact'>
+      <image class='icon' src='{{icon1}}'></image>
+      <text class='text'>众涂汽车美容（软件园二期店）</text>
+    </view>
+    <view class='contact'>
+      <image class='icon' src='{{icon2}}'></image>
+      <text class='text'>众涂汽车美容（软件园二期店）</text>
+    </view>
+  </view>
+  <view class='right'>
+    <icon type='info' size='20'></icon>
+  </view>
+</view>
+
+<view class='menbers'>
+  <view class='titleBox'>
+    <text class='title'>拼团人员</text>
+  </view>
+  <view class='menber' wx:for="{{menbers}}" wx:key>
+    <image class='face' src='{{item.face}}'></image>
+    <text class='text'>{{item.name}}</text>
+    <text class='text'>{{item.time}}</text>
+  </view>
+</view>
+<view class='footer'>
+  <view class='left'>
+    再邀
+    <text>2</text>人购买即可享受优惠
+  </view>
+  <navigator class='right'>邀请好友拼团</navigator>
+</view>

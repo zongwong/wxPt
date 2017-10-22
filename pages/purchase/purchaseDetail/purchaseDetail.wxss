@@ -1,0 +1,158 @@
+/* pages/purchaseDetail/purchaseDetail.wxss */
+
+page {
+  background-color: #f2f2f2;
+}
+
+.goodInfoBox, .priceBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.goodInfoBox .infoLeft {
+  color: #fff;
+  background-color: #e02e24;
+  padding: 20rpx 30rpx;
+}
+
+.goodInfoBox .infoRight {
+  color: #e02e24;
+  background-color: #fdd51b;
+  padding: 20rpx 30rpx;
+  font-size: 32rpx;
+  height: 156rpx;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.goodInfoBox .infoLeft, .priceBox .priceRight {
+  flex: 2;
+}
+
+.goodInfoBox .infoRight, .priceBox .priceLeft {
+  flex: 1;
+}
+
+.priceBox .priceLeft .text {
+  font-size: 60rpx;
+}
+
+.priceBox .priceLeft {
+  height: 45px;
+}
+
+.goodInfoBox .infoRight .text, .priceBox .priceRight .text {
+  display: block;
+}
+
+.priceBox .priceRight .text:first-child {
+  color: #f0aca9;
+  font-size: 30rpx;
+  text-decoration: line-through;
+}
+
+.goodInfoBox .infoRight .text:last-child {
+  border: 2rpx solid #e02e24;
+  padding: 4rpx;
+  border-radius: 10rpx;
+  margin-top: 10rpx;
+}
+
+.contactInfo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  padding: 20rpx;
+  margin: 20rpx 0;
+}
+
+.contactInfo .left {
+  flex: 3;
+  font-size: 32rpx;
+  border-right: 2rpx solid #dbdbdb;
+}
+
+.contactInfo .left .contact {
+  line-height: 70rpx;
+  height: 70rpx;
+  position: relative;
+}
+
+.contactInfo .left .icon {
+  width: 46rpx;
+  height: 46rpx;
+  position: absolute;
+  top: 10rpx;
+}
+
+.contactInfo .left .text {
+  margin-left: 50rpx;
+}
+
+.contactInfo .right {
+  flex: 1;
+  text-align: center;
+}
+
+.menbers {
+  background-color: #fff;
+  padding: 30rpx 40rpx;
+}
+
+.menbers .titleBox {
+  border-bottom: 2rpx solid #f2f2f2;
+  padding-bottom: 16rpx;
+}
+
+.menbers .face {
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.menbers .menber {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 140rpx;
+  border-bottom: 2rpx solid #f2f2f2;
+}
+
+.menber .text {
+  margin-left: 10rpx;
+}
+
+.menber .text:last-child {
+  float: right;
+}
+
+.footer {
+  border-top: 2rpx solid #f2f2f2;
+  margin-top: 20rpx;
+  background-color: #ffffff;
+  height: 90rpx;
+  line-height: 90rpx;
+}
+
+.footer .left {
+  width: 60%;
+  display: inline-block;
+  font-size: 28rpx;
+  color: #979797;
+  padding-left: 5%;
+}
+.footer .left text{
+  color: #e02e24;
+}
+.footer .right {
+  width: 35%;
+  display: inline-block;
+  background-color: #e02e24;
+  color: #fff;
+  font-size: 36rpx;
+  text-align: center;
+}

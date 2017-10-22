@@ -1,0 +1,64 @@
+<!--pages/purchase/paycomplete/paycomplate.wxml-->
+<view class='payInfo success {{flag==1?"show":"hide"}}'>
+  <view class='first'>
+    <image src='{{successImg}}' class='img'></image>
+    <text class='title'>支付成功</text>
+  </view>
+  <view class='second'>
+    再邀
+    <text class='count'>2</text>人购买即可完成拼单
+  </view>
+  <view class='third'>
+    <button data-type="invite" bindtap='invitePurchase' class='primary' type='primary'>邀请好友拼团</button>
+  </view>
+</view>
+
+<view class='payInfo success {{flag==1?"show":"hide"}}'>
+  <view class='first'>
+    <image src='{{successImg}}' class='img'></image>
+    <text class='title'>支付成功</text>
+  </view>
+  <view class='second'>
+    再邀
+    <text class='count'>2</text>人购买即可完成拼单
+  </view>
+  <view class='third'>
+    <button data-type="check" bindtap='invitePurchase' class='primary' type='primary'>查看拼团</button>
+  </view>
+</view>
+
+<view class='payInfo error {{flag==0?"show":"hide"}}'>
+  <view class='first'>
+    <image src='{{failImg}}' class='img'></image>
+    <text class='title'>支付失败</text>
+  </view>
+  <view class='second'>
+    该团已满，请重新发起
+  </view>
+  <view class='third'>
+    <button class='warn' type='warn'>发起拼团</button>
+  </view>
+</view>
+
+<view class='message'>
+  <view class='detail'>
+    <view class=''>
+      <view class='title'>拼团成功提醒</view>
+      <view class='huise'>9月20日</view>
+    </view>
+    <view class='detailTitle'>
+      您参与的“金钱豹子汽车摆件时钟”团购项目新增拼团人员！
+    </view>
+    <view class='huise'>
+      商品名称：
+      <text>黄金车厘子</text>
+    </view>
+    <view class='huise'>
+      团长：
+      <text>小林</text>
+    </view>
+  </view>
+  <view class='me'>
+    <text>个人中心我的团购可查看团购码</text>
+  </view>
+</view>

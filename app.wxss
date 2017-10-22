@@ -1,0 +1,120 @@
+/**app.wxss**/
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  background-color: #F2F2F2;
+} 
+
+/*******************弹窗**********************/   
+/*mask*/ 
+.drawer_screen { 
+  width: 100%;  
+  height: 100%;  
+  position: fixed;  
+  top: 0;  
+  left: 0;  
+  z-index: 1000;  
+  background: #000;  
+  opacity: 0.5;  
+  overflow: hidden;  
+} 
+   
+/*content*/ 
+.drawer_box { 
+  width: 650rpx;  
+  overflow: hidden;  
+  position: fixed;  
+  top: 45%;  
+  left: 0;  
+  z-index: 1001;  
+  background: #FAFAFA;  
+  margin: -150px 50rpx 0 50rpx;  
+  border-radius: 3px;  
+  font-size: 32rpx; 
+} 
+   
+.drawer_title{ 
+  color: #3F3F3F; 
+  
+  text-align: center;  
+  padding: 20rpx;
+} 
+.drawer_content { 
+  overflow-y: scroll; /*超出父盒子高度可滚动*/ 
+  margin-bottom: 40rpx;
+  padding: 0 30rpx;
+} 
+   
+.btn_ok{ 
+  padding: 20rpx;  
+  text-align: center;  
+  color: #fff;
+  background-color: #6c4176;
+  width: 90%;
+  border-radius: 10rpx;
+} 
+   
+.drawer_box .top{ 
+    padding-top:8px;  
+} 
+.drawer_box .bottom { 
+    padding-bottom:8px;  
+} 
+.drawer_box .title { 
+    height: 30px;  
+    line-height: 30px;  
+    width: 160rpx;  
+    text-align: center;  
+    display: inline-block;  
+    font: 300 28rpx/30px "microsoft yahei";  
+} 
+   
+.drawer_box .input_base { 
+    padding-left: 10rpx;  
+    margin-right: 50rpx;  
+} 
+.drawer_box .input_h30{ 
+    height: 30px;  
+    line-height: 30px;  
+} 
+.drawer_box .input_h60{ 
+    height: 60px;  
+} 
+.drawer_box .input_view{ 
+    font: 12px "microsoft yahei";  
+    background: #fff;  
+    color:#000;  
+    line-height: 30px;  
+} 
+   
+.drawer_box input { 
+    font: 12px "microsoft yahei";  
+    background: #fff;  
+    color:#000 ;  
+} 
+.drawer_box radio{ 
+    margin-right: 20px;  
+} 
+.drawer_box .grid { 
+  display: -webkit-box; 
+  display: box; 
+  border-bottom: 2rpx solid #CACACA;
+  } 
+.drawer_box .col-0 {
+  -webkit-box-flex:0;
+  box-flex:0;
+  } 
+.drawer_box .col-1 {
+  -webkit-box-flex:1;
+  box-flex:1;
+  } 
+.drawer_box .fl { 
+  float: left;
+  } 
+.drawer_box .fr { 
+  float: right;
+  } 

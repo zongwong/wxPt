@@ -1,0 +1,15 @@
+@import "../takeorder/takeorder.wxss";
+
+.footer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.footer .right{
+  font-size: 30rpx;
+  border-radius: 0rpx;
+  height: 100%;
+  line-height: 80rpx;
+  display: block;
+}
