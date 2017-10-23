@@ -1,115 +1,113 @@
-//app.js
+import utils from "./utils/util.js";
 App({
     globalData: {
-        userInfo: null,
+        userInfo: {},
+        token: '',
+        code: '',
         openid: '',
         appid: 'wx15d6ca4ad6e41cd8',
         secret: '84f45a7e8b406edf3f802d8bbdbd7aa6',
         serverPath: 'https://www.baby25.cn/jeesite/',
-        token:'',
+        islogin:false,
     },
     onLaunch: function() {
-        this.toLogin();
+         this.toLogin();
+         this.userInfoReadyCallback = res => {
+            console.log('获取用户名成功回调')
+         }
     },
-    toLogin:function(fn){
-      var that = this;
-
-      // if(this.globalData.token){
-      //     typeof fn == "function" && fn(this.globalData.userInfo);
-      // }else{
-
-      // }
-
-      wx.login({
-          success: function(res) {
-              if (res.code) {
-                  console.log('获取登录code:'+res.code);
-                  that.getOpenId(res.code);
-              } else {
-                  console.log('获取用户登录态失败！' + res.errMsg)
-              }
-          }
-      });
-      // 获取用户信息
-      wx.getSetting({
-          success: res => {
-              if (res.authSetting['scope.userInfo']) {
-                  // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-                  wx.getUserInfo({
-                      success: res => {
-                          that.globalData.userInfo = res.userInfo;
-                          console.log('用户信息:',res.userInfo);
-                          // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-                          // 所以此处加入 callback 以防止这种情况
-                          // if (this.userInfoReadyCallback) {
-                          //     this.userInfoReadyCallback(res)
-                          // }
-                      }
-                  })
-              }
-          }
-      })
+    toLogin: function(fn) {
+        let that = this;
+        if (this.globalData.token) {
+            typeof fn == "function" && fn();
+        } else {
+            if (this.globalData.openid && this.globalData.userInfo) {
+                 this.getMemberLogin(this.globalData.openid, this.globalData.userInfo, fn);
+            } else {
+                wx.login({
+                    success: function(loginres) {
+                        if (loginres.code) {
+                            that.globalData.code = loginres.code;
+                            if (!that.globalData.userInfo) {
+                                wx.getUserInfo({
+                                    success: function(userres) {
+                                        that.globalData.userInfo = userres.userInfo;
+                                        if (!that.globalData.openid) {
+                                            that.getOpenId(loginres.code, userres.userInfo, fn);
+                                        }
+                                        
+                                    }
+                                })
+                            }else{
+                                if (!that.globalData.openid) {
+                                    that.getOpenId(loginres.code, that.globalData.userInfo, fn);
+                                }
+                            }
+                        }
+                    }
+                })
+            }
+        }
     },
-    getOpenId: function(code) {
+    getOpenId: function(code, userInfo, fn) {
         var that = this;
-        var url = that.globalData.serverPath + 'api/common/member/getOpenId';
         wx.request({
-            url: url,
+            method: 'POST',
+            url: that.globalData.serverPath + 'api/common/member/getOpenId',
             data: {
                 code: code
             },
-            method: 'POST',
             header: {
                 'content-type': 'application/x-www-form-urlencoded'
             },
             success: function(res) {
-                var data = res.data.data;
-                var openid = data.openid;
-                console.log('openid:'+res.data);
-                that.globalData.openid = openid;
-                wx.setStorageSync('openid', openid);
-                that.getMemberLogin(openid);
+                that.globalData.openid = res.data.openid;
+                that.getMemberLogin(res.data.openid, userInfo,fn);
             }
-        });
+        })
+
+
+        // utils.ajax('post','api/common/member/getOpenId',{code:code},function(res){
+        //     console.log(res);
+        //     return false;
+        //     const data = res.data.data;
+        //     console.log(data)
+        //     const openid = data.openid;
+        //     that.globalData.openid = openid;
+        //     wx.setStorageSync('openid', openid);
+        //     that.getMemberLogin(openid);
+        // });
     },
-    getMemberLogin: function(openid) {
-        var that = this;
-        var url = that.globalData.serverPath + 'api/common/member';
-        var memberInfo = {};
-        // wx.getUserInfo({
-        //     success: res => {
-        //         // 可以将 res 发送给后台解码出 unionId
-        //         var userInfo = res.userInfo
-                
-        //     }
-        // })
+    getMemberLogin: function(openid, userInfo, fn) {
+        
+        let that = this;
         wx.request({
-            url: url,
+            method: 'POST',
+            url: that.globalData.serverPath + 'api/common/member',
+            header: {
+                'content-type': 'application/x-www-form-urlencoded'
+            },
             data: {
                 key: openid,
-                name: that.globalData.userInfo.nickName,
+                name: userInfo.nickName,
                 mobile: '',
-                imgUrl: that.globalData.userInfo.avatarUrl,
+                imgUrl: userInfo.avatarUrl,
             },
-            method: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT    
-            header: {
-                'content-type': 'application/x-www-form-urlencoded'
-            }, // 设置请求的 header    
             success: function(res) {
-                // console.log(res);
-                var data = res.data;
-                if (data.code == '0') {
-                    data = data.data;
+                if (res.data.code == '0') {
+                    let data = res.data.data
+                    that.globalData.token = data.memberId + '_' + data.token;
+                    let memberInfo = {};
                     memberInfo.memberId = data.memberId;
                     memberInfo.userId = data.memberId;
-                    memberInfo.token = data.token;
-                } else {
-                    memberInfo.memberId = '';
-                    memberInfo.userId = '';
-                    memberInfo.token = '';
+                    memberInfo.token = that.globalData.token;
+                    wx.setStorageSync('memberInfo', memberInfo);
+                    console.log('登录成功');
+                    fn && fn();
                 }
-                wx.setStorageSync('memberInfo', memberInfo);
+
             }
-        });
+        })
     }
+
 })

@@ -1,28 +1,30 @@
-<!--pages/purchase/purchase.wxml-->
 <view class="container">
-    <scroll-view class="container-body" scroll-y="true" scroll-top="{{scrolltop}}"  bindscrolltolower="scrollLoading" style="height: 1100rpx">
+    <scroll-view class="container-body" scroll-y="true" scroll-top="{{scrolltop}}" bindscrolltolower="scrollLoading" style="height: 1300rpx;">
         <view class="purchase-list">
-            <navigator class="purchase-item" wx:for="{{activitylist}}" wx:key="{{item.id}}" url="./immediately/immediately?id={{item.id}}">
-                <view class="purchase-item-img" style="background: url(../../images/default_rect.png) center / 100% no-repeat;">
-                    <image class='image' src="{{item.imgUrl}}" mode="aspectFill"></image>
-                    <!-- <text class='status'>{{item.status}}</text> -->
-                </view>
-                <view class="purchase-item-text">
-                    <view class="purchase-item-title">{{item.name}}</view>
-                    <view class="purchase-item-info btn-group">
-                        <view class='left'>
-                            <text class="icon-price">￥{{item.ptGood.price}}</text>
-                            <text class="icon-count">已售{{item.saleNum}}</text>
-                        </view>
-                        <view class='right'>
-                            <button type='warn' class='btn-purchase'>马上开团 {{char_gt}}</button>
+            <block wx:for="{{activitylist}}" wx:key="{{item.id}}">
+                <navigator class="purchase-item" url="./immediately/immediately?id={{item.id}}">
+                    <view class="purchase-item-img" style="background:url(../../images/default_rect.png) center / cover no-repeat;">
+                        <image class='image' src="{{item.imgUrl}}" mode="aspectFill"></image>
+                        <text class='status'>{{item.statusText}}</text>
+                    </view>
+                    <view class="purchase-item-text">
+                        <view class="purchase-item-title">{{item.name}}</view>
+                        <view class="purchase-item-info btn-group">
+                            <view class='left'>
+                                <text class="icon-price">￥{{item.ptGood.price}}</text>
+                                <text class="icon-count">已售{{item.saleNum}}</text>
+                            </view>
+                            <view class='right'>
+                                <button type='warn' class='btn-purchase'>马上开团 ></button>
+                            </view>
                         </view>
                     </view>
-                </view>
-            </navigator>
+                </navigator>
+            </block>
         </view>
         <view class="gototop {{scrolltop>200?'active':''}}" bindtap="goToTop"></view>
+        <view wx:if="{{!activitylist.length || scrollEnd}}" class="emptyData">^_^没有数据了</view>
     </scroll-view>
-    <button bindtap='scanCode' class='scanCode' type='primary'>扫码参与活动</button>
-    <navigator class='scanCode mycenter' url="./my/my">我的拼团</navigator>
+    <button bindtap='scanCode' class='aside_item aside_scan'></button>
+    <navigator class='aside_item aside_center' url="./center/center"></navigator>
 </view>

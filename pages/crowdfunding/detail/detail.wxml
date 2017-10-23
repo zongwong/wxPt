@@ -1,82 +1,94 @@
 <swiper class='img-swiper' indicator-dots="{{indicatorDots}}" indicator-active-color='{{indicatorActivColor}}' autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-  <block wx:for="{{imgUrls}}" wx:key>
-    <swiper-item>
-      <image mode='aspectFit' src="{{item}}" class="slide-image" />
-    </swiper-item>
-  </block>
+    <block wx:for="{{imgUrls}}" wx:key>
+        <swiper-item>
+            <image mode='aspectFill' src="{{item}}" class="slide-image" />
+        </swiper-item>
+    </block>
 </swiper>
 <view class='goodInfoBox'>
-  <view class='infoLeft'>
-    <text class='zhongchou'>众筹</text>
-    <text>{{activityInfo.zcGoods.name}}</text>
-    <view class='priceBox'>
-      <view class='priceLeft'>
-        ￥
-        <text class='text'>{{activityInfo.zcGoods.price}}</text>
-      </view>
-      <view class='priceRight'>
-        <text class='text'>原价￥{{activityInfo.zcGoods.originalPrice}}</text>
-        <text class='text'>已售{{activityInfo.saleNum}}</text>
-      </view>
+    <view class='infoLeft'>
+        <text class='zhongchou'>众筹</text>
+        <text>{{activityInfo.zcGoods.name}}</text>
+        <view class='priceBox'>
+            <view class='priceLeft'>
+                ￥
+                <text class='text'>{{activityInfo.zcGoods.price}}</text>
+            </view>
+            <view class='priceRight'>
+                <text class='text'>原价￥{{activityInfo.zcGoods.originalPrice}}</text>
+                <text class='text'>已售{{activityInfo.saleNum}}</text>
+            </view>
+        </view>
     </view>
-  </view>
-  <image class='triangle' src='{{triangleImg}}'></image>
-  <view class='infoRight'>
-    <text class='text'>距离结束还剩</text>
-    <text class='text'>{{timeCountDown}}</text>
-  </view>
+    <image class='triangle' src='{{triangleImg}}'></image>
+    <view class='infoRight'>
+        <text class='text'>距离结束还剩</text>
+        <text class='text'>{{timeCountDown}}</text>
+    </view>
 </view>
 <view class='shuoming'>
-  <view class='tip'>众筹说明</view>
-  <view class='tip'>请朋友代付1元抵用100元，最多可找2人付款</view>
+    <view class='tip' wx:if="{{!friendPay}}">众筹说明</view>
+
+    <view class='tip tip1' wx:if="{{friendPay}}">
+        <text>众筹说明</text>
+        <text bindtap='partake' class='partake'>我要参与</text>
+    </view>
+    
+    <view class='tip'>请朋友代付{{activityInfo.payPrice}}元抵用{{activityInfo.discountPrice}}元，最多可找{{activityInfo.maxCount}}人付款</view>
 </view>
-<view class='menbers'>
-  <view class='titleBox'>
-    <text class='title'>朋友代付</text>
-  </view>
-  <view class='menber' wx:for="{{menbers}}" wx:key>
-    <view class='faceName'>
-      <image class='face' src='{{item.face}}'></image>
-      <text class='text'>{{item.name}}</text>
-      <text class='pay'>￥1.00</text>
+<view class='menbers' wx:if="{{menbers.length}}">
+    <view class='titleBox'>
+        <text class='title'>朋友代付</text>
     </view>
-    <view class='right'>
-      <text class='text'>抵</text>
-      <text class='text'>100元</text>
+    <view class='menber' wx:for="{{menbers}}" wx:key="menbers{{item.index}}">
+        <view class='faceName'>
+            <image class='face' src='{{item.imgUrl}}'></image>
+            <text class='text'>{{item.name}}</text>
+            <text class='pay'>￥{{activityInfo.payPrice}}</text>
+        </view>
+        <view class='right'>
+            <text class='text'>抵</text>
+            <text class='text'>{{activityInfo.discountPrice}}元</text>
+        </view>
     </view>
-  </view>
 </view>
 <view class='contactInfo'>
-  <view class='left'>
-    <view class='contact'>
-      <image class='house' src='{{house}}'></image>
-      <text class='text'>{{activityInfo.storeName}}</text>
+    <view class='left'>
+        <view class='contact'>
+            <image class='house' src='{{house}}'></image>
+            <text class='text'>{{activityInfo.storeName}}</text>
+        </view>
+        <view class='contact'>
+            <image class='addr' src='{{addr}}'></image>
+            <text class='text'>{{activityInfo.storeAddress}}</text>
+        </view>
     </view>
-    <view class='contact'>
-      <image class='addr' src='{{addr}}'></image>
-      <text class='text'>{{activityInfo.storeAddress}}</text>
+    <view data-tel="17749759443" bindtap='calling' class='right'>
+        <image src='../../../images/funding/phone.png' class='phone'></image>
     </view>
-  </view>
-  <view data-tel="17749759443" bindtap='calling' class='right'>
-    <image src='../../../images/funding/phone.png' class='phone'></image>
-  </view>
 </view>
 <view class='menbers'>
-  <view class='titleBox'>
-    <text class='title'>消费提醒</text>
-  </view>
-  <view class='tips'>
-    <view class='tip'>1. 有效期：{{activityInfo.beginTime}} 至{{activityInfo.endTime}}</view>
-    <view class='tip'>2. 消费者众筹后不消费，众筹金额不退还</view>
-    <view class='tip'>3. 需到店消费</view>
-  </view>
+    <view class='titleBox'>
+        <text class='title'>消费提醒</text>
+    </view>
+    <view class='tips'>
+        <view class='tip'>1. 有效期：{{activityInfo.beginTime}} 至{{activityInfo.endTime}}</view>
+        <view class='tip'>2. 消费者众筹后不消费，众筹金额不退还</view>
+        <view class='tip'>3. 需到店消费</view>
+    </view>
+</view> 
+<view class='footer myPay' wx:if="{{!friendPay}}">
+    <view class='left'>
+        已有
+        <text>{{menbers.length}}</text>人帮忙付款
+    </view>
+    <button open-type='share' class='right first inviteBtn' wx:if="{{menbers.length<activityInfo.maxCount}}">请朋友付款</button>
+    <text data-id='1111' bindtap='payImmediately' class='right'>立即付款</text>
 </view>
-<view class='footer'>
-  <view class='left'>
-    已有
-    <text>2</text>人帮忙付款
-  </view>
-  <!-- <navigator open-type='share' class='right first'>请朋友付款</navigator> -->
-  <navigator url='../friendPay/friendPay?id=111&name=金钱豹子汽车摆件时钟' class='right first'>请朋友付款</navigator>
-  <text data-id='1111' bindtap='payImmediately' class='right'>立即付款</text>
+<view class='footer friendPay' wx:if="{{friendPay}}">
+    <view class='left'>
+        立即为朋友支付
+        <text>{{activityInfo.payPrice}}元</text>，朋友可抵{{activityInfo.discountPrice}}
+    </view>
+    <navigator url='../fpay/fpay?id=111' class='right'>立即付款</navigator>
 </view>

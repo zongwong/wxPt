@@ -1,4 +1,4 @@
-const util = require('../../../utils/util.js');
+const utils = require('../../../utils/util.js');
 import timeUtil from "../../../utils/timeUtil.js";
 const app = getApp();
 Page({
@@ -19,14 +19,15 @@ Page({
     house: '../../../images/funding/house.png',
     addr: '../../../images/funding/addr.png',
     triangleImg: '../../../images/funding/ddd.png',
+    friendPay:false,
     menbers: [
       {
-        "face": "../../../images/funding/face-default.png",
+        "imgUrl": "../../../images/funding/face-default.png",
         "name": "中途小妹",
         "time": "2017/09/23"
       },
       {
-        "face": "../../../images/funding/face-default.png",
+        "imgUrl": "../../../images/funding/face-default.png",
         "name": "中途小di",
         "time": "2017/09/23"
       }
@@ -35,7 +36,7 @@ Page({
   calling: function (event) {
     var dataset = event.currentTarget.dataset;
     var telNum = dataset['tel'];
-    util.phoneCallFn(telNum);
+    utils.phoneCallFn(telNum);
   },
   /**
    * 生命周期函数--监听页面加载
@@ -44,89 +45,62 @@ Page({
     wx.setNavigationBarTitle({
       title: '众筹-'+options.name,
     });
-    const memberInfo = wx.getStorageSync('memberInfo');
-    const url = app.globalData.serverPath+'api/zc/zcActivity/info';
+    if (typeof options.friendPay !== 'undefined' && options.friendPay) {
+      this.setData({
+        friendPay:options.friendPay
+      })
+    }
     const that = this;
-    wx.request({
-      url:url,
-      method:'get',
-      data:{
-        actId:options.id,
-      },
-       header: {
-          'authorization': memberInfo.memberId + '_' + memberInfo.token
-        },
-      success:function(res){
-        console.log(res.data.data)
-        const data= res.data.data;
-        if (data) {
-          that.setData({
-            activityInfo: data,
-            endTime: data.endTime
-          })
-        }
+    utils.ajax('get','api/zc/zcActivity/info',{
+      actId:options.id
+    },function(res){
 
-        setInterval(function () {
-            that.setData({
-              timeCountDown: timeUtil.countDown(that.data.endTime)
-            })
-          }, 1000);
+      if (typeof res.data.data === 'undefined') {
+        console.log('没有众筹数据了');
+        return false;
       }
+
+      let activityInfo = res.data.data;
+      that.setData({
+        activityInfo: activityInfo,
+        endTime: activityInfo.endTime,
+      })
+
+      if (typeof activityInfo.memberList !== 'undefined') {
+        that.setData({
+          menbers: activityInfo.memberList,
+        })
+      }
+
+      setInterval(function () {
+        that.setData({
+          timeCountDown: timeUtil.countDown(that.data.endTime)
+        })
+      }, 1000);
+
     })
-
-
-
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
   onPullDownRefresh: function () {
 
   },
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
   onReachBottom: function () {
 
   },
 
-  /**
-   * 用户点击右上角分享
-   */
   onShareAppMessage: function () {
-
+    return {
+      title: app.globalData.userInfo.nickName+'正在参与"'+this.data.activityInfo.zcGoods.name+'"众筹项目，邀请您为他支持！',
+      path: '/pages/crowdfunding?type=true&userId=',
+      success: function(res) {
+        // 转发成功
+      },
+      fail: function(res) {
+        // 转发失败
+      }
+    }
   },
-
   payImmediately:function(event){
     wx.showModal({
       title: '调起支付接口',

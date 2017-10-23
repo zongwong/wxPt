@@ -1,8 +1,8 @@
 <!--pages/pay/pay.wxml-->
 <view class='common detail'>
   <view class='one'>
-    <text>金钱豹子汽车摆件时钟</text>
-    <text class='price'>￥{{price}}</text>
+    <text>{{goods.name}}</text>
+    <text class='price'>￥{{goods.price}}</text>
   </view>
   <view class='one'>
     <view class='textgroup'>
@@ -23,22 +23,22 @@
   <text>支付方式</text>
 </view>
 <view class='common payway'>
-  <view data-type="wechat" bindtap='checkPay' class='one'>
+  <view data-type="1" bindtap='checkPay' class='one'>
     <view class='textgroup'>
       <image class='wechatIcon' src='{{wechatIcon}}'></image>
       <text>微信支付</text>
     </view>
     <view class='inputgroup'>
-      <image class='checkIcon' src='{{check == "wechat"?checkImg:uncheckedImg}}'></image>
+      <image class='checkIcon' src='{{check == "1"?checkImg:uncheckedImg}}'></image>
     </view>
   </view>
-  <view data-type="huiyuan" bindtap='checkPay' class='one'>
+  <view data-type="2" bindtap='checkPay' class='one'>
     <view class='textgroup'>
       <image class='huiyuanIcon' src='{{huiyuanIcon}}'></image>
       <text>会员支付</text>
     </view>
     <view class='inputgroup'>
-      <image class='checkIcon' src='{{check == "huiyuan"?checkImg:uncheckedImg}}'></image>
+      <image class='checkIcon' src='{{check == "2"?checkImg:uncheckedImg}}'></image>
     </view>
   </view>
 </view>
@@ -49,5 +49,5 @@
   <textarea placeholder='如有其它要求请填写'></textarea>
 </view>
 <view class='footer'>
-  <button bindtap='payComplate' type='warn'>支付</button>
+  <button bindtap='pay' type='warn'>支付</button>
 </view>

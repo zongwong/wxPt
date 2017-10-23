@@ -9,7 +9,7 @@
 	"compileType": "weapp",
 	"libVersion": "1.5.4",
 	"appid": "wx15d6ca4ad6e41cd8",
-	"projectname": "zhongtuDev",
+	"projectname": "wxPt",
 	"condition": {
 		"weapp": {
 			"current": -1,

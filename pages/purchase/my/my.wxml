@@ -1,19 +1,17 @@
-<!--pages/purchase/my/my.wxml-->
-<text></text>
 <view class='tabs'>
-    <text bindtap='changeTab' data-status="0" data-tab="1" class='tab {{flag == 1 ? "active" : ""}}'>全部</text>
-    <text bindtap='changeTab' data-status="1" data-tab="2" class='tab {{flag == 2 ? "active" : ""}}'>待成团</text>
-    <text bindtap='changeTab' data-status="2" data-tab="3" class='tab {{flag == 3 ? "active" : ""}}'>已成团</text>
-    <text bindtap='changeTab' data-status="3" data-tab="4" class='tab {{flag == 4 ? "active" : ""}}'>拼团失败</text>
+    <text bindtap='changeTab' data-status="0" class='tab {{status == 0 ? "active" : ""}}'>全部</text>
+    <text bindtap='changeTab' data-status="1" class='tab {{status == 1 ? "active" : ""}}'>待成团</text>
+    <text bindtap='changeTab' data-status="2" class='tab {{status == 2 ? "active" : ""}}'>已成团</text>
+    <text bindtap='changeTab' data-status="3" class='tab {{status == 3 ? "active" : ""}}'>拼团失败</text>
 </view>
 <view class="container">
-    <scroll-view class="container-body" scroll-y="true" bindscroll="scrollHandle" lower-threshold="50" bindscrolltolower="scrollLoading">
+    <scroll-view class="container-body" style="height: 1300rpx;" scroll-y="true" bindscroll="scrollHandle" lower-threshold="50" bindscrolltolower="scrollLoading">
         <view class="purchase-list">
-            <block wx:for="{{activitylist}}" wx:key="{{item.id}}">
-                <navigator  open-type='redirect' class="purchase-item" url="../pintuan/pintuan?id={{item.actId}}">
-                    <view class="purchase-item-img">
+            <block wx:for="{{activitylist}}" wx:key="{{item.actId}}">
+                <navigator open-type='redirect' class="purchase-item" url="../immediately/immediately?id={{item.actId}}&type=true">
+                    <view class="purchase-item-img" style="background:url(../../../images/default_rect.png) center / cover no-repeat;">
                         <image class='image' src="{{item.actImgUrl}}" mode="aspectFill"></image>
-                        <text class='status'>{{item.status}}</text>
+                        <text class='status'>{{item.statusText}}</text>
                     </view>
                     <view class="purchase-item-text">
                         <view class="purchase-item-title">{{item.actName}}</view>
@@ -38,6 +36,7 @@
                     </view>
                 </navigator>
             </block>
+            <view wx:if="{{!activitylist.length || scrollEnd}}" class="emptyData">^_^没有数据了</view>
         </view>
     </scroll-view>
 </view>

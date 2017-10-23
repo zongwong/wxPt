@@ -1,135 +1,137 @@
-// pages/purchase/purchase.js
-import util from "../../utils/util.js";
+import utils from "../../utils/util.js";
 const app = getApp();
 Page({
-  /**
-   * 页面的初始数据
-   */
-  data: {
-    sortindex: 0,  //排序索引
-    sortid: null,  //排序id
-    sort: [],
-    activitylist: [], //会议室列表列表
-    scrolltop: null, //滚动位置
-    page: 0 , //分页
-    perpage: 5
-  },
-  onLoad: function (options) {
-    this.fetchPurchaseData();
-  },
-  fetchPurchaseData: function () {
-    let that = this;
-    const memberInfo = wx.getStorageSync('memberInfo');
-    this.setData({
-      page: this.data.page + 1
-    })
-    let url = app.globalData.serverPath+'/api/zc/zcActivity/list'
-      wx.request({
-        url: url,
-        method:'get',
-        data:{
-          pageNo:that.data.page,
-          pageSize:that.data.perpage,
-          status:0,
-        },
-        header: {
-          'authorization': memberInfo.memberId + '_' + memberInfo.token
-        },
-        success: function (res) {
-          if(res.data.code==0){
-            let newlist = that.data.activitylist.concat(res.data.data);
-            that.setData({
-              activitylist: newlist
+    data: {
+        sortindex: 0,
+        sortid: null,
+        sort: [],
+        activitylist: [{
+                "id": "1",
+                "isNewRecord": false,
+                "createDate": "2017-10-19 11:34:05",
+                "updateDate": "2017-10-19 14:42:39",
+                "merchantId": "1",
+                "goodsId": "2",
+                "storeId": "3",
+                "name": "众筹活动",
+                "imgUrl": "",
+                "beginTime": "2017-10-09",
+                "endTime": "2017-10-09",
+                "num": 0,
+                "saleNum": 0,
+                "saleRemarks": "消费提示",
+                "status": 1,
+                "statusText":'众筹中',
+                "payPrice": 1,
+                "discountPrice": 50,
+                "maxCount": 3,
+                "storeName": "门店1",
+                "storeAddress": "泉州市丰泽区",
+                "zcGoods": {
+                    "id": "2",
+                    "isNewRecord": false,
+                    "merchantId": "1",
+                    "name": "12321312",
+                    "originalPrice": 500,
+                    "price": 300,
+                    "count": 100,
+                    "videoUrl": "",
+                    "imgUrl": ""
+                }
+            }
+
+        ],
+        scrolltop: null,
+        pageNo: 0,
+        perpage: 5,
+        scrollEnd: false,
+    },
+    onLoad: function(options) {
+        app.toLogin(this.fetchPurchaseData);
+    },
+    fetchPurchaseData: function() {
+        const that = this;
+        that.setData({
+            pageNo: that.data.pageNo + 1
+        })
+        const pageNo = that.data.pageNo;
+
+        const url = 'api/zc/zcActivity/list';
+
+        utils.ajax('get', url, {
+            pageNo: pageNo,
+            pageSize: 10,
+            status: 0
+        }, function(res) {
+            if (typeof res.data.data === 'undefined') {
+                that.setData({
+                    scrollEnd: true
+                })
+                return false;
+            }
+            let list = res.data.data;
+            list.forEach(function(item,index){
+              switch(item.status){
+                  case 1:
+                    item.statusText = '众筹中';
+                    break;
+                  case 2:
+                    item.statusText = '已下单';
+                    break;
+                  case 3:
+                    item.statusText = '已过期';
+                    break;
+              }
             })
-          }else{
-
-          }
-        },
-        fail: function (res) {
-          
+            let newactivitylist = that.data.activitylist.concat(list);
+            that.setData({
+                activitylist: newactivitylist
+            });
+        })
+    },
+    goToTop: function() { //回到顶部
+        this.setData({
+            scrolltop: 0
+        })
+    },
+    scrollLoading: function() { //滚动加载
+        if (!this.data.scrollEnd) {
+            this.fetchPurchaseData();
         }
-      });
+    },
+    scanCode:function(){
+        var that = this;
+        this.setData({
+            pageNo: 0
+        });
+        wx.scanCode({
+            success: (res) => {
+                var userId = res.result;
+                var memberInfo = that.data.memberInfo;
+                memberInfo.userId = userId;
+                that.setData({
+                    memberInfo: memberInfo
+                });
 
-  },
-  setSortBy: function (e) { //选择排序方式
-    const d = this.data;
-    const dataset = e.currentTarget.dataset;
-    this.setData({
-      sortindex: dataset.sortindex,
-      sortid: dataset.sortid
-    })
-    console.log('排序方式id：' + this.data.sortid);
-  },
-  setStatusClass: function (e) { //设置状态颜色
-    console.log(e);
-  },
-  scrollHandle: function (e) { //滚动事件
-    this.setData({
-      scrolltop: e.detail.scrollTop
-    })
-  },
-  goToTop: function () { //回到顶部
-    this.setData({
-      scrolltop: 0
-    })
-  },
-  scrollLoading: function () { //滚动加载
-    this.fetchPurchaseData();
-  },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
+                this.fetchPurchaseData();
+            }
+        })
+    },
+    onPullDownRefresh: function() {
+        this.setData({
+            page: 0,
+            activitylist: []
+        })
+        this.fetchPurchaseData();
+        this.fetchSortData();
+        setTimeout(() => {
+            wx.stopPullDownRefresh()
+        }, 1000)
+    },
+    onReachBottom: function() {
 
-  },
+    },
+    onShareAppMessage: function() {
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-    this.setData({
-      page: 0,
-      activitylist: []
-    })
-    this.fetchPurchaseData();
-    this.fetchSortData();
-    setTimeout(() => {
-      wx.stopPullDownRefresh()
-    }, 1000)
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
+    }
 })

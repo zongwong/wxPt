@@ -43,3 +43,6 @@ page {
   margin-top: 8rpx;
   font-size: 36rpx;
 }
+.container-body{
+  margin-top:2px;
+}

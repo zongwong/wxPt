@@ -1,48 +1,42 @@
 <!--pages/purchase/my/my.wxml-->
 <view class='tabs'>
-  <text bindtap='changeTab' data-count="3" data-tab="1" class='tab {{flag == 1 ? "active" : ""}}'>全部</text>
-  <text bindtap='changeTab' data-count="2" data-tab="2" class='tab {{flag == 2 ? "active" : ""}}'>众筹中</text>
-  <text bindtap='changeTab' data-count="1" data-tab="3" class='tab {{flag == 3 ? "active" : ""}}'>已下单</text>
-  <text bindtap='changeTab' data-count="0" data-tab="4" class='tab {{flag == 4 ? "active" : ""}}'>已过期</text>
+  <text bindtap='changeTab' data-status="0" class='tab {{status == 0 ? "active" : ""}}'>全部</text>
+  <text bindtap='changeTab' data-status="1" class='tab {{status == 1 ? "active" : ""}}'>众筹中</text>
+  <text bindtap='changeTab' data-status="2" class='tab {{status == 2 ? "active" : ""}}'>已下单</text>
+  <text bindtap='changeTab' data-status="3" class='tab {{status == 3 ? "active" : ""}}'>已过期</text>
 </view>
 
 <view class="container">
-  <scroll-view class="container-body" scroll-y="true" bindscroll="scrollHandle" lower-threshold="50" bindscrolltolower="scrollLoading">
+  <scroll-view class="container-body" scroll-y="true" bindscroll="scrollHandle" lower-threshold="50" bindscrolltolower="scrollLoading" style="height: 1300rpx;">
     <view class="purchase-list">
-      <navigator open-type='redirect' class="purchase-item" wx:for="{{activitylist}}" wx:key="{{item.id}}" url="../friendPay/friendPay?id={{item.id}}&name={{item.name}}">
-        <view class="purchase-item-img">
-          <image class='image' src="{{item.imgurl}}" mode="aspectFill"></image>
-          <!-- <text class='status'>{{item.status}}</text> -->
-        </view>
-        <view class="purchase-item-text">
-          <view class="purchase-item-title">{{item.desc}}</view>
-          <view class="purchase-item-info btn-group">
-            <view class='left'>
-              再邀请<text class="icon-price">{{item.count}}</text>人购买即可享受优惠
-            </view>
-            <view class='right'>
-              <button type='warn' class='btn-purchase'>邀请好友{{item.char_gt}}</button>
-            </view>
+      <block wx:for="{{activitylist}}" wx:key="{{item.actId}}">
+        <navigator open-type='redirect' class="purchase-item" url="../detail/detail?id={{item.actId}}">
+          <view class="purchase-item-img" style="background:url(../../../images/default_rect.png) center / cover no-repeat;">
+            <image class='image' src="{{item.imgurl}}" mode="aspectFill"></image>
+            <text class='status'>{{item.statusText}}</text>
           </view>
-        </view>
-      </navigator>
-      <navigator open-type='redirect' class="purchase-item" url="../takeorder/takeorder?id={{donePurchase.id}}">
-        <view class="purchase-item-img">
-          <image class='image' src="{{donePurchase.imgurl}}" mode="aspectFill"></image>
-          <!-- <text class='status'>{{donePurchase.status}}</text> -->
-        </view>
-        <view class="purchase-item-text">
-          <view class="purchase-item-title">{{donePurchase.name}}</view>
-          <view class="purchase-item-info btn-group">
-            <view class='left'>
-              团购码：<text class="icon-code">{{donePurchase.pCode}}</text>
+          <view class="purchase-item-text">
+            <view class="purchase-item-title">{{item.actName}}</view>
+            <view wx:if="{{item.status == 1}}" class="purchase-item-info btn-group">
+              <view class='left'>
+                再邀请<text class="icon-price">{{item.maxCount - item.actualCount }}</text>人购买即可享受优惠
+              </view>
+              <view class='right'>
+                <button type='warn' class='btn-purchase'>邀请好友 ></button>
+              </view>
             </view>
-            <view class='right'>
-              <button class='btn-check-code'>查看二维码</button>
-            </view>
+            <view wx:if="{{item.status == 2}}" class="purchase-item-info btn-group">
+                <view class='left'>
+                  团购码：<text class="icon-code">{{item.redeemCode}}</text>
+                </view>
+                <view class='right'>
+                  <button class='btn-check-code'>查看二维码</button>
+                </view>
+              </view>
           </view>
-        </view>
-      </navigator>
+        </navigator>
+      </block>
+      <view wx:if="{{!activitylist.length || scrollEnd}}" class="emptyData">^_^没有数据了</view>
     </view>
   </scroll-view>
 </view>

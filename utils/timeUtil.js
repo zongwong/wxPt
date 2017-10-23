@@ -2,7 +2,7 @@
 function countDown(time_val) {
   var www_qsyz_net = /^[\d]{4}-[\d]{1,2}-[\d]{1,2}( [\d]{1,2}:[\d]{1,2}(:[\d]{1,2})?)?$/ig, str = '', s;
   if (!time_val.match(www_qsyz_net)) {
-    alert('参数格式为2012-01-01[ 01:01[:01]].\r其中[]内的内容可省略');
+    // alert('参数格式为2012-01-01[ 01:01[:01]].\r其中[]内的内容可省略');
     return false;
   }
   var sec = (new Date(time_val.replace(/-/ig, '/')).getTime() - new Date().getTime()) / 1000;

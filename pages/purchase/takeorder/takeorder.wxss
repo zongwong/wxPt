@@ -217,3 +217,10 @@ page {
     height: 178rpx;
   }
 }
+
+.sharebtn{
+  border-radius:0!important;
+  line-height: 90rpx!important;
+  vertical-align: top;
+  font-size: 28rpx;
+}

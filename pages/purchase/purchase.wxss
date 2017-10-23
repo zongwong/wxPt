@@ -79,6 +79,3 @@ page {
   right: 10rpx;
   background-color: rgba(224, 46, 36, 0.5) !important;
 }
-.mycenter{
-  bottom: 80rpx;
-}

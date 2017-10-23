@@ -1,27 +1,32 @@
-// pages/pay/pay.js
+const utils = require('../../../utils/util.js');
+const app = getApp();
 Page({
   data: {
+    actid:'',
     counts: 1,
-    price: 50,
-    total: 50,
-    check: 'wechat',
+    goods: {price:'',name:''},
+    total: '',
+    check: '1',
     checkImg: '../../../images/pintuan/arrow.png',
     uncheckedImg:'../../../images/pintuan/blank.png',
     wechatIcon: '../../../images/pintuan/wechat.png',
-    huiyuanIcon: '../../../images/pintuan/huiyuan.png'
+    huiyuanIcon: '../../../images/pintuan/huiyuan.png',
+    wxPayment:{},
   },
   changeCount: function (event) {
     var dataset = event.currentTarget.dataset;
     var optiontype = dataset['type'];
     var currentCount = this.data.counts;
-    if (optiontype == 'minus' && currentCount != 0) {
+    if (optiontype == 'minus' && currentCount >= 2) {
       currentCount--;
-    } else {
+    } else if (optiontype == 'plus'){
       currentCount++;
+    }else{
+      currentCount = 1;
     }
     this.setData({
       counts: currentCount,
-      total: this.data.price * currentCount
+      total: this.data.goods.price * currentCount
     })
   },
   checkPay: function (event) {
@@ -31,64 +36,61 @@ Page({
       check: paytype
     })
   },
-  payComplate: function(event){
-    wx.navigateTo({
-      url: '../paycomplete/paycomplate',
+  wxPayment: function(wxPayment){
+    let that = this;
+    wx.requestPayment({
+      timeStamp:new Data().getTime(),
+      nonceStr:wxPayment.nonceStr,
+      package:'prepay_id='+that.wxPayment.package,
+      signType:'MD5',
+      paySign:wxPayment.paySign,
+      success:function(res){
+        wx.navigateTo({
+          url: '/pages/purchase/paycomplete/paycomplate?type=success'
+        })
+      },
+      fail:function(){
+        wx.navigateTo({
+          url: '/pages/purchase/paycomplete/paycomplate?type=fail'
+        })
+      },
+      complete:function(){
+
+      },
+    });
+  },
+  onLoad: function (options) {
+    this.setData({
+      actid:options.actid,
+      total:options.price,
+      goods:{
+        name:options.name,
+        price:options.price
+      }
     })
   },
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
+  pay:function(){
+        wx.navigateTo({
+          url: '/pages/purchase/paycomplete/paycomplate?type=success'
+        })
+        return false;
+    let that = this;
+    utils.ajax('post','api/pt/ptGroupOrder/pay',{
+      type:this.data.check,
+      num:this.data.counts,
+      actId:this.data.actid,
+      userId:'',
+      openid:app.globalData.openid,
+    },function(res){
+      console.log(res.data)
 
+      that.setData({
+        wxPayment:{}
+      })
+
+      that.wxPayment()
+
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
+  wx
 })

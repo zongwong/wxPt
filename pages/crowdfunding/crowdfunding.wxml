@@ -1,26 +1,30 @@
-<!--pages/purchase/purchase.wxml-->
 <view class="container">
-  <scroll-view class="container-body" scroll-y="true" scroll-top="{{scrolltop}}" bindscroll="scrollHandle" lower-threshold="50" bindscrolltolower="scrollLoading">
-    <view class="purchase-list">
-      <navigator class="purchase-item" wx:for="{{activitylist}}" wx:key="{{item.id}}" url="./detail/detail?id={{item.id}}&name={{item.name}}">
-        <view class="purchase-item-img">
-          <image class='image' src="{{item.imgurl}}" mode="aspectFill"></image>
-          <text class='status'>{{item.status}}</text>
+    <scroll-view class="container-body" scroll-y="true" scroll-top="{{scrolltop}}"  bindscrolltolower="scrollLoading" style="height: 1300rpx;">
+        <view class="purchase-list">
+            <block wx:for="{{activitylist}}" wx:key="{{item.id}}">
+                <navigator class="purchase-item" url="./detail/detail?id={{item.id}}&name={{item.name}}">
+                    <view class="purchase-item-img" style="background:url(../../images/default_rect.png) center / cover no-repeat;">
+                        <image class='image' src="{{item.imgUrl}}" mode="aspectFill"></image>
+                        <text class='status'>{{item.statusText}}</text>
+                    </view>
+                    <view class="purchase-item-text">
+                        <view class="purchase-item-title">{{item.zcGoods.name}}</view>
+                        <view class="purchase-item-info btn-group">
+                            <view class='left'>
+                                <text class="icon-price">￥{{item.zcGoods.price}}</text>
+                                <text class="icon-count">已售{{item.saleNum}}</text>
+                            </view>
+                            <view class='right'>
+                                <button type='warn' class='{{item.disabled?"btn-purchase-disabled":"btn-purchase"}}'>马上众筹 ></button>
+                            </view>
+                        </view>
+                    </view>
+                </navigator>
+            </block>
         </view>
-        <view class="purchase-item-text">
-          <view class="purchase-item-title">{{item.desc}}</view>
-          <view class="purchase-item-info btn-group">
-            <view class='left'>
-              <text class="icon-price">{{item.price}}</text>
-              <text class="icon-count">{{item.saledCount}}</text>
-            </view>
-            <view class='right'>
-              <button type='warn' class='{{item.disabled?"btn-purchase-disabled":"btn-purchase"}}'>马上众筹 {{item.char_gt}}</button>
-            </view>
-          </view>
-        </view>
-      </navigator>
-    </view>
-    <view class="gototop {{scrolltop>200?'active':''}}" bindtap="goToTop"></view>
-  </scroll-view>
+        <view class="gototop {{scrolltop>200?'active':''}}" bindtap="goToTop"></view>
+        <view wx:if="{{!activitylist.length || scrollEnd}}" class="emptyData">^_^没有数据了</view>
+    </scroll-view>
+    <button bindtap='scanCode' class='aside_item aside_scan'></button>
+    <navigator class='aside_item aside_center' url="./center/center"></navigator>
 </view>

@@ -12,22 +12,16 @@
 </view>
 
 <view class='bottom'>
-  <view class='item'>
+
+  <navigator class='item' url="/pages/purchase/my/my">
     <view class='mid'>
       <image class='img' mode='aspectFit' src='../../../images/pintuan/my.png'></image>
       <text>我的拼团</text>
     </view>
     <view class='mid'>
-      <text>2</text>
+      <text></text>
       <image class='img' mode='aspectFit' src='../../../images/funding/r.png'></image>
     </view>
-  </view>
-  <view bindtap='goToMyFunding' class='item'>
-    <view class='mid'>
-      
-    </view>
-    <view class='mid'>
-      <image class='img' mode='aspectFit' src='../../../images/funding/r.png'></image>
-    </view>
-  </view>
+  </navigator>
+
 </view>

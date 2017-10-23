@@ -29,6 +29,20 @@
   line-height: 90rpx;
 }
 
+.shuoming .tip1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.shuoming .tip1 .partake{
+  color: #ff7900;
+  border: 2rpx solid #ff7900;
+  padding: 10rpx 20rpx;
+  border-radius: 10rpx;
+  line-height: 30rpx;
+}
+
 .shuoming .tip:first-child {
   border-bottom: 2rpx solid #dbdbdb;
 }
@@ -49,7 +63,7 @@
   border-radius: 5rpx;
 }
 
-.footer .left {
+.myPay .left {
   width: 33%;
   display: inline-block;
   font-size: 28rpx;
@@ -58,7 +72,7 @@
   text-align:center;
 }
 
-.footer .right {
+.myPay.footer .right {
   width: 33%;
   display: inline-block;
   background-color: #ff7900;
@@ -66,9 +80,18 @@
   text-align: center;
 }
 .footer .right.first {
-  background-color: #B0B0B0;
+  background-color: #b0b0b0;
 }
 
 .footer .left wx-text{
   color: #ff7900;
+}
+.friendPay.footer .right {
+  background-color: #ff7900;
+}
+.inviteBtn{
+  font-size:28rpx;
+  vertical-align: top;
+  border-radius: 0!important;
+  line-height: 90rpx;
 }
