@@ -117,6 +117,17 @@ Page({
             }
         })
     },
+    startzc:function(event){
+        const actId = event.detial.dataset['actId']||'';
+        utils.ajax('POST','api/zc/zcOrder/save',{
+          actId:actId,
+          userId:app.globalData.memberId,
+        },function(res){
+          if (res.data.code==0) {
+            console.log(res);
+          }
+        })
+      },
     onPullDownRefresh: function() {
         this.setData({
             page: 0,

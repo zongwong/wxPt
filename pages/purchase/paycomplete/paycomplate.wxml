@@ -33,10 +33,10 @@
         该团已满，请重新发起
     </view>
     <view class='third'>
-        <button class='warn' type='warn'>发起拼团</button>
+        <button class='warn' type='warn' bindtap = 'rePt'>发起拼团</button>
     </view>
 </view>
-<view class='message'>
+<view class='message' wx:if="{{0}}">
     <view class='detail'>
         <view class=''>
             <view class='title'>拼团成功提醒</view>

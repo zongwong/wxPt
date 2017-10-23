@@ -15,7 +15,7 @@
                                 <text class="icon-count">已售{{item.saleNum}}</text>
                             </view>
                             <view class='right'>
-                                <button type='warn' class='{{item.disabled?"btn-purchase-disabled":"btn-purchase"}}'>马上众筹 ></button>
+                                <button type='warn' class='{{item.disabled?"btn-purchase-disabled":"btn-purchase"}}' bindtap="startzc" data-actid="{{item.id}}">马上众筹 ></button>
                             </view>
                         </view>
                     </view>

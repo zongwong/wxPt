@@ -12,18 +12,10 @@ Page({
         scrollEnd: false,
     },
     onLoad: function(options) {
-        app.userInfoReadyCallback = res => {
-            console.log('获取用户名成功回调')
-        }
-        app.toLogin(this.fetchPurchaseData);
         console.log('onload了')
+        app.toLogin(this.fetchPurchaseData);
+        this.fetchPurchaseData()
 
-        if (!app.globalData.token || !app.globalData.userInfo ) {
-        console.log('p,token'+app.globalData.token)
-          // app.userInfoReadyCallback = res => {
-          //   app.toLogin(this.fetchPurchaseData);
-          // }
-        }
     },
     scanCode: function(event) {
         var that = this;

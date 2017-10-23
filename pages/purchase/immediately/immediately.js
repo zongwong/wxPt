@@ -49,7 +49,7 @@ Page({
         var url = 'api/pt/ptActivities/info';
         utils.ajax('get', url, {
             actId: options.id,
-            inviteId: options.options
+            // inviteId: options.options
         }, function(res) {
             var data = res.data.data;
             console.log(data)

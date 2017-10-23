@@ -61,8 +61,10 @@ App({
                 'content-type': 'application/x-www-form-urlencoded'
             },
             success: function(res) {
-                that.globalData.openid = res.data.openid;
-                that.getMemberLogin(res.data.openid, userInfo,fn);
+                console.log(res.data.data)
+                that.globalData.openid = res.data.data.openid;
+                // console.log(that.globalData.openid,res.data.openid)
+                that.getMemberLogin(res.data.data.openid, userInfo,fn);
             }
         })
 
@@ -97,6 +99,7 @@ App({
                 if (res.data.code == '0') {
                     let data = res.data.data
                     that.globalData.token = data.memberId + '_' + data.token;
+                    that.globalData.memberId = data.memberId;
                     let memberInfo = {};
                     memberInfo.memberId = data.memberId;
                     memberInfo.userId = data.memberId;

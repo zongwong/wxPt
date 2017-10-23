@@ -38,12 +38,12 @@ Page({
   },
   wxPayment: function(wxPayment){
     let that = this;
-    wx.requestPayment({
-      timeStamp:new Data().getTime(),
+    let data ={
+      timeStamp:wxPayment.timeStamp.toString(),
       nonceStr:wxPayment.nonceStr,
-      package:'prepay_id='+that.wxPayment.package,
+      package:wxPayment.wxPackage,
       signType:'MD5',
-      paySign:wxPayment.paySign,
+      paySign:wxPayment.sign,
       success:function(res){
         wx.navigateTo({
           url: '/pages/purchase/paycomplete/paycomplate?type=success'
@@ -57,7 +57,9 @@ Page({
       complete:function(){
 
       },
-    });
+    }
+    console.log(data);
+    wx.requestPayment(data);
   },
   onLoad: function (options) {
     this.setData({
@@ -70,27 +72,18 @@ Page({
     })
   },
   pay:function(){
-        wx.navigateTo({
-          url: '/pages/purchase/paycomplete/paycomplate?type=success'
-        })
-        return false;
     let that = this;
     utils.ajax('post','api/pt/ptGroupOrder/pay',{
       type:this.data.check,
       num:this.data.counts,
       actId:this.data.actid,
-      userId:'',
+      userId:app.globalData.memberId,
       openid:app.globalData.openid,
     },function(res){
-      console.log(res.data)
-
-      that.setData({
-        wxPayment:{}
-      })
-
-      that.wxPayment()
-
+      if (res.data.code == 0) {
+        let data = res.data.data;
+        that.wxPayment(data)
+      }
     })
   },
-  wx
 })

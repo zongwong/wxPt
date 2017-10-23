@@ -38,9 +38,6 @@ Page({
     var telNum = dataset['tel'];
     utils.phoneCallFn(telNum);
   },
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
     wx.setNavigationBarTitle({
       title: '众筹-'+options.name,
@@ -88,7 +85,6 @@ Page({
   onReachBottom: function () {
 
   },
-
   onShareAppMessage: function () {
     return {
       title: app.globalData.userInfo.nickName+'正在参与"'+this.data.activityInfo.zcGoods.name+'"众筹项目，邀请您为他支持！',
@@ -102,16 +98,17 @@ Page({
     }
   },
   payImmediately:function(event){
-    wx.showModal({
-      title: '调起支付接口',
-      content: '支付完成',
-      showCancel: false,//去掉取消按钮
-      success: function (res) {
-        if (res.confirm) {
-          wx.redirectTo({
-            url: '../pay/pay',
-          })
-        }
+    let that = this;
+    utils.ajax('POST','api/zc/zcOrder/pay',{
+      orderId:1,
+      type:1,
+      isHelp:1,
+      userId:app.globalData.memberId,
+      openid:app.globalData.openid,
+    },function(res){
+      if (res.data.code == 0) {
+        let data = res.data.data;
+        that.wxPayment(data)
       }
     })
   }
