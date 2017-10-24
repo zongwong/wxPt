@@ -1,6 +1,5 @@
 {
-  "backgroundTextStyle": "light",
   "navigationBarBackgroundColor": "#FF7900",
   "navigationBarTitleText": "众筹列表",
-  "navigationBarTextStyle": "white"
+  "enablePullDownRefresh": true
 }

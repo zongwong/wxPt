@@ -8,7 +8,9 @@
   box-sizing: border-box;
   background-color: #F2F2F2;
 } 
-
+.container-body{
+  width:100%;
+}
 /*******************弹窗**********************/   
 /*mask*/ 
 .drawer_screen { 

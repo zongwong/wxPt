@@ -10,17 +10,16 @@ Page({
         pageNo: 0,
         memberInfo: null,
         scrollEnd: false,
+        isajaxLoad: false,
     },
     onLoad: function(options) {
-        console.log('onload了')
-        app.toLogin(this.fetchPurchaseData);
-        this.fetchPurchaseData()
-
+        app.tokenCheck(this.fetchPurchaseData);
     },
     scanCode: function(event) {
         var that = this;
         this.setData({
-            pageNo: 0
+            pageNo: 0,
+            scrollEnd: false,
         });
         wx.scanCode({
             success: (res) => {
@@ -31,47 +30,56 @@ Page({
                     memberInfo: memberInfo
                 });
 
-                this.fetchPurchaseData();
+                this.fetchPurchaseData(userId);
             }
         })
     },
-    fetchPurchaseData: function() {
-        var that = this;
+    fetchPurchaseData: function(userId = '') {
+        if (this.data.isajaxLoad) {
+            return false;
+        }
+
+        let that = this;
         that.setData({
+            isajaxLoad: true,
             pageNo: that.data.pageNo + 1
         })
         const pageNo = that.data.pageNo;
 
-        var url = 'api/pt/ptActivities/list';
+        const url = 'api/pt/ptActivities/list';
 
         utils.ajax('GET', url, {
             pageNo: pageNo,
             pageSize: 10,
-            status: 0
+            status: 0,
+            userId: userId
         }, function(res) {
+            that.setData({
+                isajaxLoad: false,
+            })
             if (typeof res.data.data === 'undefined') {
                 that.setData({
-                    scrollEnd: true
+                    scrollEnd: true,
                 })
                 return false;
             }
             let list = res.data.data;
 
-            list.forEach(function(item,index){
-              switch(item.status){
-                  case 1:
-                    item.statusText = '拼团中';
-                    break;
-                  case 2:
-                    item.statusText = '已过期';
-                    break;
-                  case 3:
-                    item.statusText = '已过期';
-                    break;
-                  default:
-                    item.statusText = '已过期';
-                    break;
-              }
+            list.forEach(function(item, index) {
+                switch (item.status) {
+                    case 1:
+                        item.statusText = '拼团中';
+                        break;
+                    case 2:
+                        item.statusText = '已过期';
+                        break;
+                    case 3:
+                        item.statusText = '已过期';
+                        break;
+                    default:
+                        item.statusText = '已过期';
+                        break;
+                }
             })
             let newactivitylist = that.data.activitylist.concat(list);
             that.setData({
@@ -95,14 +103,16 @@ Page({
             pageNo: 0,
             activitylist: []
         })
-        this.fetchPurchaseData(this.data.memberInfo);
-        this.fetchSortData();
+        this.fetchPurchaseData();
+
         setTimeout(() => {
             wx.stopPullDownRefresh()
-        }, 1000)
+        }, 500)
     },
     onReachBottom: function() {
-
+        if (!this.data.scrollEnd) {
+            this.fetchPurchaseData();
+        }
     },
     onShareAppMessage: function() {
 

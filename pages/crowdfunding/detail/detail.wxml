@@ -82,9 +82,10 @@
         已有
         <text>{{menbers.length}}</text>人帮忙付款
     </view>
-    <button open-type='share' class='right first inviteBtn' wx:if="{{menbers.length<activityInfo.maxCount}}">请朋友付款</button>
+    <button open-type='share' class='right first inviteBtn'>请朋友付款</button>
     <text data-id='1111' bindtap='payImmediately' class='right'>立即付款</text>
 </view>
+
 <view class='footer friendPay' wx:if="{{friendPay}}">
     <view class='left'>
         立即为朋友支付

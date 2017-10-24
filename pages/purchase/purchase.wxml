@@ -1,5 +1,6 @@
 <view class="container">
-    <scroll-view class="container-body" scroll-y="true" scroll-top="{{scrolltop}}" bindscrolltolower="scrollLoading" style="height: 1300rpx;">
+    <!-- <scroll-view class="container-body" scroll-y="true" scroll-top="{{scrolltop}}" bindscrolltolower="scrollLoading" style="height: 1300rpx;"> -->
+    <view class="container-body">
         <view class="purchase-list">
             <block wx:for="{{activitylist}}" wx:key="{{item.id}}">
                 <navigator class="purchase-item" url="./immediately/immediately?id={{item.id}}">
@@ -22,9 +23,10 @@
                 </navigator>
             </block>
         </view>
-        <view class="gototop {{scrolltop>200?'active':''}}" bindtap="goToTop"></view>
+        <!-- <view class="gototop {{scrolltop>200?'active':''}}" bindtap="goToTop"></view> -->
         <view wx:if="{{!activitylist.length || scrollEnd}}" class="emptyData">^_^没有数据了</view>
-    </scroll-view>
+    </view>
+    <!-- </scroll-view> -->
     <button bindtap='scanCode' class='aside_item aside_scan'></button>
     <navigator class='aside_item aside_center' url="./center/center"></navigator>
 </view>

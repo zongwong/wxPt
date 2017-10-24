@@ -13,4 +13,5 @@
     </view>
     <view class="gototop {{scrolltop>200?'active':''}}" bindtap="goToTop"></view>
   </scroll-view>
+  <navigator class='aside_item aside_center' url="./mine/mine"></navigator>
 </view>

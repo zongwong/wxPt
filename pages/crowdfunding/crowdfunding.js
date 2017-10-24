@@ -5,64 +5,36 @@ Page({
         sortindex: 0,
         sortid: null,
         sort: [],
-        activitylist: [{
-                "id": "1",
-                "isNewRecord": false,
-                "createDate": "2017-10-19 11:34:05",
-                "updateDate": "2017-10-19 14:42:39",
-                "merchantId": "1",
-                "goodsId": "2",
-                "storeId": "3",
-                "name": "众筹活动",
-                "imgUrl": "",
-                "beginTime": "2017-10-09",
-                "endTime": "2017-10-09",
-                "num": 0,
-                "saleNum": 0,
-                "saleRemarks": "消费提示",
-                "status": 1,
-                "statusText":'众筹中',
-                "payPrice": 1,
-                "discountPrice": 50,
-                "maxCount": 3,
-                "storeName": "门店1",
-                "storeAddress": "泉州市丰泽区",
-                "zcGoods": {
-                    "id": "2",
-                    "isNewRecord": false,
-                    "merchantId": "1",
-                    "name": "12321312",
-                    "originalPrice": 500,
-                    "price": 300,
-                    "count": 100,
-                    "videoUrl": "",
-                    "imgUrl": ""
-                }
-            }
-
-        ],
+        activitylist: [],
         scrolltop: null,
         pageNo: 0,
         perpage: 5,
         scrollEnd: false,
+        isajaxLoad: false,
     },
     onLoad: function(options) {
-        app.toLogin(this.fetchPurchaseData);
+        app.tokenCheck(this.fetchPurchaseData);
     },
-    fetchPurchaseData: function() {
+    fetchPurchaseData: function(userId='') {
+        if (this.data.isajaxLoad) {
+            return false;
+        }
         const that = this;
         that.setData({
+            isajaxLoad: true,
             pageNo: that.data.pageNo + 1
         })
         const pageNo = that.data.pageNo;
 
-        const url = 'api/zc/zcActivity/list';
-
-        utils.ajax('get', url, {
+        utils.ajax('get', 'api/zc/zcActivity/list', {
             pageNo: pageNo,
             pageSize: 10,
-            status: 0
+            status: 0,
+            userId: userId
         }, function(res) {
+            that.setData({
+                isajaxLoad: false,
+            })
             if (typeof res.data.data === 'undefined') {
                 that.setData({
                     scrollEnd: true
@@ -70,20 +42,20 @@ Page({
                 return false;
             }
             let list = res.data.data;
-            list.forEach(function(item,index){
-              switch(item.status){
-                  case 1:
-                    item.statusText = '众筹中';
-                    break;
-                  case 2:
-                    item.statusText = '已下单';
-                    break;
-                  case 3:
-                    item.statusText = '已过期';
-                    break;
-              }
+            list.forEach(function(item, index) {
+                switch (item.status) {
+                    case 1:
+                        item.statusText = '众筹中';
+                        break;
+                    case 2:
+                        item.statusText = '已下单';
+                        break;
+                    case 3:
+                        item.statusText = '已过期';
+                        break;
+                }
             })
-            let newactivitylist = that.data.activitylist.concat(list);
+            let newactivitylist = that.data.activitylist.concat(list).concat(list);
             that.setData({
                 activitylist: newactivitylist
             });
@@ -99,7 +71,7 @@ Page({
             this.fetchPurchaseData();
         }
     },
-    scanCode:function(){
+    scanCode: function() {
         var that = this;
         this.setData({
             pageNo: 0
@@ -113,34 +85,35 @@ Page({
                     memberInfo: memberInfo
                 });
 
-                this.fetchPurchaseData();
+                this.fetchPurchaseData(userId);
             }
         })
     },
-    startzc:function(event){
-        const actId = event.detial.dataset['actId']||'';
-        utils.ajax('POST','api/zc/zcOrder/save',{
-          actId:actId,
-          userId:app.globalData.memberId,
-        },function(res){
-          if (res.data.code==0) {
-            console.log(res);
-          }
+    startzc: function(event) {
+        const actId = event.detial.dataset['actId'] || '';
+        utils.ajax('POST', 'api/zc/zcOrder/save', {
+            actId: actId,
+            userId: app.globalData.memberId,
+        }, function(res) {
+            if (res.data.code == 0) {
+                console.log(res);
+            }
         })
-      },
+    },
     onPullDownRefresh: function() {
         this.setData({
             page: 0,
             activitylist: []
         })
         this.fetchPurchaseData();
-        this.fetchSortData();
         setTimeout(() => {
             wx.stopPullDownRefresh()
-        }, 1000)
+        }, 500)
     },
     onReachBottom: function() {
-
+        if (!this.data.scrollEnd) {
+            this.fetchPurchaseData();
+        }
     },
     onShareAppMessage: function() {
 

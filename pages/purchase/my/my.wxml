@@ -5,10 +5,10 @@
     <text bindtap='changeTab' data-status="3" class='tab {{status == 3 ? "active" : ""}}'>拼团失败</text>
 </view>
 <view class="container">
-    <scroll-view class="container-body" style="height: 1300rpx;" scroll-y="true" bindscroll="scrollHandle" lower-threshold="50" bindscrolltolower="scrollLoading">
+    <scroll-view class="container-body" style="height: 1300rpx;" scroll-y="true" bindscrolltolower="scrollLoading">
         <view class="purchase-list">
             <block wx:for="{{activitylist}}" wx:key="{{item.actId}}">
-                <navigator open-type='redirect' class="purchase-item" url="../immediately/immediately?id={{item.actId}}&type=true">
+                <navigator open-type='redirect' class="purchase-item" url="../immediately/immediately?id={{item.actId}}&type=true&inviteId={{item.inviteId}}">
                     <view class="purchase-item-img" style="background:url(../../../images/default_rect.png) center / cover no-repeat;">
                         <image class='image' src="{{item.actImgUrl}}" mode="aspectFill"></image>
                         <text class='status'>{{item.statusText}}</text>

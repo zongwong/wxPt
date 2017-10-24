@@ -1,6 +1,7 @@
 let app = getApp();
 
 const formatTime = date => {
+    date = new Date(date);
     const year = date.getFullYear()
     const month = date.getMonth() + 1
     const day = date.getDate()
@@ -78,6 +79,7 @@ function ajax(type = 'get', url = "", data = {}, success, fail) {
         }
     })
 }
+
 module.exports = {
     ajax: ajax,
     formatTime: formatTime,

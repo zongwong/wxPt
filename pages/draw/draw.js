@@ -1,42 +1,98 @@
-import util from "../../utils/util.js";
+import utils from "../../utils/util.js";
 Page({
   data: {
     sortindex: 0,
     sortid: null,
     sort: [],
-    activitylist: [],
+    activitylist:[],
     scrolltop: null,
-    page: 0
+    pageNo: 0,
+    isajaxLoad:false,
+    scrollEnd:false,
   },
   onLoad: function (options) {
     this.fetchPurchaseData();
   },
   fetchPurchaseData: function () {
-    const perpage = 10;
-    this.setData({
-      page: this.data.page + 1
-    })
-    const page = this.data.page;
-    const newlist = [];
-    for (var i = (page - 1) * perpage; i < page * perpage; i++) {
-      newlist.push({
-        "id": i + 1,
-        "title": "VIP客户专享*幸运大转盘抽终身保养卡",
-        "price": Math.floor(Math.random() * 10) + "元博",
-        "imgurl": "http://bryanly.oss-cn-shenzhen.aliyuncs.com/draw.png"
-      })
+
+    if (this.data.isajaxLoad) {
+        return false;
     }
-    this.setData({
-      activitylist: this.data.activitylist.concat(newlist)
+    let that = this;
+    that.setData({
+        isajaxLoad: true,
+        pageNo: that.data.pageNo + 1
     })
+    const pageNo = that.data.pageNo;
+
+    utils.ajax('GET', 'api/cj/cjActivity/list', {
+        pageNo: pageNo,
+        pageSize: 5,
+        status: 0,
+    }, function(res) {
+        that.setData({
+            isajaxLoad: false,
+        })
+        if (typeof res.data.data === 'undefined') {
+            that.setData({
+                scrollEnd: true,
+            })
+            return false;
+        }
+        let list = res.data.data;
+
+        // list.forEach(function(item, index) {
+        //     switch (item.status) {
+        //         case 1:
+        //             item.statusText = '拼团中';
+        //             break;
+        //         case 2:
+        //             item.statusText = '已过期';
+        //             break;
+        //         case 3:
+        //             item.statusText = '已过期';
+        //             break;
+        //         default:
+        //             item.statusText = '已过期';
+        //             break;
+        //     }
+        // })
+        let newactivitylist = that.data.activitylist.concat(list);
+        that.setData({
+            activitylist: newactivitylist
+        });
+    })
+
+
+
+
+    // const perpage = 10;
+    // this.setData({
+    //   pageNo: this.data.pageNo + 1
+    // })
+    // const pageNo = this.data.pageNo;
+    // const newlist = [];
+    // for (var i = (pageNo - 1) * perpage; i < pageNo * perpage; i++) {
+    //   newlist.push({
+    //     "id": i + 1,
+    //     "title": "VIP客户专享*幸运大转盘抽终身保养卡",
+    //     "price": Math.floor(Math.random() * 10) + "元博",
+    //     "imgurl": "http://bryanly.oss-cn-shenzhen.aliyuncs.com/draw.png"
+    //   })
+    // }
+    // this.setData({
+    //   activitylist: this.data.activitylist.concat(newlist)
+    // })
   },
-  goToTop: function () { //回到顶部
+  goToTop: function () {
     this.setData({
       scrolltop: 0
     })
   },
-  scrollLoading: function () { //滚动加载
-    this.fetchPurchaseData();
+  scrollLoading: function () {
+    if (!this.data.scrollEnd) {
+      this.fetchPurchaseData();
+    }
   },
   onPullDownRefresh: function () {
     this.setData({

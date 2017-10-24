@@ -45,14 +45,14 @@
     </view>
 </view>
 <view class='menbers' wx-if="{{menbers.length}}">
-  <view class='titleBox'>
-    <text class='title'>拼团人员</text>
-  </view>
-  <view class='menber' wx:for="{{menbers}}" wx:key>
-    <image class='face' src='{{item.face}}'></image>
-    <text class='text'>{{item.name}}</text>
-    <text class='text'>{{item.time}}</text>
-  </view>
+    <view class='titleBox'>
+        <text class='title'>拼团人员</text>
+    </view>
+    <view class='menber' wx:for="{{menbers}}" wx:key>
+        <image class='face' src='{{item.imgUrl}}'></image>
+        <text class='text'>{{item.name}}</text>
+        <text class='text'>{{item.time}}</text>
+    </view>
 </view>
 <view class='menbers'>
     <view class='titleBox'>
@@ -72,9 +72,9 @@
     <navigator url='../pay/pay?actid={{activityInfo.id}}&name={{activityInfo.ptGood.name}}&price={{activityInfo.ptGood.price}}' class='right'>立即抢购</navigator>
 </view>
 <view class='footer' wx:if="{{friendInvite}}">
-  <view class='left'>
-    再邀
-    <text>{{activityInfo.num - menbers.length}}</text>人购买即可享受优惠
-  </view>
-  <button class='right sharebtn' open-type="share" type="default">邀请好友拼团</button>
+    <view class='left'>
+        再邀
+        <text>{{activityInfo.num - menbers.length}}</text>人购买即可享受优惠
+    </view>
+    <button class='right sharebtn' open-type="share" type="default">邀请好友拼团</button>
 </view>

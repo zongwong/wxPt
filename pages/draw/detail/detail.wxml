@@ -1,37 +1,32 @@
 <view class="description" style='background-image:url("{{descImg}}")'>
-  <view class='title'>
-    十周年*幸运大转盘抽iPhone8
-  </view>
-  <view class='desc'>
-    说明：先抽先得，数量有限！每人可无条件获得1次抽奖资格,每分享给1个朋友可再获得一次抽奖机会
-  </view>
-  <view class='time'>
-    2017/10/01-2017/10/08
-  </view>
+    <view class='title'>
+        十周年*幸运大转盘抽iPhone8
+    </view>
+    <view class='desc'>
+        说明：先抽先得，数量有限！每人可无条件获得1次抽奖资格,每分享给1个朋友可再获得一次抽奖机会
+    </view>
+    <view class='time'>
+        2017/10/01-2017/10/08
+    </view>
 </view>
 <view class='chanceCount'>（当前您还有
-  <text class='count'>{{chanceCount}}</text>次机会）</view>
-
-<!--大转盘实现-->
-
-<!--index.wxml-->
+    <text class='count'>{{chanceCount}}</text>次机会）</view>
 <view class="container-out">
-  <view class="circle" wx:for="{{circleList}}" wx:key="{{index}}" style="top:{{item.topCircle}}rpx;left:{{item.leftCircle}}rpx;background-color: {{(index%2==0)?colorCircleFirst:colorCircleSecond}};"></view>
-  <view class="container-in">
-    <view class="content-out" wx:for="{{awardList}}" wx:key="{{index}}" style="top:{{item.topAward}}rpx;left:{{item.leftAward}}rpx;background-color: {{(index==indexSelect)?colorAwardSelect:colorAwardDefault}};">
-      <image class="award-image" src="{{item.imageAward.image}}"></image>
+    <view class="circle" wx:for="{{circleList}}" wx:key="{{index}}" style="top:{{item.topCircle}}rpx;left:{{item.leftCircle}}rpx;background-color: {{(index%2==0)?colorCircleFirst:colorCircleSecond}};"></view>
+    <view class="container-in">
+        <view class="content-out" wx:for="{{awardList}}" wx:key="{{index}}" style="top:{{item.topAward}}rpx;left:{{item.leftAward}}rpx;background-color: {{(index==indexSelect)?colorAwardSelect:colorAwardDefault}};">
+            <image class="award-image" src="{{item.imageAward.image}}"></image>
+        </view>
+        <view class="start-btn" bindtap="startGame" style=" background-image:url({{btnDrawImg}})"></view>
     </view>
-    <view class="start-btn" bindtap="startGame" style=" background-image:url({{btnDrawImg}})"></view>
-  </view>
 </view>
-
 <view class='records'>
-  <view class='header'>
-    <text class='title'>中奖记录</text>
-    <text bindtap='goToMyAward' class='myaward'>我的奖品</text>
-  </view>
-  <view class='record' wx:for="{{recordsList}}" wx:key="{{item.id}}">
-    <text class='tel'>{{item.tel}}</text>
-    <text class='goodName'>{{item.goodName}}</text>
-  </view>
+    <view class='header'>
+        <text class='title'>中奖记录</text>
+        <text bindtap='goToMyAward' class='myaward'>我的奖品</text>
+    </view>
+    <view class='record' wx:for="{{recordsList}}" wx:key="{{item.id}}">
+        <text class='tel'>{{item.tel}}</text>
+        <text class='goodName'>{{item.goodName}}</text>
+    </view>
 </view>
