@@ -18,6 +18,7 @@ Page({
         friendPay: false,
         inviteId: '',
         menbers: [],
+        orderId:''
     },
     calling: function(event) {
         var dataset = event.currentTarget.dataset;
@@ -65,8 +66,27 @@ Page({
                 }, 500);
             }
         })
-    },
 
+
+        // 发起众筹
+        if (!inviteId) {
+            this.startzc(options.id);
+        }
+    },
+    startzc: function(actId) {
+        let that= this;
+        utils.ajax('POST', 'api/zc/zcOrder/save', {
+            actId: actId,
+            userId: app.globalData.memberId,
+        }, function(res) {
+
+            if (res.data.code == 0) {
+                that.setData({
+                    orderId:res.data.data.orderNumber
+                })
+            }
+        })
+    },
     onPullDownRefresh: function() {
 
     },
@@ -77,7 +97,7 @@ Page({
     onShareAppMessage: function() {
         return {
             title: app.globalData.userInfo.nickName + '正在参与"' + this.data.activityInfo.zcGoods.name + '"众筹项目，邀请您为他支持！',
-            path: '/pages/crowdfunding?type=true&userId=',
+            path: '/pages/crowdfunding?type=true&userId='+app.globalData.memberId,
             success: function(res) {
                 // 转发成功
             },
@@ -88,14 +108,15 @@ Page({
     },
     payImmediately: function(event) {
         let that = this;
-        let isHelp = 1;
+        let isHelp = 0;
         if (this.data.friendPay){
-          isHelp=0;
+          isHelp=1;
         }
         utils.ajax('POST', 'api/zc/zcOrder/pay', {
-            orderId: 1,
+            orderId: that.data.orderId,
             type: 1,
             isHelp: isHelp,
+            openid: app.globalData.openid,
             userId: app.globalData.memberId,
         }, function(res) {
             if (res.data.code == 0) {

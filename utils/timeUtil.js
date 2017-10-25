@@ -7,7 +7,12 @@ function countDown(time_val) {
         // alert('参数格式为2012-01-01[ 01:01[:01]].\r其中[]内的内容可省略');
         return false;
     }
+
     var sec = (new Date(time_val.replace(/-/ig, '/')).getTime() - new Date().getTime()) / 1000;
+
+    if (sec<=0) {
+        return '活动已结束';
+    }
     if (!(sec > 0)) {
         sec *= -1;
     }

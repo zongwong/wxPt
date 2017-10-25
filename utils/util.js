@@ -39,7 +39,7 @@ const getRandomArray = (arr, count) => {
 
 const phoneCallFn = (telNum) => {
     wx.makePhoneCall({
-        phoneNumber: telNum, //此号码并非真实电话号码，仅用于测试
+        phoneNumber: telNum,
         success: function() {
             console.log("拨打电话成功！")
         },
@@ -57,20 +57,20 @@ const getRandomArrayElement = arr => {
     return arr[Math.floor(Math.random() * arr.length)];
 }
 
-
+// ajax请求
 function ajax(type = 'get', url = "", data = {}, success, fail) {
     const memberInfo = wx.getStorageSync('memberInfo');
     let header = {
-      'authorization': memberInfo.token,
+        'authorization': memberInfo.token,
     };
-    if (type == 'post') {
-      header['content-type'] = 'application/x-www-form-urlencoded';
+    if (type == 'post' || type == 'POST') {
+        header['content-type'] = 'application/x-www-form-urlencoded';
     }
     wx.request({
         method: type,
         url: 'https://www.baby25.cn/jeesite/' + url,
         data: data,
-        header:header,
+        header: header,
         success: function(res) {
             success(res);
         },
@@ -80,9 +80,26 @@ function ajax(type = 'get', url = "", data = {}, success, fail) {
     })
 }
 
+// 图片错误
+function errImgFun(e, that ,attrName = "imgUrl",imgUrl="../../images/default_rect.png") {
+    let errImg = e.target.dataset.errImg;
+    let errObj = {};
+    errObj['' + errImg + '.'+attrName] = imgUrl;
+
+    that.setData(errObj);
+}
+//展示二维码
+function qrcodeShow(e){
+    let qrcodeUrl = e.target.dataset['qrcode'];
+    wx.previewImage({
+        urls: [qrcodeUrl]
+    })
+}
 module.exports = {
     ajax: ajax,
     formatTime: formatTime,
+    errImgFun: errImgFun,
+    qrcodeShow:qrcodeShow,
     getRandomArray: getRandomArray,
     getRandomArrayElement: getRandomArrayElement,
     phoneCallFn: phoneCallFn

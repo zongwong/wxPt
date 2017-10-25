@@ -26,12 +26,17 @@ Page({
     },
     onLoad: function(options) {
         let inviteId = '';
-        if (typeof options.type !== 'undefined' && options.type) {
+        if (typeof options.type !== 'undefined') {
             this.setData({
-                friendInvite: options.type,
-                inviteId: options.inviteId
+                friendInvite: true,
             })
+            
+        }
+        if (typeof options.inviteId !== 'undefined' && options.inviteId) {
             inviteId = options.inviteId;
+            this.setData({
+                inviteId: inviteId
+            })
         }
         let that = this;
 
@@ -45,7 +50,7 @@ Page({
                     activityInfo: data,
                     endTime: data.endTime,
                 });
-                if (that.data.friendInvite) {
+                if (typeof data.memberList !== 'undefined' && data.memberList.length) {
                     let memberList = data.memberList;
                     memberList.forEach(function(item) {
                         item.time = utils.formatTime(item.ptDate)
@@ -54,11 +59,35 @@ Page({
                         menbers: memberList,
                     })
                 }
-                setInterval(function() {
-                    that.setData({
-                        timeCountDown: timeUtil.countDown(that.data.endTime)
+                let endtime = timeUtil.countDown(that.data.endTime);
+
+                if (!endtime) {
+                    wx.showModal({
+                          title: '提示',
+                          content: '时间错误',
+                          success: function(res) {
+                            wx.redirectTo({
+                              url: '/pages/purchase/purchase'
+                            })
+                          }
                     })
-                }, 500);
+                }else if ( endtime === '活动已结束') {
+                    wx.showModal({
+                          title: '提示',
+                          content: '来晚啦,活动已结束~',
+                          success: function(res) {
+                            wx.redirectTo({
+                              url: '/pages/purchase/purchase'
+                            })
+                          }
+                    })
+                }else{
+                    setInterval(function() {
+                        that.setData({
+                            timeCountDown: timeUtil.countDown(that.data.endTime)
+                        })
+                    }, 500);
+                }
             }
         });
 
@@ -70,7 +99,7 @@ Page({
         }
         return {
             title: '我正在拼团快来帮忙',
-            path: '/pages/immediately/immediately' + query,
+            path: '/pages/purchase/immediately/immediately' + query,
             success: function(res) {
                 console.log('转发成功' + res)
             },

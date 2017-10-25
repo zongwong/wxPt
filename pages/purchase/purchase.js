@@ -2,11 +2,7 @@ import utils from "../../utils/util.js";
 const app = getApp();
 Page({
     data: {
-        sortindex: 0,
-        sortid: null,
-        sort: [],
         activitylist: [],
-        scrolltop: null,
         pageNo: 0,
         memberInfo: null,
         scrollEnd: false,
@@ -16,20 +12,19 @@ Page({
         app.tokenCheck(this.fetchPurchaseData);
     },
     scanCode: function(event) {
-        var that = this;
+        let that = this;
         this.setData({
             pageNo: 0,
             scrollEnd: false,
         });
         wx.scanCode({
             success: (res) => {
-                var userId = res.result;
-                var memberInfo = that.data.memberInfo;
+                let userId = res.result;
+                let memberInfo = that.data.memberInfo;
                 memberInfo.userId = userId;
                 that.setData({
                     memberInfo: memberInfo
                 });
-
                 this.fetchPurchaseData(userId);
             }
         })
@@ -50,53 +45,26 @@ Page({
 
         utils.ajax('GET', url, {
             pageNo: pageNo,
-            pageSize: 10,
-            status: 0,
+            pageSize: 5,
+            status: 1,
             userId: userId
         }, function(res) {
             that.setData({
                 isajaxLoad: false,
             })
-            if (typeof res.data.data === 'undefined') {
-                that.setData({
-                    scrollEnd: true,
-                })
-                return false;
-            }
-            let list = res.data.data;
-
-            list.forEach(function(item, index) {
-                switch (item.status) {
-                    case 1:
-                        item.statusText = '拼团中';
-                        break;
-                    case 2:
-                        item.statusText = '已过期';
-                        break;
-                    case 3:
-                        item.statusText = '已过期';
-                        break;
-                    default:
-                        item.statusText = '已过期';
-                        break;
+            if (res.data.code == 0) {
+                if (typeof res.data.data === 'undefined') {
+                    that.setData({
+                        scrollEnd: true,
+                    })
+                    return false;
                 }
-            })
-            let newactivitylist = that.data.activitylist.concat(list);
-            that.setData({
-                activitylist: newactivitylist
-            });
-
+                let newactivitylist = that.data.activitylist.concat(res.data.data);
+                that.setData({
+                    activitylist: newactivitylist
+                });
+            }
         })
-    },
-    goToTop: function() {
-        this.setData({
-            scrolltop: 0
-        })
-    },
-    scrollLoading: function() {
-        if (!this.data.scrollEnd) {
-            this.fetchPurchaseData();
-        }
     },
     onPullDownRefresh: function() {
         this.setData({
@@ -116,5 +84,9 @@ Page({
     },
     onShareAppMessage: function() {
 
+    },
+    imgError:function(e){
+        let that = this;
+        utils.errImgFun(e,that);
     }
 })

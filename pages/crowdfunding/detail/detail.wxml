@@ -1,9 +1,9 @@
 <swiper class='img-swiper' indicator-dots="{{indicatorDots}}" indicator-active-color='{{indicatorActivColor}}' autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-    <block wx:for="{{imgUrls}}" wx:key>
+    <!-- <block wx:for="{{imgUrls}}" wx:key> -->
         <swiper-item>
-            <image mode='aspectFill' src="{{item}}" class="slide-image" />
+            <image mode='aspectFill' src="{{activityInfo.imgUrl}}" class="slide-image" />
         </swiper-item>
-    </block>
+    <!-- </block> -->
 </swiper>
 <view class='goodInfoBox'>
     <view class='infoLeft'>

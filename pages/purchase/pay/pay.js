@@ -37,6 +37,7 @@ Page({
         })
     },
     wxPayment: function(wxPayment) {
+        console.log('调用微信支付')
         let that = this;
         let data = {
             timeStamp: wxPayment.timeStamp.toString(),
@@ -55,25 +56,57 @@ Page({
                     url: '/pages/purchase/paycomplete/paycomplate?type=fail'
                 })
             },
-            complete: function() {
-
+            complete: function(res) {
+                console.log(res)
             },
         }
         console.log(data);
         wx.requestPayment(data);
     },
     onLoad: function(options) {
-        this.setData({
-            actid: options.actid,
-            total: options.price,
-            goods: {
-                name: options.name,
-                price: options.price
-            }
+        let that = this;
+        app.tokenCheck(function() {
+            that.setData({
+                actid: options.actid,
+                total: options.price,
+                goods: {
+                    name: options.name,
+                    price: options.price
+                }
+            })
         })
     },
     pay: function() {
         let that = this;
+        console.log(app.globalData.memberId, app.globalData.openid)
+        // const memberInfo = wx.getStorageSync('memberInfo');
+        // wx.request({
+        //     method: 'POST',
+        //     url: 'https://www.baby25.cn/jeesite/api/pt/ptGroupOrder/pay',
+        //     data: {
+        //         type: that.data.check,
+        //         num: that.data.counts,
+        //         actId: that.data.actid,
+        //         userId: app.globalData.memberId,
+        //         openid: app.globalData.openid,
+        //     },
+        //     header: {
+        //         'authorization': memberInfo.token
+        //     },
+        //     success: function(res) {
+        //        console.log('统一下单')
+        //         console.log(res)
+        //         console.log(res.data.data)
+        //         if (res.data.code == 0) {
+        //             let data = res.data.data;
+        //             that.wxPayment(data)
+        //         }
+        //     },
+        //     fail: function(res) {
+        //         console.log(res);
+        //     }
+        // })
+
         utils.ajax('post', 'api/pt/ptGroupOrder/pay', {
             type: this.data.check,
             num: this.data.counts,
@@ -81,6 +114,9 @@ Page({
             userId: app.globalData.memberId,
             openid: app.globalData.openid,
         }, function(res) {
+            console.log('统一下单')
+            console.log(res)
+            console.log(res.data.data)
             if (res.data.code == 0) {
                 let data = res.data.data;
                 that.wxPayment(data)

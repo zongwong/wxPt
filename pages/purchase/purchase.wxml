@@ -4,9 +4,9 @@
         <view class="purchase-list">
             <block wx:for="{{activitylist}}" wx:key="{{item.id}}">
                 <navigator class="purchase-item" url="./immediately/immediately?id={{item.id}}">
-                    <view class="purchase-item-img" style="background:url(../../images/default_rect.png) center / cover no-repeat;">
-                        <image class='image' src="{{item.imgUrl}}" mode="aspectFill"></image>
-                        <text class='status'>{{item.statusText}}</text>
+                    <view class="purchase-item-img">
+                        <image class='image' src="{{item.imgUrl}}" mode="aspectFill" binderror="imgError" data-err-img="activitylist[{{index}}]"></image>
+                        <!-- <text class='status'>{{item.statusText}}</text> -->
                     </view>
                     <view class="purchase-item-text">
                         <view class="purchase-item-title">{{item.name}}</view>

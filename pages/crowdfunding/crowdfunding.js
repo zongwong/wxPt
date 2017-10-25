@@ -29,7 +29,7 @@ Page({
         utils.ajax('get', 'api/zc/zcActivity/list', {
             pageNo: pageNo,
             pageSize: 10,
-            status: 0,
+            status: 1,
             userId: userId
         }, function(res) {
             that.setData({
@@ -86,17 +86,6 @@ Page({
                 });
 
                 this.fetchPurchaseData(userId);
-            }
-        })
-    },
-    startzc: function(event) {
-        const actId = event.detial.dataset['actId'] || '';
-        utils.ajax('POST', 'api/zc/zcOrder/save', {
-            actId: actId,
-            userId: app.globalData.memberId,
-        }, function(res) {
-            if (res.data.code == 0) {
-                console.log(res);
             }
         })
     },

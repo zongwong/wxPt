@@ -15,41 +15,23 @@ App({
     },
     toLogin: function(fn) {
         let that = this;
-        
         if (this.globalData.token) {
-            
             typeof fn == "function" && fn();
+            return false;
         } else {
-            
             if (this.globalData.openid && this.globalData.userInfo) {
-                
                 this.getMemberLogin(this.globalData.openid, this.globalData.userInfo, fn);
             } else {
-                
                 wx.login({
                     success: function(loginres) {
-                        console.log(loginres)
                         if (loginres.code) {
                             that.globalData.code = loginres.code;
-                            console.log(that.globalData.userInfo, !that.globalData.userInfo)
-                            if (!that.globalData.userInfo) {
-                                wx.getUserInfo({
-                                    success: function(userres) {
-                                        console.log('userres:' + userres.userInfo)
-                                        that.globalData.userInfo = userres.userInfo;
-                                        console.log(that.globalData.userInfo)
-                                        if (!that.globalData.openid) {
-                                            that.getOpenId(loginres.code, userres.userInfo, fn);
-                                        }
-
-                                    }
-                                })
-                            } else {
-                                if (!that.globalData.openid) {
-                                    console.log('else:' + that.globalData.userInfo)
-                                    that.getOpenId(loginres.code, that.globalData.userInfo, fn);
+                            wx.getUserInfo({
+                                success: function(userres) {
+                                    that.globalData.userInfo = userres.userInfo;
+                                    that.getOpenId(loginres.code, userres.userInfo, fn);
                                 }
-                            }
+                            })
                         }
                     }
                 })
@@ -68,29 +50,13 @@ App({
                 'content-type': 'application/x-www-form-urlencoded'
             },
             success: function(res) {
-                console.log(res.data.data)
                 that.globalData.openid = res.data.data.openid;
                 that.getMemberLogin(res.data.data.openid, userInfo, fn);
             }
         })
-
-
-        // utils.ajax('post','api/common/member/getOpenId',{code:code},function(res){
-        //     console.log(res);
-        //     return false;
-        //     const data = res.data.data;
-        //     console.log(data)
-        //     const openid = data.openid;
-        //     that.globalData.openid = openid;
-        //     wx.setStorageSync('openid', openid);
-        //     that.getMemberLogin(openid);
-        // });
     },
     getMemberLogin: function(openid, userInfo, fn) {
-        console.log('准备登录');
         if (this.globalData.token) {
-            console.log('有token了');
-            console.log(this.globalData.token)
             typeof fn == "function" && fn();
             return false;
         }
@@ -117,8 +83,6 @@ App({
                     memberInfo.userId = data.memberId;
                     memberInfo.token = that.globalData.token;
                     wx.setStorageSync('memberInfo', memberInfo);
-                    console.log('登录成功');
-                    console.log(that.globalData)
                     fn && fn();
                 }
 

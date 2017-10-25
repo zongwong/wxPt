@@ -39,9 +39,8 @@ page {
   color: #e02e24;
   border: 1px solid #e02e24;
   background-color: #fff;
-  line-height: 76rpx;
-  margin-top: 8rpx;
-  font-size: 36rpx;
+  box-sizing: border-box;
+  white-space: nowrap;
 }
 .container-body{
   margin-top:2px;
