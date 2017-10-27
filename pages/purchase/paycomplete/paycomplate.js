@@ -8,7 +8,6 @@ Page({
         this.setData({
             type: options.type
         })
-        console.log(options.type,this.data.type)
     },
     invitePurchase: function(event) {
         wx.redirectTo({

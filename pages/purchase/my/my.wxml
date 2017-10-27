@@ -10,7 +10,7 @@
         <view class="purchase-list">
             <block wx:for="{{activitylist}}" wx:key="{{item.actId}}">
                 <view class="purchase-item">
-                    <navigator url="../immediately/immediately?id={{item.actId}}&type=true&inviteId={{item.inviteId}}">
+                    <navigator url="../immediately/immediately?id={{item.actId}}&type=true&inviteId={{item.inviteId}}&userId={{item.userId}}">
                         <view class="purchase-item-img">
                             <image class='image' src="{{item.actImgUrl}}" mode="aspectFill" binderror="imgError" data-err-img="activitylist[{{index}}]"></image>
                             <!-- <text class='status'>{{item.statusText}}</text> -->

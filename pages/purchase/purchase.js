@@ -4,12 +4,29 @@ Page({
     data: {
         activitylist: [],
         pageNo: 0,
-        memberInfo: null,
         scrollEnd: false,
         isajaxLoad: false,
+        userId: 1,
     },
     onLoad: function(options) {
-        app.tokenCheck(this.fetchPurchaseData);
+        let that = this;
+        app.tokenCheck(function() {
+            try {
+                let userId = wx.getStorageSync('userId');
+                console.log('userId:' + userId);
+                if (userId) {
+                    that.setData({
+                        userId: userId
+                    })
+                    that.fetchPurchaseData(that.data.userId)
+                }else{
+                    that.fetchPurchaseData(that.data.userId)
+                }
+            } catch (e) {
+                console.log(e)
+            }
+            
+        });
     },
     scanCode: function(event) {
         let that = this;
@@ -20,16 +37,22 @@ Page({
         wx.scanCode({
             success: (res) => {
                 let userId = res.result;
-                let memberInfo = that.data.memberInfo;
-                memberInfo.userId = userId;
-                that.setData({
-                    memberInfo: memberInfo
-                });
-                this.fetchPurchaseData(userId);
+                if (typeof userId !== 'undefined' && userId) {
+                    that.setData({
+                        userId: userId
+                    });
+                    this.fetchPurchaseData();
+                } else {
+                    wx.showModal({
+                        title: '提示',
+                        content: '参数错误,请重新扫码',
+                        success: function(res) {}
+                    })
+                }
             }
         })
     },
-    fetchPurchaseData: function(userId = '') {
+    fetchPurchaseData: function() {
         if (this.data.isajaxLoad) {
             return false;
         }
@@ -47,7 +70,7 @@ Page({
             pageNo: pageNo,
             pageSize: 5,
             status: 1,
-            userId: userId
+            userId: that.data.userId
         }, function(res) {
             that.setData({
                 isajaxLoad: false,
@@ -74,7 +97,7 @@ Page({
         this.fetchPurchaseData();
 
         setTimeout(() => {
-            wx.stopPullDownRefresh()
+            wx.stopPullDownRefresh();
         }, 500)
     },
     onReachBottom: function() {
@@ -85,8 +108,8 @@ Page({
     onShareAppMessage: function() {
 
     },
-    imgError:function(e){
+    imgError: function(e) {
         let that = this;
-        utils.errImgFun(e,that);
+        utils.errImgFun(e, that);
     }
 })

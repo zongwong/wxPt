@@ -67,14 +67,14 @@
 <view class='footer' wx:if="{{!friendInvite}}">
     <view class='left'>
         再邀
-        <text>{{activityInfo.num}}</text>人购买即可享受优惠
+        <text>{{activityInfo.count-activityInfo.groupNum}}</text>人购买即可享受优惠
     </view>
-    <navigator url='../pay/pay?actid={{activityInfo.id}}&name={{activityInfo.ptGood.name}}&price={{activityInfo.ptGood.price}}' class='right'>立即抢购</navigator>
+    <navigator url='../pay/pay?actid={{activityInfo.id}}&name={{activityInfo.ptGood.name}}&price={{activityInfo.ptGood.price}}&inviteId={{inviteId}}&userId={{userId}}' class='right'>立即抢购</navigator>
 </view>
 <view class='footer' wx:if="{{friendInvite}}">
     <view class='left'>
         再邀
-        <text>{{activityInfo.num - menbers.length}}</text>人购买即可享受优惠
+        <text>{{activityInfo.count-activityInfo.groupNum}}</text>人购买即可享受优惠
     </view>
     <button class='right sharebtn' open-type="share" type="default">邀请好友拼团</button>
 </view>

@@ -56,11 +56,11 @@ Page({
         let path = '/pages/purchase/immediately/immediately';
         if (options.from === 'button') {
             let index = Number(options.target.dataset['index']);
-            query = '?id=' + this.data.activitylist[index].actId+'&inviteId=' + this.data.activitylist[index].inviteId;
+            query = '?id=' + this.data.activitylist[index].actId+'&inviteId=' + this.data.activitylist[index].inviteId+'&userId=' + this.data.activitylist[index].userId;
         }else{
             path = "/pages/purchase/purchase";
         }
-
+        console.log(path + query)
         return {
             title: '我正在拼团快来帮忙',
             path: path + query,

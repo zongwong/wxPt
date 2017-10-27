@@ -3,12 +3,13 @@ import timeUtil from "../../../utils/timeUtil.js";
 const app = getApp();
 Page({
     data: {
-        timeCountDown: '',
+        timeCountDown: '获取中...',
         endTime: '',
         activityInfo: null,
         imgUrls: [],
         friendInvite: false,
         inviteId: '',
+        userId:'',
         menbers: [],
         indicatorDots: true,
         indicatorActivColor: '#E12F25',
@@ -25,24 +26,37 @@ Page({
         utils.phoneCallFn(telNum);
     },
     onLoad: function(options) {
-        let inviteId = '';
+
+        if (typeof options.userId !== 'undefined' && options.userId) {
+            this.setData({
+                userId: options.userId
+            })
+        }else{
+            wx.showModal({
+                title:'提示',
+                content:'参数错误,请重新进入',
+                success:function(){
+                    wx.switchTab({
+                        url:'/pages/purchase/purchase'
+                    })
+                }
+            })
+            return false;
+        }
         if (typeof options.type !== 'undefined') {
             this.setData({
                 friendInvite: true,
             })
-            
         }
         if (typeof options.inviteId !== 'undefined' && options.inviteId) {
-            inviteId = options.inviteId;
             this.setData({
-                inviteId: inviteId
+                inviteId: options.inviteId
             })
         }
         let that = this;
-
         utils.ajax('GET', 'api/pt/ptActivities/info', {
             actId: options.id,
-            inviteId: inviteId,
+            inviteId: that.data.inviteId,
         }, function(res) {
             if (res.data.code == 0) {
                 let data = res.data.data;
@@ -66,7 +80,7 @@ Page({
                           title: '提示',
                           content: '时间错误',
                           success: function(res) {
-                            wx.redirectTo({
+                            wx.switchTab({
                               url: '/pages/purchase/purchase'
                             })
                           }
@@ -76,7 +90,7 @@ Page({
                           title: '提示',
                           content: '来晚啦,活动已结束~',
                           success: function(res) {
-                            wx.redirectTo({
+                            wx.switchTab({
                               url: '/pages/purchase/purchase'
                             })
                           }
@@ -86,19 +100,21 @@ Page({
                         that.setData({
                             timeCountDown: timeUtil.countDown(that.data.endTime)
                         })
-                    }, 500);
+                    }, 1000);
                 }
             }
         });
 
     },
     onShareAppMessage: function() {
-        let query = '?id=' + this.data.activityInfo.id;
-        if (this.data.friendInvite) {
-            query += '&type=true&inviteId=' + this.data.inviteId;
-        }
+        // ?差一个判断 是不是自己点进来
+        let query = '?id=' + this.data.activityInfo.id + '&inviteId=' + this.data.inviteId + '&userId='+this.data.userId;
+        // if (this.data.friendInvite) {
+        //     query += '&type=true&inviteId=' + this.data.inviteId + '&userId='+this.data.userId;
+        // }
+        console.log(query)
         return {
-            title: '我正在拼团快来帮忙',
+            title: '我正在拼团快来',
             path: '/pages/purchase/immediately/immediately' + query,
             success: function(res) {
                 console.log('转发成功' + res)

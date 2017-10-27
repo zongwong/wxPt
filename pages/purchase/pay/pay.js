@@ -3,6 +3,8 @@ const app = getApp();
 Page({
     data: {
         actid: '',
+        inviteId:'',
+        userId:'',
         counts: 1,
         goods: { price: '', name: '' },
         total: '',
@@ -26,7 +28,7 @@ Page({
         }
         this.setData({
             counts: currentCount,
-            total: this.data.goods.price * currentCount
+            total: (this.data.goods.price * currentCount).toFixed(2)
         })
     },
     checkPay: function(event) {
@@ -66,6 +68,24 @@ Page({
     onLoad: function(options) {
         let that = this;
         app.tokenCheck(function() {
+
+            if (typeof options.userId !=='undefined' && options.userId) {
+                that.setData({
+                    userId:options.userId
+                })
+            }else{
+                wx.showModal({
+                    title:'提示',
+                    content:'参数错误,请重新进入',
+                    success:function(){
+                        wx.switchTab({
+                            url:'/pages/purchase/purchase'
+                        })
+                    }
+                })
+                return false;
+            }
+
             that.setData({
                 actid: options.actid,
                 total: options.price,
@@ -74,49 +94,29 @@ Page({
                     price: options.price
                 }
             })
+
+            if (typeof options.inviteId !=='undefined' && options.inviteId) {
+                that.setData({
+                    inviteId:options.inviteId
+                })
+            }
+
         })
     },
     pay: function() {
         let that = this;
-        console.log(app.globalData.memberId, app.globalData.openid)
-        // const memberInfo = wx.getStorageSync('memberInfo');
-        // wx.request({
-        //     method: 'POST',
-        //     url: 'https://www.baby25.cn/jeesite/api/pt/ptGroupOrder/pay',
-        //     data: {
-        //         type: that.data.check,
-        //         num: that.data.counts,
-        //         actId: that.data.actid,
-        //         userId: app.globalData.memberId,
-        //         openid: app.globalData.openid,
-        //     },
-        //     header: {
-        //         'authorization': memberInfo.token
-        //     },
-        //     success: function(res) {
-        //        console.log('统一下单')
-        //         console.log(res)
-        //         console.log(res.data.data)
-        //         if (res.data.code == 0) {
-        //             let data = res.data.data;
-        //             that.wxPayment(data)
-        //         }
-        //     },
-        //     fail: function(res) {
-        //         console.log(res);
-        //     }
-        // })
-
-        utils.ajax('post', 'api/pt/ptGroupOrder/pay', {
-            type: this.data.check,
-            num: this.data.counts,
-            actId: this.data.actid,
-            userId: app.globalData.memberId,
+        let cs = {
+            type: that.data.check,
+            num: that.data.counts,
+            actId: that.data.actid,
+            userId: that.data.userId,
             openid: app.globalData.openid,
-        }, function(res) {
+            inviteId:that.data.inviteId,
+        };
+        console.log(cs)
+        utils.ajax('post', 'api/pt/ptGroupOrder/pay',cs, function(res) {
             console.log('统一下单')
-            console.log(res)
-            console.log(res.data.data)
+            console.log(res.data)
             if (res.data.code == 0) {
                 let data = res.data.data;
                 that.wxPayment(data)

@@ -84,6 +84,7 @@ App({
                     memberInfo.token = that.globalData.token;
                     wx.setStorageSync('memberInfo', memberInfo);
                     fn && fn();
+                    console.log(that.globalData)
                 }
 
             }

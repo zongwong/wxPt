@@ -3,7 +3,7 @@
     <view class="container-body">
         <view class="purchase-list">
             <block wx:for="{{activitylist}}" wx:key="{{item.id}}">
-                <navigator class="purchase-item" url="./immediately/immediately?id={{item.id}}">
+                <navigator class="purchase-item" url="./immediately/immediately?id={{item.id}}&userId={{userId}}">
                     <view class="purchase-item-img">
                         <image class='image' src="{{item.imgUrl}}" mode="aspectFill" binderror="imgError" data-err-img="activitylist[{{index}}]"></image>
                         <!-- <text class='status'>{{item.statusText}}</text> -->
