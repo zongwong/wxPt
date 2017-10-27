@@ -64,14 +64,14 @@
         <view class='tip'>3. 需到店消费</view>
     </view>
 </view>
-<view class='footer' wx:if="{{!friendInvite}}">
+<view class='footer' wx:if="{{!inviteId || !iInList}}">
     <view class='left'>
         再邀
-        <text>{{activityInfo.count-activityInfo.groupNum}}</text>人购买即可享受优惠
+        <text>{{activityInfo.num}}</text>人购买即可享受优惠
     </view>
     <navigator url='../pay/pay?actid={{activityInfo.id}}&name={{activityInfo.ptGood.name}}&price={{activityInfo.ptGood.price}}&inviteId={{inviteId}}&userId={{userId}}' class='right'>立即抢购</navigator>
 </view>
-<view class='footer' wx:if="{{friendInvite}}">
+<view class='footer' wx:if="{{inviteId && iInList}}">
     <view class='left'>
         再邀
         <text>{{activityInfo.count-activityInfo.groupNum}}</text>人购买即可享受优惠

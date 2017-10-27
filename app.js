@@ -98,6 +98,15 @@ App({
                 clearInterval(loginTimer);
             }
         }, 10);
+    },
+    loading:function(type){
+        if (type==='open') {
+            wx.showLoading({
+                title:'加载中'
+            })
+        }else if (type === 'close') {
+            wx.hideLoading()
+        }
     }
 
 })

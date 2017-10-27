@@ -15,10 +15,12 @@ Page({
         house: '../../../images/funding/house.png',
         addr: '../../../images/funding/addr.png',
         triangleImg: '../../../images/funding/ddd.png',
-        friendPay: false,
         inviteId: '',
+        originId:'',
+        isMyself:true,
+        iInList:false,
         menbers: [],
-        orderId:''
+        userId:'',
     },
     calling: function(event) {
         var dataset = event.currentTarget.dataset;
@@ -26,22 +28,45 @@ Page({
         utils.phoneCallFn(telNum);
     },
     onLoad: function(options) {
-        wx.setNavigationBarTitle({
-            title: '众筹-' + options.name,
-        });
-
-        let inviteId = '';
-        if (typeof options.friendPay !== 'undefined' && options.friendPay) {
+        if (typeof options.userId !== 'undefined' && options.userId) {
             this.setData({
-                friendPay: options.friendPay,
+                userId: options.userId
+            })
+        } else {
+            wx.showModal({
+                title: '提示',
+                content: '参数错误,请重新进入',
+                success: function() {
+                    wx.switchTab({
+                        url: '/pages/crowdfunding/crowdfunding'
+                    })
+                }
+            })
+            return false;
+        }
+
+        if (typeof options.inviteId !== 'undefined' && options.inviteId) {
+            this.setData({
                 inviteId: options.inviteId
             })
-            inviteId = options.inviteId;
         }
+        if (typeof options.originId !== 'undefined' && options.originId) {
+            this.setData({
+                originId: options.originId,
+            })
+            //判断众筹单是不是自己发起的
+            if (options.originId != app.globalData.memberId) {
+                this.setData({
+                    isMyself:false
+                })
+            }
+        }
+
+
         let that = this;
         utils.ajax('GET', 'api/zc/zcActivity/info', {
             actId: options.id,
-            inviteId: inviteId,
+            inviteId: that.data.inviteId,
         }, function(res) {
 
             if (res.data.code == 0) {
@@ -50,39 +75,63 @@ Page({
                     activityInfo: data,
                     endTime: data.endTime,
                 });
-                if (that.data.friendPay) {
+                if (typeof data.memberList !== 'undefined' && data.memberList.length) {
                     let memberList = data.memberList;
                     memberList.forEach(function(item) {
-                        item.time = utils.formatTime(item.ptDate)
+                        item.time = utils.formatTime(item.ptDate);
+                        //判断自己是否在列表
+                        if (item.memberId == app.globalData.memberId) {
+                            that.setData({
+                                iInList:true
+                            })
+                        }
                     })
                     that.setData({
                         menbers: memberList,
                     })
                 }
-                setInterval(function() {
-                    that.setData({
-                        timeCountDown: timeUtil.countDown(that.data.endTime)
-                    })
-                }, 500);
+                let endtime = timeUtil.countDown(that.data.endTime);
+
+                // if (!endtime) {
+                //     wx.showModal({
+                //         title: '提示',
+                //         content: '时间错误',
+                //         success: function(res) {
+                //             wx.switchTab({
+                //                 url: '/pages/crowdfunding/crowdfunding'
+                //             })
+                //         }
+                //     })
+                // } else if (endtime === '活动已结束') {
+                //     wx.showModal({
+                //         title: '提示',
+                //         content: '来晚啦,活动已结束~',
+                //         success: function(res) {
+                //             wx.switchTab({
+                //                 url: '/pages/crowdfunding/crowdfunding'
+                //             })
+                //         }
+                //     })
+                // } else {
+                //     setInterval(function() {
+                //         that.setData({
+                //             timeCountDown: timeUtil.countDown(that.data.endTime)
+                //         })
+                //     }, 1000);
+                // }
             }
         })
-
-
-        // 发起众筹
-        if (!inviteId) {
-            this.startzc(options.id);
-        }
     },
     startzc: function(actId) {
-        let that= this;
+        let that = this;
         utils.ajax('POST', 'api/zc/zcOrder/save', {
             actId: actId,
-            userId: app.globalData.memberId,
+            userId: userId,
         }, function(res) {
 
             if (res.data.code == 0) {
                 that.setData({
-                    orderId:res.data.data.orderNumber
+                    orderId: res.data.data.orderNumber
                 })
             }
         })
@@ -97,7 +146,7 @@ Page({
     onShareAppMessage: function() {
         return {
             title: app.globalData.userInfo.nickName + '正在参与"' + this.data.activityInfo.zcGoods.name + '"众筹项目，邀请您为他支持！',
-            path: '/pages/crowdfunding?type=true&userId='+app.globalData.memberId,
+            path: '/pages/crowdfunding/detail/detail?id=&userId&inviteId&originId',
             success: function(res) {
                 // 转发成功
             },
@@ -109,15 +158,18 @@ Page({
     payImmediately: function(event) {
         let that = this;
         let isHelp = 0;
-        if (this.data.friendPay){
-          isHelp=1;
+        let price = that.data.activityInfo.zcGoods.price;
+        if (!this.data.isMyself) {
+            isHelp = 1;
+            price = that.data.activityInfo.payPrice;
         }
         utils.ajax('POST', 'api/zc/zcOrder/pay', {
-            orderId: that.data.orderId,
+            orderId: that.data.inviteId,
             type: 1,
             isHelp: isHelp,
             openid: app.globalData.openid,
-            userId: app.globalData.memberId,
+            userId: that.data.userId,
+            price:price
         }, function(res) {
             if (res.data.code == 0) {
                 let data = res.data.data;

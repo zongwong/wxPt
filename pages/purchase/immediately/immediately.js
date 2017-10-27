@@ -7,10 +7,10 @@ Page({
         endTime: '',
         activityInfo: null,
         imgUrls: [],
-        friendInvite: false,
         inviteId: '',
         userId:'',
         menbers: [],
+        iInList:false,
         indicatorDots: true,
         indicatorActivColor: '#E12F25',
         autoplay: true,
@@ -26,7 +26,7 @@ Page({
         utils.phoneCallFn(telNum);
     },
     onLoad: function(options) {
-
+        //判断userId 必须有
         if (typeof options.userId !== 'undefined' && options.userId) {
             this.setData({
                 userId: options.userId
@@ -34,7 +34,7 @@ Page({
         }else{
             wx.showModal({
                 title:'提示',
-                content:'参数错误,请重新进入',
+                content:'userId错误,请扫码进入',
                 success:function(){
                     wx.switchTab({
                         url:'/pages/purchase/purchase'
@@ -43,16 +43,13 @@ Page({
             })
             return false;
         }
-        if (typeof options.type !== 'undefined') {
-            this.setData({
-                friendInvite: true,
-            })
-        }
+        //判断inviteId ,有就是开团的,没有就是没开团
         if (typeof options.inviteId !== 'undefined' && options.inviteId) {
             this.setData({
                 inviteId: options.inviteId
             })
         }
+
         let that = this;
         utils.ajax('GET', 'api/pt/ptActivities/info', {
             actId: options.id,
@@ -67,7 +64,13 @@ Page({
                 if (typeof data.memberList !== 'undefined' && data.memberList.length) {
                     let memberList = data.memberList;
                     memberList.forEach(function(item) {
-                        item.time = utils.formatTime(item.ptDate)
+                        item.time = utils.formatTime(item.ptDate);
+                        //判断自己是否在拼团列表
+                        if (item.memberId == app.globalData.memberId) {
+                            that.setData({
+                                iInList:true
+                            })
+                        }
                     })
                     that.setData({
                         menbers: memberList,
@@ -107,11 +110,8 @@ Page({
 
     },
     onShareAppMessage: function() {
-        // ?差一个判断 是不是自己点进来
+
         let query = '?id=' + this.data.activityInfo.id + '&inviteId=' + this.data.inviteId + '&userId='+this.data.userId;
-        // if (this.data.friendInvite) {
-        //     query += '&type=true&inviteId=' + this.data.inviteId + '&userId='+this.data.userId;
-        // }
         console.log(query)
         return {
             title: '我正在拼团快来',

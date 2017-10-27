@@ -56,7 +56,7 @@ Page({
         if (this.data.isajaxLoad) {
             return false;
         }
-
+        app.loading('open');
         let that = this;
         that.setData({
             isajaxLoad: true,
@@ -75,6 +75,7 @@ Page({
             that.setData({
                 isajaxLoad: false,
             })
+            app.loading('close');
             if (res.data.code == 0) {
                 if (typeof res.data.data === 'undefined') {
                     that.setData({

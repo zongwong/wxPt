@@ -3,10 +3,10 @@
         <view class="container-body">
         <view class="purchase-list">
             <block wx:for="{{activitylist}}" wx:key="{{item.id}}">
-                <navigator class="purchase-item" url="./detail/detail?id={{item.id}}&name={{item.name}}" >
-                    <view class="purchase-item-img" style="background:url(../../images/default_rect.png) center / cover no-repeat;">
-                        <image class='image' src="{{item.imgUrl}}" mode="aspectFill"></image>
-                        <text class='status'>{{item.statusText}}</text>
+                <navigator class="purchase-item" url="./detail/detail?id={{item.id}}&userId={{userId}}" >
+                    <view class="purchase-item-img" >
+                        <image class='image' src="{{item.imgUrl}}" mode="aspectFill" binderror="imgError" data-err-img="activitylist[{{index}}]"></image>
+                        <text class='status'>众筹中</text>
                     </view>
                     <view class="purchase-item-text">
                         <view class="purchase-item-title">{{item.zcGoods.name}}</view>

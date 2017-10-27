@@ -2,23 +2,39 @@ import utils from "../../utils/util.js";
 const app = getApp();
 Page({
     data: {
-        sortindex: 0,
-        sortid: null,
-        sort: [],
         activitylist: [],
         scrolltop: null,
         pageNo: 0,
         perpage: 5,
         scrollEnd: false,
         isajaxLoad: false,
+        userId: 2,
     },
     onLoad: function(options) {
-        app.tokenCheck(this.fetchPurchaseData);
+        let that = this;
+        app.tokenCheck(function() {
+            try {
+                let userId = wx.getStorageSync('userId');
+                console.log('userId:' + userId);
+                if (userId) {
+                    that.setData({
+                        userId: userId
+                    })
+                    that.fetchPurchaseData(that.data.userId)
+                } else {
+                    that.fetchPurchaseData(that.data.userId)
+                }
+            } catch (e) {
+                console.log(e)
+            }
+
+        });
     },
-    fetchPurchaseData: function(userId='') {
+    fetchPurchaseData: function() {
         if (this.data.isajaxLoad) {
             return false;
         }
+        app.loading('open');
         const that = this;
         that.setData({
             isajaxLoad: true,
@@ -30,46 +46,24 @@ Page({
             pageNo: pageNo,
             pageSize: 10,
             status: 1,
-            userId: userId
+            userId: that.data.userId
         }, function(res) {
             that.setData({
                 isajaxLoad: false,
             })
+            app.loading('close');
             if (typeof res.data.data === 'undefined') {
                 that.setData({
                     scrollEnd: true
                 })
                 return false;
             }
-            let list = res.data.data;
-            list.forEach(function(item, index) {
-                switch (item.status) {
-                    case 1:
-                        item.statusText = '众筹中';
-                        break;
-                    case 2:
-                        item.statusText = '已下单';
-                        break;
-                    case 3:
-                        item.statusText = '已过期';
-                        break;
-                }
-            })
-            let newactivitylist = that.data.activitylist.concat(list).concat(list);
+
+            let newactivitylist = that.data.activitylist.concat(res.data.data);
             that.setData({
                 activitylist: newactivitylist
             });
         })
-    },
-    goToTop: function() { //回到顶部
-        this.setData({
-            scrolltop: 0
-        })
-    },
-    scrollLoading: function() { //滚动加载
-        if (!this.data.scrollEnd) {
-            this.fetchPurchaseData();
-        }
     },
     scanCode: function() {
         var that = this;
@@ -91,7 +85,7 @@ Page({
     },
     onPullDownRefresh: function() {
         this.setData({
-            page: 0,
+            pageNo: 0,
             activitylist: []
         })
         this.fetchPurchaseData();
@@ -103,6 +97,10 @@ Page({
         if (!this.data.scrollEnd) {
             this.fetchPurchaseData();
         }
+    },
+    imgError: function(e) {
+        let that = this;
+        utils.errImgFun(e, that);
     },
     onShareAppMessage: function() {
 

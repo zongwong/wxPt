@@ -6,9 +6,13 @@ Page({
         status: 0,
         pageNo: 0,
         scrollEnd: false,
+        isajaxLoad: false,
     },
     onLoad: function(options) {
-        this.fetchData(this.data.status);
+        let that = this;
+        app.tokenCheck(function(){
+            that.fetchData(that.data.status);
+        })
     },
     changeTab: function(event) {
         var dataset = event.currentTarget.dataset;
@@ -17,11 +21,15 @@ Page({
             pageNo: 0,
             scrollEnd: false,
             activitylist: [],
-            status: status
+            status: status,
         });
         this.fetchData(status);
     },
     fetchData: function(status) {
+        if (this.data.isajaxLoad) {
+            return false;
+        }
+        app.loading('open');
         let that = this;
         const url = 'api/pt/ptGroupOrder/list';
         this.setData({
@@ -32,6 +40,10 @@ Page({
             pageSize: 5,
             status: status,
         }, function(res) {
+            that.setData({
+                isajaxLoad: false,
+            })
+            app.loading('close');
             if (res.data.code == 0) {
                 if (typeof res.data.data === 'undefined') {
                     that.setData({
