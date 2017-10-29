@@ -2,12 +2,12 @@
     <!--   <scroll-view class="container-body" scroll-y="true" scroll-top="{{scrolltop}}" bindscroll="scrollHandle" lower-threshold="50" bindscrolltolower="scrollLoading"> -->
     <view class="container-body">
         <view class="purchase-list">
-            <navigator class="purchase-item" wx:for="{{activitylist}}" wx:key="{{item.id}}" url="./detail/detail?id={{item.id}}">
+            <navigator class="purchase-item" wx:for="{{activitylist}}" wx:key="{{item.id}}" url="./detail/detail?id={{item.id}}&userId={{userId}}">
                 <view class='ac-item'>
-                    <text class='title'>{{item.title}}</text>
+                    <text class='title'>{{item.name}}</text>
                 </view>
                 <view class="purchase-item-img">
-                    <image class='image' src="{{item.imgurl}}" mode="aspectFill"></image>
+                    <image class='image' src="{{item.imgUrl}}" mode="aspectFill" binderror="imgError" data-err-img="activitylist[{{index}}]"></image>
                 </view>
             </navigator>
         </view>

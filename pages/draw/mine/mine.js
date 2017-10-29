@@ -12,18 +12,20 @@ Page({
             count: '11',
             price: 11
         }],
+        qrcodeImg: '../../../images/user/qrcode.png',
         isajaxLoad: false,
         scrollEnd: false,
         pageNo: 0,
     },
     onLoad: function(options) {
-        app.checkToken(this.loadDataDistType);
+        app.tokenCheck(this.loadDataDistType);
     },
     loadDataDistType: function() {
 
         if (this.data.isajaxLoad) {
             return false;
         }
+        app.loading('open');
         const that = this;
         that.setData({
             isajaxLoad: true,
@@ -34,40 +36,49 @@ Page({
         utils.ajax('get', 'api/cj/cjAwardDetail/myAward', {
             pageNo: pageNo,
             pageSize: 5,
-            status: 1,
-            userId: userId
+            actId:1
         }, function(res) {
             that.setData({
                 isajaxLoad: false,
             })
-            if (typeof res.data.data === 'undefined') {
+            app.loading('close');
+            if (res.data.code == 0) {
+                
+                if (typeof res.data.data === 'undefined') {
+                    that.setData({
+                        scrollEnd: true
+                    })
+                    return false;
+                }
+                let newactivitylist = that.data.myitems.concat(res.data.data);
                 that.setData({
-                    scrollEnd: true
-                })
-                return false;
+                    myitems: newactivitylist
+                });
             }
-            let list = res.data.data;
-
-            let newactivitylist = that.data.myitems.concat(list).concat(list);
-            that.setData({
-                myitems: newactivitylist
-            });
         })
 
     },
     onPullDownRefresh: function() {
         this.setData({
-            page: 0
+            pageNo: 0,
+            myitems: []
         })
-        this.fetchSortData();
+        this.loadDataDistType();
+
         setTimeout(() => {
-            wx.stopPullDownRefresh()
+            wx.stopPullDownRefresh();
         }, 500)
     },
     onReachBottom: function() {
-
+        if (!this.data.scrollEnd) {
+            this.loadDataDistType();
+        }
     },
     onShareAppMessage: function() {
 
+    },
+    imgError: function(e) {
+        let that = this;
+        utils.errImgFun(e, that , 'myImg' ,'../../../images/default_rect.png');
     }
 })

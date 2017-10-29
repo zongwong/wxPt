@@ -14,7 +14,9 @@ Page({
         colorAwardDefault: '#F5F0FC', //奖品默认颜色
         colorAwardSelect: '#F3365E', //奖品选中颜色
         indexSelect: 0, //被选中的奖品index
+        resultIndex:2,
         isRunning: false, //是否正在抽奖
+        activitylist:null,
         imageAward: [{
                 image: '../../../images/draw/1.png',
                 name: "TV KING7S"
@@ -52,12 +54,21 @@ Page({
             id: "1",
             tel: "177*****443",
             goodName: "铠甲镀晶"
-        }]
+        }],
+        actId:'',
+        userId:14
     },
     onLoad: function(options) {
-        let actId = options.id;
-        this.getInfo(actId);
-        this.loadDrawGame();
+        let that = this;
+        app.tokenCheck(function(){
+            let actId = options.id;
+            that.setData({
+                userId:options.userId,
+                actId:actId
+            })
+            that.getInfo(actId);
+            that.loadDrawGame();
+        })
     },
     goToMyAward: function(event) {
         wx.redirectTo({
@@ -65,11 +76,15 @@ Page({
         })
     },
     getInfo:function(actId){
-       utils.ajax('GET', 'api/cj/cjActivity/info', {
-            actId: actId
+        let that = this;
+       utils.ajax('GET', 'api/cj/cjActivityMember/info', {
+            actId: actId,
+            userId:that.data.userId
         }, function(res) {
             if (res.data.code == 0) {
-
+                that.setData({
+                    activitylist:res.data.data
+                })
             }
         });
     },
@@ -123,19 +138,19 @@ Page({
         })
 
         //圆点闪烁
-        // setInterval(function () {
-        //   if (_this.data.colorCircleFirst == '#FFDF2F') {
-        //     _this.setData({
-        //       colorCircleFirst: '#FE4D32',
-        //       colorCircleSecond: '#FFDF2F',
-        //     })
-        //   } else {
-        //     _this.setData({
-        //       colorCircleFirst: '#FFDF2F',
-        //       colorCircleSecond: '#FE4D32',
-        //     })
-        //   }
-        // }, 500)//设置圆点闪烁的效果
+        setInterval(function () {
+          if (_this.data.colorCircleFirst == '#FFDF2F') {
+            _this.setData({
+              colorCircleFirst: '#FE4D32',
+              colorCircleSecond: '#FFDF2F',
+            })
+          } else {
+            _this.setData({
+              colorCircleFirst: '#FFDF2F',
+              colorCircleSecond: '#FE4D32',
+            })
+          }
+        }, 500)//设置圆点闪烁的效果
 
         //奖品item设置
         var awardList = [];
@@ -168,43 +183,79 @@ Page({
             awardList: awardList
         })
     },
+    getResult:function(){
+        let that = this;
+        utils.ajax('POST', 'api/cj/cjAwardDetail/save', {
+            actId: that.data.actId,
+            userId:that.data.userId
+        }, function(res) {
+            if (res.data.code == 0) {
+                that.setData({
+                    resultIndex:2
+                })
+
+                    
+
+
+            }
+        });
+    },
     //开始抽奖
     startGame: function() {
         if (this.data.isRunning) return
         this.setData({
             isRunning: true
         })
-        var _this = this;
-        var indexSelect = 0;
+        this.getResult();
+        let that = this;
+        var indexSelect = that.data.indexSelect;
+        var start = that.data.indexSelect;
         var i = 0;
-        var randomMaxCount = Math.floor(Math.random() * 1000);
-        var _that = this;
+        // var randomMaxCount = Math.floor(Math.random() * 1000);
+
         var timer = setInterval(function() {
-            indexSelect++;
+            indexSelect+=1;
             //这里我只是简单粗暴用y=30*x+200函数做的处理.可根据自己的需求改变转盘速度
             i += 30;
-            if (i > randomMaxCount) {
+            console.log(indexSelect)
+            if (indexSelect >= (8*3+start)) {
                 //去除循环
-                clearInterval(timer)
-                //获奖提示
-                var award = _that.data.awardList[_this.data.indexSelect + 1];
-                wx.showModal({
-                    title: '恭喜您中奖',
-                    content: '奖品：' + award.imageAward.name,
-                    showCancel: false, //去掉取消按钮
-                    success: function(res) {
-                        if (res.confirm) {
-                            _this.setData({
-                                isRunning: false
-                            })
+                
+                let dir = that.data.resultIndex - (that.data.indexSelect);
+                dir = dir >= 0?dir:(8-Math.abs(dir));
+                console.log(dir,that.data.resultIndex,that.data.indexSelect)
+                // console.log(that.data.resultIndex , that.data.indexSelect,dir);
+                if (dir === 0) {
+                    clearInterval(timer)
+                    //获奖提示
+                    var award = that.data.awardList[that.data.resultIndex];
+                    wx.showModal({
+                        title: '恭喜您中奖',
+                        content: '奖品：' + award.imageAward.name,
+                        showCancel: false, //去掉取消按钮
+                        success: function(res) {
+                            if (res.confirm) {
+                                that.setData({
+                                    isRunning: false,
+                                    // indexSelect: 0
+                                })
+                            }
                         }
-                    }
+                    })
+                }else{
+                    let ii = (that.data.indexSelect + 1) % 8;
+                    // console.log(ii)
+                    that.setData({
+                        indexSelect: ii
+                    })
+                }
+            }else{
+
+                let aa = indexSelect % 8;
+                that.setData({
+                    indexSelect: aa
                 })
             }
-            indexSelect = indexSelect % 8;
-            _this.setData({
-                indexSelect: indexSelect
-            })
         }, (200 + i))
     }
 })
