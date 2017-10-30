@@ -92,7 +92,6 @@ page {
 }
 
 .detail-3 .top {
-  height: 200rpx;
   border-bottom: 1rpx solid #6c4176;
 }
 

@@ -2,16 +2,18 @@ import utils from "../../../utils/util.js";
 const app = getApp();
 Page({
     data: {
-        myitems: [{
-            id: '1',
-            code: '1',
-            date: '2017-10-11',
-            name: '铠甲镀晶',
-            qrcodeImg: '../../../images/user/qrcode.png',
-            myImg: 'http://bryanly.oss-cn-shenzhen.aliyuncs.com/itembg.png',
-            count: '11',
-            price: 11
-        }],
+        myitems: [
+        // {
+        //     id: '1',
+        //     code: '1',
+        //     date: '2017-10-11',
+        //     name: '铠甲镀晶',
+        //     qrcodeImg: '../../../images/user/qrcode.png',
+        //     myImg: 'http://bryanly.oss-cn-shenzhen.aliyuncs.com/itembg.png',
+        //     count: '11',
+        //     price: 11
+        // }
+        ],
         qrcodeImg: '../../../images/user/qrcode.png',
         isajaxLoad: false,
         scrollEnd: false,
@@ -50,7 +52,12 @@ Page({
                     })
                     return false;
                 }
-                let newactivitylist = that.data.myitems.concat(res.data.data);
+                let list = res.data.data;
+                list.forEach(function(item){
+                    item.createDate = item.createDate.slice(0,10)
+                })
+
+                let newactivitylist = that.data.myitems.concat(list);
                 that.setData({
                     myitems: newactivitylist
                 });
@@ -80,5 +87,8 @@ Page({
     imgError: function(e) {
         let that = this;
         utils.errImgFun(e, that , 'myImg' ,'../../../images/default_rect.png');
+    },
+    previewCode:function(e){
+        utils.qrcodeShow(e)
     }
 })

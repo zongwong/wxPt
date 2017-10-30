@@ -1,122 +1,123 @@
-// pages/purchase/purchase.js
-import util from "../../utils/util.js";
+// {
+//     "id": i + 1,
+//     "title": "￥3948元铠甲镀金",
+//     "price": Math.floor(Math.random() * 10) + "元博",
+//     "imgurl": "http://bryanly.oss-cn-shenzhen.aliyuncs.com/baozi.png"
+// }
+import utils from "../../utils/util.js";
+const app = getApp();
 Page({
-  /**
-   * 页面的初始数据
-   */
-  data: {
-    sortindex: 0,  //排序索引
-    sortid: null,  //排序id
-    sort: [],
-    activitylist: [], //会议室列表列表
-    scrolltop: null, //滚动位置
-    page: 0  //分页
-  },
+    data: {
+        activitylist: [],
+        pageNo: 0,
+        scrollEnd: false,
+        isajaxLoad: false,
+        userId: 1,
+    },
+    onLoad: function(options) {
+        let that = this;
+        app.tokenCheck(function() {
+            try {
+                let userId = wx.getStorageSync('userId');
+                console.log('userId:' + userId);
+                if (userId) {
+                    that.setData({
+                        userId: userId
+                    })
+                    that.fetchPurchaseData(that.data.userId)
+                } else {
+                    that.fetchPurchaseData(that.data.userId)
+                }
+            } catch (e) {
+                console.log(e)
+            }
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-    this.fetchPurchaseData();
-  },
-  fetchPurchaseData: function () {  //获取会议室列表
-    const perpage = 10;
-    this.setData({
-      page: this.data.page + 1
-    })
-    const page = this.data.page;
-    const newlist = [];
-    for (var i = (page - 1) * perpage; i < page * perpage; i++) {
-      newlist.push({
-        "id": i + 1,
-        "title": "￥3948元铠甲镀金",
-        "price": Math.floor(Math.random() * 10) + "元博",
-        "imgurl": "http://bryanly.oss-cn-shenzhen.aliyuncs.com/baozi.png"
-      })
+        });
+    },
+    scanCode: function(event) {
+        let that = this;
+        this.setData({
+            pageNo: 0,
+            scrollEnd: false,
+        });
+        wx.scanCode({
+            success: (res) => {
+                let userId = res.result;
+                if (typeof userId !== 'undefined' && userId) {
+                    that.setData({
+                        userId: userId
+                    });
+                    this.fetchPurchaseData();
+                } else {
+                    wx.showModal({
+                        title: '提示',
+                        content: '参数错误,请重新扫码',
+                        success: function(res) {}
+                    })
+                }
+            }
+        })
+    },
+    fetchPurchaseData: function() {
+        if (this.data.isajaxLoad) {
+            return false;
+        }
+        app.loading('open');
+        let that = this;
+        that.setData({
+            isajaxLoad: true,
+            pageNo: that.data.pageNo + 1
+        })
+        const pageNo = that.data.pageNo;
+
+        const url = 'api/hx/hxActivity/list';
+
+        utils.ajax('GET', url, {
+            pageNo: pageNo,
+            pageSize: 5,
+            status: 0,
+            userId: that.data.userId
+        }, function(res) {
+            that.setData({
+                isajaxLoad: false,
+            })
+            app.loading('close');
+            if (res.data.code == 0) {
+                if (typeof res.data.data === 'undefined') {
+                    that.setData({
+                        scrollEnd: true,
+                    })
+                    return false;
+                }
+                let newactivitylist = that.data.activitylist.concat(res.data.data);
+                that.setData({
+                    activitylist: newactivitylist
+                });
+            }
+        })
+    },
+    onPullDownRefresh: function() {
+        this.setData({
+            pageNo: 0,
+            activitylist: [],
+            scrollEnd:false,
+        })
+        this.fetchPurchaseData();
+
+        setTimeout(() => {
+            wx.stopPullDownRefresh();
+        }, 500)
+    },
+    onReachBottom: function() {
+        if (!this.data.scrollEnd) {
+            this.fetchPurchaseData();
+        }
+    },
+    onShareAppMessage: function() {
+
+    },
+    imgError: function(e) {
+        let that = this;
+        utils.errImgFun(e, that);
     }
-    this.setData({
-      activitylist: this.data.activitylist.concat(newlist)
-    })
-  },
-  setSortBy: function (e) { //选择排序方式
-    const d = this.data;
-    const dataset = e.currentTarget.dataset;
-    this.setData({
-      sortindex: dataset.sortindex,
-      sortid: dataset.sortid
-    })
-    console.log('排序方式id：' + this.data.sortid);
-  },
-  setStatusClass: function (e) { //设置状态颜色
-    console.log(e);
-  },
-  scrollHandle: function (e) { //滚动事件
-    this.setData({
-      scrolltop: e.detail.scrollTop
-    })
-  },
-  goToTop: function () { //回到顶部
-    this.setData({
-      scrolltop: 0
-    })
-  },
-  scrollLoading: function () { //滚动加载
-    this.fetchPurchaseData();
-  },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-    this.setData({
-      page: 0,
-      activitylist: []
-    })
-    this.fetchPurchaseData();
-    this.fetchSortData();
-    setTimeout(() => {
-      wx.stopPullDownRefresh()
-    }, 1000)
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

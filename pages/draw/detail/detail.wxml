@@ -3,7 +3,7 @@
         {{activitylist.name}}
     </view>
     <view class='desc'>
-        说明：先抽先得，数量有限！每人可无条件获得{{activitylist.count}}次抽奖资格,每分享给1个朋友可再获得一次抽奖机会<!-- ,最多可分享{{activitylist.shareCount}}次 -->
+        说明：先抽先得，数量有限！每人可无条件获得{{activitylist.count}}次抽奖资格,每分享给1个朋友可再获得{{activitylist.shareCount}}次抽奖机会
     </view>
     <view class='time'>
         {{activitylist.beginTime}}-{{activitylist.endTime}}
@@ -15,7 +15,7 @@
     <view class="circle" wx:for="{{circleList}}" wx:key="{{index}}" style="top:{{item.topCircle}}rpx;left:{{item.leftCircle}}rpx;background-color: {{(index%2==0)?colorCircleFirst:colorCircleSecond}};"></view>
     <view class="container-in">
         <view class="content-out" wx:for="{{awardList}}" wx:key="{{index}}" style="top:{{item.topAward}}rpx;left:{{item.leftAward}}rpx;background-color: {{(index==indexSelect)?colorAwardSelect:colorAwardDefault}};">
-            <image class="award-image" src="{{item.imageAward.image}}"></image>
+            <image class="award-image" src="{{item.imageAward.imgUrl}}" binderror="imgError" data-err-img="awardList[{{index}}]"></image>
         </view>
         <view class="start-btn" bindtap="startGame" style=" background-image:url({{btnDrawImg}})"></view>
     </view>

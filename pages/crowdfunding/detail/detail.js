@@ -92,33 +92,33 @@ Page({
                 }
                 let endtime = timeUtil.countDown(that.data.endTime);
 
-                // if (!endtime) {
-                //     wx.showModal({
-                //         title: '提示',
-                //         content: '时间错误',
-                //         success: function(res) {
-                //             wx.switchTab({
-                //                 url: '/pages/crowdfunding/crowdfunding'
-                //             })
-                //         }
-                //     })
-                // } else if (endtime === '活动已结束') {
-                //     wx.showModal({
-                //         title: '提示',
-                //         content: '来晚啦,活动已结束~',
-                //         success: function(res) {
-                //             wx.switchTab({
-                //                 url: '/pages/crowdfunding/crowdfunding'
-                //             })
-                //         }
-                //     })
-                // } else {
-                //     setInterval(function() {
-                //         that.setData({
-                //             timeCountDown: timeUtil.countDown(that.data.endTime)
-                //         })
-                //     }, 1000);
-                // }
+                if (!endtime) {
+                    wx.showModal({
+                        title: '提示',
+                        content: '时间错误',
+                        success: function(res) {
+                            wx.switchTab({
+                                url: '/pages/crowdfunding/crowdfunding'
+                            })
+                        }
+                    })
+                } else if (endtime === '活动已结束') {
+                    wx.showModal({
+                        title: '提示',
+                        content: '来晚啦,活动已结束~',
+                        success: function(res) {
+                            wx.switchTab({
+                                url: '/pages/crowdfunding/crowdfunding'
+                            })
+                        }
+                    })
+                } else {
+                    setInterval(function() {
+                        that.setData({
+                            timeCountDown: timeUtil.countDown(that.data.endTime)
+                        })
+                    }, 1000);
+                }
             }
         })
     },

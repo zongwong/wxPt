@@ -13,7 +13,7 @@ Page({
         app.tokenCheck(function() {
             try {
                 let userId = wx.getStorageSync('userId');
-                console.log('userId:' + userId);
+                console.log('本地userId:' + userId);
                 if (userId) {
                     that.setData({
                         userId: userId

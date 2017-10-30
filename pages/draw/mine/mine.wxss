@@ -57,7 +57,6 @@ page {
 }
 
 .myItems .top .left {
-  width: 50%;
   height: 90rpx;
   display: flex;
   align-items: center;  

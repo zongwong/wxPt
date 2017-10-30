@@ -14,60 +14,28 @@ Page({
         colorAwardDefault: '#F5F0FC', //奖品默认颜色
         colorAwardSelect: '#F3365E', //奖品选中颜色
         indexSelect: 0, //被选中的奖品index
-        resultIndex:2,
+        resultIndex: '',
         isRunning: false, //是否正在抽奖
-        activitylist:null,
-        imageAward: [{
-                image: '../../../images/draw/1.png',
-                name: "TV KING7S"
-            },
-            {
-                image: '../../../images/draw/2.png',
-                name: "PPBOX 小黑"
-            },
-            {
-                image: '../../../images/draw/3.png',
-                name: "PPTV 一年会员"
-            },
-            {
-                image: '../../../images/draw/4.png',
-                name: "家电券 100元"
-            },
-            {
-                image: '../../../images/draw/5.png',
-                name: "速度与激情T恤"
-            },
-            {
-                image: '../../../images/draw/6.png',
-                name: "乐高玩具"
-            },
-            {
-                image: '../../../images/draw/7.png',
-                name: "侏罗纪T恤"
-            },
-            {
-                image: '../../../images/draw/8.png',
-                name: "IPHONE6S 16G"
-            }
-        ], //奖品图片数组
+        activitylist: null,
+        imageAward: [], //奖品图片数组
         recordsList: [{
             id: "1",
             tel: "177*****443",
             goodName: "铠甲镀晶"
         }],
-        actId:'',
-        userId:14
+        actId: '',
+        userId: 14
     },
     onLoad: function(options) {
         let that = this;
-        app.tokenCheck(function(){
+        app.tokenCheck(function() {
             let actId = options.id;
             that.setData({
-                userId:options.userId,
-                actId:actId
+                userId: options.userId,
+                actId: actId
             })
             that.getInfo(actId);
-            that.loadDrawGame();
+            
         })
     },
     goToMyAward: function(event) {
@@ -75,16 +43,36 @@ Page({
             url: '../mine/mine',
         })
     },
-    getInfo:function(actId){
+    getInfo: function(actId) {
         let that = this;
-       utils.ajax('GET', 'api/cj/cjActivityMember/info', {
+        utils.ajax('GET', 'api/cj/cjActivityMember/info', {
             actId: actId,
-            userId:that.data.userId
+            userId: that.data.userId
         }, function(res) {
             if (res.data.code == 0) {
                 that.setData({
-                    activitylist:res.data.data
+                    activitylist: res.data.data
                 })
+
+                let awards = res.data.data.awards;
+                let dir = 8 - awards.length;
+                for (let i = 0; i < dir; i++) {
+                    awards.push({
+                        actId: "-1",
+                        awardOdds: 0.1,
+                        id: "-1",
+                        imgUrl: "2",
+                        name: "再接再厉",
+                        num: 0,
+                        price: 0,
+                    });
+                }
+                that.setData({
+                    imageAward: awards
+                })
+                that.loadDrawGame();
+
+
             }
         });
     },
@@ -95,7 +83,25 @@ Page({
 
     },
     onShareAppMessage: function() {
+        let that = this;
+        return {
+            title:'抽奖',
+            success:function(){
+                utils.ajax('POST', 'api/cj/cjActivity/share', {
+                    actId: that.data.actId,
+                    userId: that.data.userId
+                }, function(res) {
+                    if (res.data.code == 0) {
+                        let num = that.data.activitylist.memberCount + that.data.activitylist.shareCount;
+                        that.setData({
+                            'activitylist.memberCount':num
+                        })
 
+
+                    }
+                });
+            }
+        }
     },
     loadDrawGame: function() {
         var _this = this;
@@ -138,19 +144,19 @@ Page({
         })
 
         //圆点闪烁
-        setInterval(function () {
-          if (_this.data.colorCircleFirst == '#FFDF2F') {
-            _this.setData({
-              colorCircleFirst: '#FE4D32',
-              colorCircleSecond: '#FFDF2F',
-            })
-          } else {
-            _this.setData({
-              colorCircleFirst: '#FFDF2F',
-              colorCircleSecond: '#FE4D32',
-            })
-          }
-        }, 500)//设置圆点闪烁的效果
+        // setInterval(function() {
+        //     if (_this.data.colorCircleFirst == '#FFDF2F') {
+        //         _this.setData({
+        //             colorCircleFirst: '#FE4D32',
+        //             colorCircleSecond: '#FFDF2F',
+        //         })
+        //     } else {
+        //         _this.setData({
+        //             colorCircleFirst: '#FFDF2F',
+        //             colorCircleSecond: '#FE4D32',
+        //         })
+        //     }
+        // }, 500) //设置圆点闪烁的效果
 
         //奖品item设置
         var awardList = [];
@@ -183,20 +189,47 @@ Page({
             awardList: awardList
         })
     },
-    getResult:function(){
+    getResult: function(fn) {
         let that = this;
         utils.ajax('POST', 'api/cj/cjAwardDetail/save', {
             actId: that.data.actId,
-            userId:that.data.userId
+            userId: that.data.userId
         }, function(res) {
+
             if (res.data.code == 0) {
-                that.setData({
-                    resultIndex:2
-                })
-
+                let data = res.data.data;
+                if (data.isAward) {
+                    let num = that.data.activitylist.memberCount - 1;
+                    that.setData({
+                        'activitylist.memberCount':num
+                    })
                     
+                    const result = {};
+                    result.awardName = data.awardName;
+                    result.awardId = data.awardId;
 
+                    that.data.imageAward.forEach(function(item, index) {
+                        if (item.awardId === result.awardId && item.awardName === result.awardName) {
+                            that.setData({
+                                resultIndex: index
+                            })
+                        }
+                    })
 
+                } else {
+                    that.setData({
+                        resultIndex: -1
+                    })
+                }
+                fn && fn();
+            }else{
+                wx.showModal({
+                    title:'提示',
+                    content:res.data.message+',快去分享给好友吧~'
+                })
+                that.setData({
+                    isRunning: false
+                })
             }
         });
     },
@@ -206,56 +239,64 @@ Page({
         this.setData({
             isRunning: true
         })
-        this.getResult();
         let that = this;
-        var indexSelect = that.data.indexSelect;
-        var start = that.data.indexSelect;
-        var i = 0;
-        // var randomMaxCount = Math.floor(Math.random() * 1000);
+        this.getResult(function(){
 
-        var timer = setInterval(function() {
-            indexSelect+=1;
-            //这里我只是简单粗暴用y=30*x+200函数做的处理.可根据自己的需求改变转盘速度
-            i += 30;
-            console.log(indexSelect)
-            if (indexSelect >= (8*3+start)) {
-                //去除循环
-                
-                let dir = that.data.resultIndex - (that.data.indexSelect);
-                dir = dir >= 0?dir:(8-Math.abs(dir));
-                console.log(dir,that.data.resultIndex,that.data.indexSelect)
-                // console.log(that.data.resultIndex , that.data.indexSelect,dir);
-                if (dir === 0) {
-                    clearInterval(timer)
-                    //获奖提示
-                    var award = that.data.awardList[that.data.resultIndex];
-                    wx.showModal({
-                        title: '恭喜您中奖',
-                        content: '奖品：' + award.imageAward.name,
-                        showCancel: false, //去掉取消按钮
-                        success: function(res) {
-                            if (res.confirm) {
-                                that.setData({
-                                    isRunning: false,
-                                    // indexSelect: 0
-                                })
+        
+        
+            var indexSelect = that.data.indexSelect;
+            var start = that.data.indexSelect;
+            var i = 0;
+            // var randomMaxCount = Math.floor(Math.random() * 1000);
+
+            var timer = setInterval(function() {
+                indexSelect += 1;
+                //这里我只是简单粗暴用y=30*x+200函数做的处理.可根据自己的需求改变转盘速度
+                i += 30;
+                console.log(indexSelect)
+                if (indexSelect >= (8 * 3 + start)) {
+                    //去除循环
+
+                    let dir = that.data.resultIndex - (that.data.indexSelect);
+                    dir = dir >= 0 ? dir : (8 - Math.abs(dir));
+                    console.log(dir, that.data.resultIndex, that.data.indexSelect)
+                    // console.log(that.data.resultIndex , that.data.indexSelect,dir);
+                    if (dir === 0) {
+                        clearInterval(timer)
+                        //获奖提示
+                        var award = that.data.awardList[that.data.resultIndex];
+                        wx.showModal({
+                            title: '恭喜您中奖',
+                            content: '奖品：' + award.imageAward.name,
+                            showCancel: false, //去掉取消按钮
+                            success: function(res) {
+                                if (res.confirm) {
+                                    that.setData({
+                                        isRunning: false,
+                                    })
+                                }
                             }
-                        }
-                    })
-                }else{
-                    let ii = (that.data.indexSelect + 1) % 8;
-                    // console.log(ii)
+                        })
+                    } else {
+                        let ii = (that.data.indexSelect + 1) % 8;
+                        // console.log(ii)
+                        that.setData({
+                            indexSelect: ii
+                        })
+                    }
+                } else {
+
+                    let aa = indexSelect % 8;
                     that.setData({
-                        indexSelect: ii
+                        indexSelect: aa
                     })
                 }
-            }else{
+            }, (200 + i))
 
-                let aa = indexSelect % 8;
-                that.setData({
-                    indexSelect: aa
-                })
-            }
-        }, (200 + i))
+        });
+    },
+    imgError: function(e) {
+        let that = this;
+        utils.errImgFun(e, that ,'imageAward.imgUrl','../../../images/default_rect.png');
     }
 })
