@@ -518,7 +518,7 @@ Page({
                     myPrice:data.friendAward.price,
                 }
                 wx.navigateTo({
-                    url: '/pages/user/replaceAward/replaceAward'
+                    url: '/pages/user/replaceAward/replaceAward?query='+JSON.stringify(query)
                 })
             }
 
@@ -555,8 +555,15 @@ Page({
                 console.log(res)
                 return false;
                 if (data.isAward) { //中奖
+
+                    let query = {
+                        awardName:data.myAward.awardName,
+                        imgUrl:data.myAward.imgUrl,
+                        price:data.myAward.rice,
+                        shareCount:0,
+                    }
                     wx.navigateTo({
-                        url: '/pages/user/award/award?awardName=&img=&shareCount=&price='
+                        url: '/pages/user/award/award?query='+JSON.stringify(query)
                     })
                 } else {
 

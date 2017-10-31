@@ -18,14 +18,8 @@ Page({
     },
     onLoad: function(options) {
       this.setData({
-        options:options
+        options:options.query
       })
-    },
-    replaceAward: function(event) {
-
-        wx.redirectTo({
-            url: '../replace/replace?name=世界在你脚下',
-        })
     },
     onShareAppMessage: function(res) {
         if (res.from === 'button') {

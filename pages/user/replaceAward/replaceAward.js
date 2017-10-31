@@ -16,7 +16,7 @@ Page({
   },
   onLoad: function (options) {
     this.setData({
-      options:options
+      options:options.query
     })
   },
   onShareAppMessage: function (res) {
