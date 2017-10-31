@@ -7,35 +7,7 @@ Page({
         showModalStatus: false,
         liwuIcon: '../../../images/user/liwu.png',
         awards: [],
-        allSelects: [
-            // {
-            //     id: "1",
-            //     type:1,
-            //     title: "您驾驶的汽车属于",
-            //     items: [{
-            //         id: "1",
-            //         name: "公车",
-            //         checked: false
-            //     }, {
-            //         id: "2",
-            //         name: "私车",
-            //         checked: false
-            //     }]
-            // }, {
-            //     id: "2",
-            //     title: "镀晶可以保护车身",
-            //     type:2,
-            //     items: [{
-            //         id: "1",
-            //         name: "可以",
-            //         checked: false
-            //     }, {
-            //         id: "2",
-            //         name: "步行",
-            //         checked: false
-            //     }]
-            // }
-        ],
+        allSelects: [],
         unckeckImg: '../../../images/user/unchecked.png',
         ckeckImg: '../../../images/user/checked.png',
         needToPay: 5,
@@ -50,9 +22,99 @@ Page({
         vcode: '',
         orderId: '',
         isDjs: false,
-        djsText: '获取验证码'
+        djsText: '获取验证码',
+        userId: '',
+        originId: '',
+        orderId: '',
+        isMyself: '',
+        isHelped: false,
+        originName: '',
+        ableTime: 0,
     },
     onLoad: function(options) {
+
+        // originId区分我自己,orderId区分支付,ableTime邀请次数,拆奖 记录本地openAward = orderId & true ,记录本地actId = orderId+actId,只能参加一次
+        // 1.我的入口, 我(未支付,信息展示, '无orderId' , )   我(已支付,未拆奖) 我(已支付,已拆奖[有无邀请次数])
+        // 2.好友入口,已拆奖 / 未拆奖 
+        // userId是必须的
+        // 拆奖后-> 清理openAward
+        let that = this;
+        let userId = options.userId,
+            originId = options.originId,
+            orderId = options.orderId || '',
+            originName = options.originName;
+        that.setData({
+            originId: originId,
+            userId: userId,
+            orderId: orderId
+        })
+
+
+        if (originId == app.globalData.memberId) {
+            //我自己
+            that.setData({
+                isMyself: true,
+            })
+
+            if (typeof orderId != 'undefined' && orderId) {
+                //已下单
+                that.setData({
+                    orderId: orderId
+                })
+
+
+                try {
+                    let openAward = wx.getStorageSync('openAward')
+                    if (openAward) {
+                        //直接拆奖
+                        let record = openAward.split('&');
+                        if (record[0] == that.data.orderId && Boolean(record[1])) {
+                            that.createAnimation('open');
+                        }
+                    } else {
+                        //显示邀请按钮等
+
+                    }
+                } catch (e) {
+                    console.log(e)
+                }
+            } else {
+                //未下单
+
+            }
+
+
+
+
+        } else {
+            //好友
+            that.setData({
+                isMyself: false,
+            })
+
+            try {
+                let chaiRecord = wx.getStorageSync('chaiRecord')
+                if (chaiRecord) {
+                    //已帮忙拆奖
+                    let record = chaiRecord.split('&');
+                    if (record[0] == that.data.orderId && Boolean(record[1])) {
+                        that.setData({
+                            isHelped: true
+                        })
+                    }
+                } else {
+                    //未帮忙拆奖
+
+                }
+            } catch (e) {
+                console.log(e)
+            }
+
+
+
+        }
+
+
 
 
         app.tokenCheck(function() {})
@@ -92,10 +154,10 @@ Page({
         // }
 
 
-        let that = this;
+
         utils.ajax('GET', 'api/hx/hxActivity/info', {
             actId: options.id,
-            inviteId: that.data.inviteId,
+            orderId: that.data.orderId,
         }, function(res) {
 
             if (res.data.code == 0) {
@@ -104,21 +166,26 @@ Page({
                     activityInfo: data,
                     endTime: data.endTime,
                 });
-                if (typeof data.memberList !== 'undefined' && data.memberList.length) {
-                    let memberList = data.memberList;
-                    memberList.forEach(function(item) {
-                        item.time = utils.formatTime(item.ptDate);
-                        //判断自己是否在列表
-                        if (item.memberId == app.globalData.memberId) {
-                            that.setData({
-                                iInList: true
-                            })
-                        }
-                    })
-                    that.setData({
-                        menbers: memberList,
-                    })
-                }
+
+
+                // if (typeof data.memberList !== 'undefined' && data.memberList.length) {
+                //     let memberList = data.memberList;
+                //     memberList.forEach(function(item) {
+                //         item.time = utils.formatTime(item.ptDate);
+                //         //判断自己是否在列表
+                //         if (item.memberId == app.globalData.memberId) {
+                //             that.setData({
+                //                 iInList: true
+                //             })
+                //         }
+                //     })
+                //     that.setData({
+                //         menbers: memberList,
+                //     })
+                // }
+                // 
+
+                // 时间
                 // let endtime = timeUtil.countDown(that.data.endTime);
 
                 // if (!endtime) {
@@ -224,7 +291,6 @@ Page({
                         })
                     })
                     item.items = selects;
-                    // item.type = 2;
                 })
 
                 that.setData({
@@ -270,26 +336,26 @@ Page({
             })
         }
     },
-    setCurrentSelectChecked: function(parentId, checked, id) {
-        var _allSelects = this.data.allSelects;
-        for (var i = 0; i < _allSelects.length; i++) {
-            var item = _allSelects[i];
-            var pId = item.id;
-            if (pId == parentId) {
-                var cell = item['items'];
-                for (var j = 0; j < cell.length; j++) {
-                    var cellItem = cell[j];
-                    var cId = cellItem.id;
-                    if (cId == id) {
-                        cellItem.checked = checked;
-                    } else {
-                        cellItem.checked = !checked;
-                    }
-                }
-            }
-        }
-        return _allSelects;
-    },
+    // setCurrentSelectChecked: function(parentId, checked, id) {
+    //     var _allSelects = this.data.allSelects;
+    //     for (var i = 0; i < _allSelects.length; i++) {
+    //         var item = _allSelects[i];
+    //         var pId = item.id;
+    //         if (pId == parentId) {
+    //             var cell = item['items'];
+    //             for (var j = 0; j < cell.length; j++) {
+    //                 var cellItem = cell[j];
+    //                 var cId = cellItem.id;
+    //                 if (cId == id) {
+    //                     cellItem.checked = checked;
+    //                 } else {
+    //                     cellItem.checked = !checked;
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     return _allSelects;
+    // },
     // 问卷提交
     wjSubmit: function(event) {
         let that = this;
@@ -337,9 +403,19 @@ Page({
             that.setData({
                 isAjax: true
             })
+            if (res.data.code == 0) {
+                //问卷提交成功
 
-            //问卷提交成功->支付
-            // that.pay()
+
+                if (that.data.orderId) {
+                    //代抽
+                    that.createAnimation('open');
+                } else {
+                    //支付
+                    that.pay()
+                }
+
+            }
 
         })
     },
@@ -422,6 +498,32 @@ Page({
             [name]: e.detail.value
         })
     },
+    // 代抽
+    replaceGet: function() {
+
+        utils.ajax('POST', 'api/hx/hxAwardDetail/replace', {
+            orderId: that.data.orderId,
+        }, function(res) {
+
+            if (res.data.code == 0) {
+                // 代抽成功
+                let data = res.data.data;
+                let query = {
+                    awardName:data.myAward.awardName,
+                    imgUrl:data.myAward.imgUrl,
+                    price:data.myAward.rice,
+                    originName:that.data.originName,
+                    myAwardName:data.friendAward.awardName,
+                    myImgUrl:data.friendAward.imgUrl,
+                    myPrice:data.friendAward.price,
+                }
+                wx.navigateTo({
+                    url: '/pages/user/replaceAward/replaceAward'
+                })
+            }
+
+        })
+    },
     // 立即抽奖
     getReward: function() {
 
@@ -434,6 +536,13 @@ Page({
             return false;
         }
 
+        // 代抽
+        if (this.data.orderId) { //?orderId
+            this.replaceGet();
+            return false;
+        }
+
+
         let that = this;
         utils.ajax('POST', 'api/hx/hxAwardDetail/openAward', {
             orderId: that.data.orderId || 8,
@@ -443,6 +552,8 @@ Page({
         }, function(res) {
             if (res.data.code == 0) {
                 let data = res.data.data;
+                console.log(res)
+                return false;
                 if (data.isAward) { //中奖
                     wx.navigateTo({
                         url: '/pages/user/award/award?awardName=&img=&shareCount=&price='
@@ -496,9 +607,6 @@ Page({
                 this.setData({
                     showModalStatus: false
                 });
-                wx.redirectTo({
-                    url: '../award/award',
-                })
             }
         }.bind(this), 200)
 
@@ -510,7 +618,7 @@ Page({
         }
     },
     onShareAppMessage: function() {
-      let query = '?id=&originId=&ordeId=&'
+        let query = '?id=&originId=&ordeId=&'
     },
 
 

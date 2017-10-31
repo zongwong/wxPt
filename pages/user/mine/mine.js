@@ -121,7 +121,7 @@ Page({
     },
     imgError: function(e) {
         let that = this;
-        utils.errImgFun(e, that, 'myImg', '../../../images/default_rect.png');
+        utils.errImgFun(e, that, 'imgUrl', '../../../images/default_rect.png');
     },
     previewCode: function(e) {
         utils.qrcodeShow(e)

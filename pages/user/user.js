@@ -13,10 +13,15 @@ Page({
         scrollEnd: false,
         isajaxLoad: false,
         userId: 1,
+        originId:'',
+        orderId:'',
     },
     onLoad: function(options) {
         let that = this;
         app.tokenCheck(function() {
+            that.setData({
+                originId:app.globalData.memberId
+            })
             try {
                 let userId = wx.getStorageSync('userId');
                 console.log('userId:' + userId);

@@ -1,10 +1,8 @@
 <view class="getward">
-  <view class='congratulate'>恭喜您获得</view>
-  <image class='img' mode='aspectFit' src='{{goodInfo.goodImg}}'></image>
-  <view class='goodTitle'>{{goodInfo.goodTitle}}</view>
-  <view class='invite {{goodInfo.inviteFlag?"":"hide"}}'>您还有{{goodInfo.time}}次邀请好友代您抽奖的机会!</view>
-  <!-- <button open-type="share" class='btn-award {{goodInfo.inviteFlag?"":"hide"}}'>邀请好友代抽</button> -->
-  <button bindtap='replaceAward' class='btn-award {{goodInfo.inviteFlag?"":"hide"}}'>邀请好友代抽</button>
-  <button bindtap='lookMine' class='btn-award {{goodInfo.inviteFlag?"hide":""}}'>查看奖品</button>
-  <button bindtap='lookMine' class='btn-award-other {{goodInfo.inviteFlag?"":"hide"}}'>查看奖品</button>
+    <view class='congratulate'>恭喜您获得</view>
+    <image class='img' mode='aspectFit' src='{{goodInfo.goodImg}}'></image>
+    <view class='goodTitle'>{{goodInfo.goodTitle}}</view>
+    <view class='invite'>您还有{{goodInfo.time}}次邀请好友代您抽奖的机会!</view>
+    <button open-type="share" class='btn-award'>邀请好友代抽</button>
+    <button bindtap='lookMine' class='btn-award'>查看奖品</button>
 </view>

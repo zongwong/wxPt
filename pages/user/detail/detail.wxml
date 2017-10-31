@@ -33,10 +33,33 @@
                 </view>
             </view>
         </view>
-        <view class='detail-4'>
+        <!-- 我未下单 -->
+        <view class='detail-4' wx:if="{{!orderId}}">
             <text>支付{{activityInfo.money}}元,立即参与</text>
             <text data-statu="open" bindtap='wjSubmit' class='submit' type='submit'>提交</text>
         </view>
+        <!-- 我已下单,有次数 -->
+        <view class='detail-4' wx:if="{{orderId && ableTime}}">
+            <text>还可要{{ableTime}}人代抽</text>
+            <text data-statu="open" bindtap='' class='submit' open-data="share">邀请好友抽奖</text>
+        </view>
+        <!-- 我已下单,无次数 -->
+        <view class='detail-4' wx:if="{{orderId && !ableTime}}">
+            <text>还可要0人代抽</text>
+            <text data-statu="open" bindtap='' class='submit'  disabled="true" style="background: #ccc;">邀请好友抽奖</text>
+        </view>
+
+        <!-- 好友,已拆奖 -->
+        <view class='detail-4' wx:if="{{!isMyself && isHelped}}">
+            <text>活动结束/代抽次数为0/已拆</text>
+            <text data-statu="open" bindtap='' class='submit' disabled="true" style="background: #ccc;">为Ta抽奖</text>
+        </view>
+        <!-- 好友,未拆奖 -->
+        <view class='detail-4' wx:if="{{!isMyself && !isHelped}}">
+            <text>{{originName}}邀您</text>
+            <text data-statu="open" bindtap='wjSubmit' class='submit' >为Ta抽奖</text>
+        </view>
+
     </view>
 </view>
 <!--使用animation属性指定需要执行的动画-->
@@ -67,7 +90,7 @@
             </view>
         </view>
         <view class='btnBox'>
-            <view class="btn_ok" bindtap="getReward" data-statu="close">立即拆奖</view>
+            <view class="btn_ok" bindtap="getReward">立即拆奖</view>
         </view>
     </view>
 </view>

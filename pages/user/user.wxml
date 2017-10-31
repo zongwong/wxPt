@@ -3,7 +3,7 @@
     <!--   <scroll-view class="container-body" scroll-y="true" scroll-top="{{scrolltop}}" bindscroll="scrollHandle" lower-threshold="50" bindscrolltolower="scrollLoading"> -->
     <view class="container-body">
         <view class="purchase-list">
-            <navigator class="purchase-item" wx:for="{{activitylist}}" wx:key="{{item.id}}" url="./detail/detail?id={{item.id}}&userId={{userId}}">
+            <navigator class="purchase-item" wx:for="{{activitylist}}" wx:key="{{item.id}}" url="./detail/detail?id={{item.id}}&userId={{userId}}&originId={{originId}}&orderId={{orderId}}">
                 <view class='ac-item'>
                     <text class='price'>{{item.money}}元博</text>
                     <text class='title'>{{item.name}}</text>
