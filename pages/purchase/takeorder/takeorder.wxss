@@ -141,31 +141,31 @@ page {
   height: 60rpx;
 }
 
-.menbers {
+.members {
   background-color: #fff;
   padding: 30rpx 40rpx;
   margin-top: 20rpx;
 }
 
-.menbers .titleBox {
+.members .titleBox {
   border-bottom: 2rpx solid #f2f2f2;
   padding-bottom: 16rpx;
   color: #303030;
 }
 
-.menbers .tips .tip {
+.members .tips .tip {
   color: #5b5b5b;
   line-height: 50rpx;
   margin-top: 20rpx;
 }
 
-.menbers .face {
+.members .face {
   width: 90rpx;
   height: 90rpx;
   margin-right: 20rpx;
 }
 
-.menbers .menber {
+.members .member {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -174,13 +174,13 @@ page {
   font-size: 28rpx;
 }
 
-.menbers .faceName {
+.members .faceName {
   height: 130rpx;
   display: flex;
   align-items: center;
 }
 
-.menbers .menber .fulldate {
+.members .member .fulldate {
   color: #979797;
 }
 

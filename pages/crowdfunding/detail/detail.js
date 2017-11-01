@@ -19,8 +19,9 @@ Page({
         originId:'',
         isMyself:true,
         iInList:false,
-        menbers: [],
+        members: [],
         userId:'',
+        isEnough:false,
     },
     calling: function(event) {
         var dataset = event.currentTarget.dataset;
@@ -28,6 +29,12 @@ Page({
         utils.phoneCallFn(telNum);
     },
     onLoad: function(options) {
+        //userid必须
+        //originId判断是否自己, 
+        //入口,我未下单  我 已下单  inviteId判断
+        //好友,已支付 , 未支付  iInList判断
+        //先发起 凑够人 支付金额isEnough
+
         if (typeof options.userId !== 'undefined' && options.userId) {
             this.setData({
                 userId: options.userId
@@ -45,11 +52,6 @@ Page({
             return false;
         }
 
-        if (typeof options.inviteId !== 'undefined' && options.inviteId) {
-            this.setData({
-                inviteId: options.inviteId
-            })
-        }
         if (typeof options.originId !== 'undefined' && options.originId) {
             this.setData({
                 originId: options.originId,
@@ -61,6 +63,12 @@ Page({
                 })
             }
         }
+        if (typeof options.inviteId !== 'undefined' && options.inviteId) {
+            this.setData({
+                inviteId: options.inviteId
+            })
+        }
+
 
 
         let that = this;
@@ -75,66 +83,83 @@ Page({
                     activityInfo: data,
                     endTime: data.endTime,
                 });
-                if (typeof data.memberList !== 'undefined' && data.memberList.length) {
-                    let memberList = data.memberList;
-                    memberList.forEach(function(item) {
-                        item.time = utils.formatTime(item.ptDate);
-                        //判断自己是否在列表
-                        if (item.memberId == app.globalData.memberId) {
-                            that.setData({
-                                iInList:true
-                            })
-                        }
+                if (typeof data.zcOrderDetails !='undefined' && data.zcOrderDetails) {
+                    
+                
+                    let helpList = data.zcOrderDetails.filter(function(item){
+                        return item.status == 2
                     })
-                    that.setData({
-                        menbers: memberList,
-                    })
+                    
+
+                    if (helpList.length) {
+                        helpList.forEach(function(item) {
+                            //判断自己是否在列表
+                            if (item.headId == app.globalData.memberId) {
+                                that.setData({
+                                    iInList:true
+                                })
+                            }
+                        })
+                        that.setData({
+                            members: helpList
+                        })
+                    }
                 }
                 let endtime = timeUtil.countDown(that.data.endTime);
 
-                if (!endtime) {
-                    wx.showModal({
-                        title: '提示',
-                        content: '时间错误',
-                        success: function(res) {
-                            wx.switchTab({
-                                url: '/pages/crowdfunding/crowdfunding'
-                            })
-                        }
-                    })
-                } else if (endtime === '活动已结束') {
-                    wx.showModal({
-                        title: '提示',
-                        content: '来晚啦,活动已结束~',
-                        success: function(res) {
-                            wx.switchTab({
-                                url: '/pages/crowdfunding/crowdfunding'
-                            })
-                        }
-                    })
-                } else {
-                    setInterval(function() {
-                        that.setData({
-                            timeCountDown: timeUtil.countDown(that.data.endTime)
-                        })
-                    }, 1000);
-                }
+                // if (!endtime) {
+                //     wx.showModal({
+                //         title: '提示',
+                //         content: '时间错误',
+                //         success: function(res) {
+                //             wx.switchTab({
+                //                 url: '/pages/crowdfunding/crowdfunding'
+                //             })
+                //         }
+                //     })
+                // } else if (endtime === '活动已结束') {
+                //     wx.showModal({
+                //         title: '提示',
+                //         content: '来晚啦,活动已结束~',
+                //         success: function(res) {
+                //             wx.switchTab({
+                //                 url: '/pages/crowdfunding/crowdfunding'
+                //             })
+                //         }
+                //     })
+                // } else {
+                //     setInterval(function() {
+                //         that.setData({
+                //             timeCountDown: timeUtil.countDown(that.data.endTime)
+                //         })
+                //     }, 1000);
+                // }
             }
         })
     },
-    startzc: function(actId) {
-        let that = this;
-        utils.ajax('POST', 'api/zc/zcOrder/save', {
-            actId: actId,
-            userId: userId,
-        }, function(res) {
+    startzc: function(fn) {
+            let that = this;
+            utils.ajax('POST', 'api/zc/zcOrder/save', {
+                actId: that.data.activityInfo.id,
+                userId: that.data.userId,
+            }, function(res) {
 
-            if (res.data.code == 0) {
-                that.setData({
-                    orderId: res.data.data.orderNumber
-                })
-            }
-        })
+                if (res.data.code == 0) {
+
+                    let data = res.data.data;
+                    if (that.data.isMyself) {  //我发起众筹                  
+                        that.setData({
+                            inviteId: data.id
+                        })
+                        fn && fn();
+                    }else{
+                        let query = 'id='+that.data.activityInfo.id+'&inviteId='+data.orderNumber+'&userId='+that.data.userId+'&originId='+app.globalData.memberId;
+                        wx.redirectTo({
+                            url:'/pages/crowdfunding/detail/detail?'+query
+                        })
+                    }
+                }
+            })
     },
     onPullDownRefresh: function() {
 
@@ -155,10 +180,44 @@ Page({
             }
         }
     },
+    // 检测众筹是否发起
+    checkOrder:function(e){
+        let type = e.currentTarget.dataset['type']
+        if (this.data.inviteId) {
+            this.payImmediately();
+        }else{
+            if (type == 'share') {
+                this.startzc(function(){
+                    wx.showShareMenu({
+                      withShareTicket: true
+                    })
+                });
+            }else{
+                this.startzc();
+            }
+            
+        }
+    },
     payImmediately: function(event) {
+
+        //人数判断
+        if (this.data.members.length >= this.data.activityInfo.maxCount) {
+            this.setData({
+                isEnough:true
+            })
+        }
+        //我要支付
+        if (this.data.isMyself&&!this.data.isEnough) {
+            wx.showModal({
+                title:'提示',
+                content:'众筹人数不足'
+            })
+            return false;
+        }
+
         let that = this;
         let isHelp = 0;
-        let price = that.data.activityInfo.zcGoods.price;
+        let price = that.data.activityInfo.zcGoods.price-that.data.activityInfo.discountPrice*that.data.activityInfo.maxCount;
         if (!this.data.isMyself) {
             isHelp = 1;
             price = that.data.activityInfo.payPrice;
@@ -176,6 +235,23 @@ Page({
                 that.wxPayment(data)
             }
         })
-    }
+    },
+    wxPayment: function(Payment) {
+        let that = this;
+        wx.requestPayment({
+            'timeStamp': '' + Payment.timeStamp,
+            'nonceStr': Payment.nonceStr,
+            'package': Payment.wxPackage,
+            'signType': 'MD5',
+            'paySign': Payment.sign,
+            'success': function(res) {
+                
+                
+            },
+            'fail': function(res) {
+
+            }
+        })
+    },
 
 })

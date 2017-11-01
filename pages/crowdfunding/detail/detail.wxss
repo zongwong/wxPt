@@ -52,11 +52,11 @@
   color: #ff7900;
 }
 
-.menber .right {
+.member .right {
   color: #ff7900;
 }
 
-.menber .right .text:first-child {
+.member .right .text:first-child {
   border: 2rpx solid #ff7900;
   margin-right: 10rpx;
   padding: 4rpx 8rpx;

@@ -32,14 +32,14 @@
     </view>
     <view class='tip'>请朋友代付{{activityInfo.payPrice}}元抵用{{activityInfo.discountPrice}}元，最多可找{{activityInfo.maxCount}}人付款</view>
 </view>
-<view class='menbers' wx:if="{{menbers.length}}">
+<view class='members' wx:if="{{members.length}}">
     <view class='titleBox'>
         <text class='title'>朋友代付</text>
     </view>
-    <view class='menber' wx:for="{{menbers}}" wx:key="menbers{{item.index}}">
+    <view class='member' wx:for="{{members}}" wx:key="members{{item.index}}">
         <view class='faceName'>
-            <image class='face' src='{{item.imgUrl}}'></image>
-            <text class='text'>{{item.name}}</text>
+            <image class='face' src='{{item.member.imgUrl}}'></image>
+            <text class='text'>{{item.member.name}}</text>
             <text class='pay'>￥{{activityInfo.payPrice}}</text>
         </view>
         <view class='right'>
@@ -63,7 +63,7 @@
         <image src='../../../images/funding/phone.png' class='phone'></image>
     </view>
 </view>
-<view class='menbers'>
+<view class='members'>
     <view class='titleBox'>
         <text class='title'>消费提醒</text>
     </view>
@@ -74,19 +74,19 @@
     </view>
 </view>
 <!-- 众筹未成功 -->
-<view class='footer myPay' wx:if="{{!inviteId && isMyself}}">
+<view class='footer myPay' wx:if="{{isMyself && !isEnough}}">
     <view class='left'>
         已有
-        <text>{{menbers.length}}</text>人帮忙付款
+        <text>{{members.length}}</text>人帮忙付款
     </view>
-    <button open-type='share' class='right first inviteBtn'>请朋友付款</button>
-    <text data-id='1111' bindtap='payImmediately' class='right'>立即付款</text>
+    <button bindtap='checkOrder' data-type="share" class='right first inviteBtn'>请朋友付款</button>
+    <text data-id='1111' bindtap='checkOrder' data-type="pay" class='right'>立即付款</text>
 </view>
 <!-- 众筹成功 -->
-<view class='footer friendPay' wx:if="{{isMyself && inviteId}}">
+<view class='footer friendPay' wx:if="{{isMyself && inviteId && isEnough}}">
     <view class='left'>
         已有
-        <text>{{menbers.length}}</text>人帮忙付款,众筹成功
+        <text>{{members.length}}</text>人帮忙付款,众筹成功
     </view>
     <text data-id='1111' bindtap='payImmediately' class='right'>立即付款</text>
 </view>
@@ -95,7 +95,7 @@
     <view class='left'>
         团购码:xxxx
     </view>
-    <text data-id='1111' bindtap='payImmediately' class='right'>查看二维码</text>
+    <text class='right'>查看二维码</text>
 </view>
 
 <!-- 好友未付款 -->
@@ -104,12 +104,12 @@
         立即为朋友支付
         <text>{{activityInfo.payPrice}}元</text>，朋友可抵{{activityInfo.discountPrice}}
     </view>
-    <navigator url='../fpay/fpay?id=111' class='right'>立即付款</navigator>
+    <text class='right' bindtap='payImmediately'>立即付款</text>
 </view>
 <!-- 好友已付款 -->
 <view class='footer friendPay' wx:if="{{!isMyself && iInList}}">
     <view class='left'>
         您已帮忙支付过了,朋友可抵{{activityInfo.discountPrice}}
     </view>
-    <navigator url='../fpay/fpay?id=111' class='right'>我也要众筹</navigator>
+    <text class='right' bindtap='startzc'>我也要众筹</text>
 </view>
