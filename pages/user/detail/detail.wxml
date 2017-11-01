@@ -4,7 +4,7 @@
         <view class="detail-1" style='background-image:url({{activityInfo.imgUrl}});'>
             <view class='bottom'>
                 <view>
-                    <text class='price'>{{activityInfo.money}}</text>
+                    <text class='price'>{{activityInfo.money}}元博</text>
                     <text class='title'>{{activityInfo.name}}</text>
                 </view>
                 <view>

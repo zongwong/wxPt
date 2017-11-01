@@ -1,25 +1,3 @@
-// loadDataDistType: function () {
-//   var fromServer = [];
-//   for (var i = 0; i < 3; i++) {
-//     var data = {
-//       id: Math.floor(Math.random() * 10000) + '',
-//       code: Math.floor(Math.random() * 100000000000) + '',
-//       date: '2017-10-11',
-//       name: '铠甲镀晶',
-//       
-//       myImg:'http://bryanly.oss-cn-shenzhen.aliyuncs.com/itembg.png',
-//       count: Math.floor(Math.random() * 10) + '',
-//       price: Math.floor(Math.random() * 1000)
-//     }
-//     fromServer.push(data);
-//   }
-//   this.setData({
-//     myitems: fromServer
-//   })
-// }
-
-
-
 import utils from "../../../utils/util.js";
 const app = getApp();
 Page({
@@ -30,9 +8,18 @@ Page({
         scrollEnd: false,
         pageNo: 0,
         activeTab: true,
+        userId:'',
+        originId:'',
+        orderId:'',
     },
     onLoad: function(options) {
-        app.tokenCheck(this.loadDataDistType);
+        let that= this;
+        app.tokenCheck(function(){
+            that.setData({
+                originId:app.globalData.memberId
+            })
+            that.loadDataDistType()
+        });
     },
     loadDataDistType: function() {
 

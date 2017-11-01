@@ -30,6 +30,8 @@ Page({
         isHelped: false,
         originName: '',
         ableTime: 0,
+        isPayed:false,
+        payStatus:0,
     },
     onLoad: function(options) {
 
@@ -399,15 +401,21 @@ Page({
         utils.ajax('POST', 'api/hx/hxTopic/finish', {
             topicIds: topocIds,
             answers: answers,
+            userId:that.data.userId,
+            actId:that.data.activityInfo.id
         }, function(res) {
             that.setData({
                 isAjax: true
             })
             if (res.data.code == 0) {
                 //问卷提交成功
+                let data = res.data.data;
+                that.setData({
+                    orderId:data.id,
+                    payStatus:data.payStatus
+                })
 
-
-                if (that.data.orderId) {
+                if (that.data.isPayed) {
                     //代抽
                     that.createAnimation('open');
                 } else {
@@ -426,7 +434,8 @@ Page({
             actId: that.data.activityInfo.id,
             userId: that.data.userId,
             type: 1,
-            openid: app.globalData.openid
+            openid: app.globalData.openid,
+            orderId:that.data.orderId
         }, function(res) {
             if (res.data.code == 0) {
                 that.wxPayment(res.data.data);
@@ -444,6 +453,9 @@ Page({
             'paySign': Payment.sign,
             'success': function(res) {
                 that.createAnimation('open');
+                that.setData({
+                    payStatus:1
+                })
             },
             'fail': function(res) {
 
@@ -552,6 +564,11 @@ Page({
         }, function(res) {
             if (res.data.code == 0) {
                 let data = res.data.data;
+
+                that.setData({
+                    payStatus:3
+                })
+
                 console.log(res)
                 return false;
                 if (data.isAward) { //中奖

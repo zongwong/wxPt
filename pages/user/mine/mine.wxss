@@ -1,5 +1,9 @@
 /* pages/user/mine/mine.wxss */
-
+@import "../user.wxss";
+.purchase-list{
+  width: 100%;
+  margin-top:20rpx;
+}
 page {
   font-size: 30rpx;
   background-color: #f2f2f2;

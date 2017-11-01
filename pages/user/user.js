@@ -1,9 +1,3 @@
-// {
-//     "id": i + 1,
-//     "title": "￥3948元铠甲镀金",
-//     "price": Math.floor(Math.random() * 10) + "元博",
-//     "imgurl": "http://bryanly.oss-cn-shenzhen.aliyuncs.com/baozi.png"
-// }
 import utils from "../../utils/util.js";
 const app = getApp();
 Page({
