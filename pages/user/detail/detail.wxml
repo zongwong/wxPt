@@ -18,6 +18,9 @@
                 <text bindtap='lookMyAward' class='right'>我的奖品</text>
             </view>
             <view class='bottom'>
+                <view class="item" wx:if="{{awards.length==0}}">
+                    <text>暂无中奖记录</text>  
+                </view>
                 <view wx:for="{{awards}}" wx:key="{{item.id}}" class='item'>
                     <text>{{item.mobile}}</text>
                     <text>{{item.awardName}}</text>
@@ -34,17 +37,17 @@
             </view>
         </view>
         <!-- 我未下单 -->
-        <view class='detail-4' wx:if="{{!orderId}}">
+        <view class='detail-4' wx:if="{{isMyself && !orderId}}">
             <text>支付{{activityInfo.money}}元,立即参与</text>
             <text data-statu="open" bindtap='wjSubmit' class='submit' type='submit'>提交</text>
         </view>
         <!-- 我已下单,有次数 -->
-        <view class='detail-4' wx:if="{{orderId && ableTime}}">
+        <view class='detail-4' wx:if="{{isMyself && orderId && ableTime}}">
             <text>还可要{{ableTime}}人代抽</text>
             <text data-statu="open" bindtap='' class='submit' open-data="share">邀请好友抽奖</text>
         </view>
         <!-- 我已下单,无次数 -->
-        <view class='detail-4' wx:if="{{orderId && !ableTime}}">
+        <view class='detail-4' wx:if="{{isMyself && orderId && !ableTime}}">
             <text>还可要0人代抽</text>
             <text data-statu="open" bindtap='' class='submit'  disabled="true" style="background: #ccc;">邀请好友抽奖</text>
         </view>

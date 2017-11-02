@@ -15,8 +15,10 @@ Page({
     onLoad: function(options) {
         let that= this;
         app.tokenCheck(function(){
+            let userId = wx.getStorageSync('userId')||1;
             that.setData({
-                originId:app.globalData.memberId
+                originId:app.globalData.memberId,
+                userId:userId
             })
             that.loadDataDistType()
         });

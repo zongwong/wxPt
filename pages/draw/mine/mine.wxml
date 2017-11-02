@@ -23,7 +23,7 @@
         <image mode='aspectFill' class='myImg' src='{{item.myImg}}' binderror="imgError" data-err-img="myitems[{{index}}]"></image>
       </view>
       <view class='right'>
-        <text class='right-1'>{{item.actName}}</text>
+        <text class='right-1'>{{item.awardName}}</text>
         <text class='right-2'>数量：{{item.awardNum}}</text>
         <text class='right-3'>价值￥{{item.awardPrice}}</text>
       </view>

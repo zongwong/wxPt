@@ -4,7 +4,6 @@ Page({
     data: {
         descImg: 'http://bryanly.oss-cn-shenzhen.aliyuncs.com/shuo.png',
         drawImg: 'http://bryanly.oss-cn-shenzhen.aliyuncs.com/chou.png',
-        chanceCount: 1,
         //大转盘实例
         btnDrawImg: 'http://bryanly.oss-cn-shenzhen.aliyuncs.com/btndraw.png',
         circleList: [], //圆点数组
@@ -18,13 +17,9 @@ Page({
         isRunning: false, //是否正在抽奖
         activitylist: null,
         imageAward: [], //奖品图片数组
-        recordsList: [{
-            id: "1",
-            tel: "177*****443",
-            goodName: "铠甲镀晶"
-        }],
         actId: '',
-        userId: 14
+        userId: 14,
+        awardsRecord:[],
     },
     onLoad: function(options) {
         let that = this;
@@ -50,11 +45,14 @@ Page({
             userId: that.data.userId
         }, function(res) {
             if (res.data.code == 0) {
+                let data = res.data.data;
                 that.setData({
-                    activitylist: res.data.data
+                    activitylist: data
                 })
 
-                let awards = res.data.data.awards;
+
+                // 奖项处理 不足八个 补全未中奖
+                let awards = data.awards;
                 let dir = 8 - awards.length;
                 for (let i = 0; i < dir; i++) {
                     awards.push({
@@ -70,39 +68,49 @@ Page({
                 that.setData({
                     imageAward: awards
                 })
+
                 that.loadDrawGame();
+
+                //中奖记录处理
+                if (typeof data.awardDetails != 'undefined') {
+                    let awards = Array.from(data.awardDetails);
+
+                    let awardsRecord = awards.filter(function(item, index) {
+                        return (item.isAward == 1)
+                    })
+
+                    that.setData({
+                        awardsRecord: awardsRecord.slice(0, 4)
+                    })
+                    let start = 0;
+                    if (awardsRecord.length >= 5) {
+
+                        setInterval(function() {
+                            start += 1;
+                            if (start > awardsRecord.length - 4) {
+                                start = 0;
+                            }
+                            let nowList = awardsRecord.slice(start, start + 4)
+                            that.setData({
+                                awardsRecord: nowList
+                            })
+                        }, 2000)
+                    } else {
+                        that.setData({
+                            awardsRecord: awardsRecord
+                        })
+                    }
+                }
+
 
 
             }
         });
     },
-    onPullDownRefresh: function() {
+    // onPullDownRefresh: function() {
 
-    },
-    onReachBottom: function() {
+    // },
 
-    },
-    onShareAppMessage: function() {
-        let that = this;
-        return {
-            title:'抽奖',
-            success:function(){
-                utils.ajax('POST', 'api/cj/cjActivity/share', {
-                    actId: that.data.actId,
-                    userId: that.data.userId
-                }, function(res) {
-                    if (res.data.code == 0) {
-                        let num = that.data.activitylist.memberCount + that.data.activitylist.shareCount;
-                        that.setData({
-                            'activitylist.memberCount':num
-                        })
-
-
-                    }
-                });
-            }
-        }
-    },
     loadDrawGame: function() {
         var _this = this;
         //圆点设置
@@ -218,9 +226,10 @@ Page({
 
                 } else {
                     that.setData({
-                        resultIndex: -1
+                        resultIndex: 7
                     })
                 }
+
                 fn && fn();
             }else{
                 wx.showModal({
@@ -279,7 +288,6 @@ Page({
                         })
                     } else {
                         let ii = (that.data.indexSelect + 1) % 8;
-                        // console.log(ii)
                         that.setData({
                             indexSelect: ii
                         })
@@ -298,5 +306,26 @@ Page({
     imgError: function(e) {
         let that = this;
         utils.errImgFun(e, that ,'imageAward.imgUrl','../../../images/default_rect.png');
-    }
+    },
+    onShareAppMessage: function() {
+        let that = this;
+        return {
+            title:'我正在抽奖抽奖',
+            success:function(){
+                utils.ajax('POST', 'api/cj/cjActivity/share', {
+                    actId: that.data.actId,
+                    userId: that.data.userId
+                }, function(res) {
+                    if (res.data.code == 0) {
+                        let num = that.data.activitylist.memberCount + that.data.activitylist.shareCount;
+                        that.setData({
+                            'activitylist.memberCount':num
+                        })
+
+
+                    }
+                });
+            }
+        }
+    },
 })

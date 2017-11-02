@@ -2,13 +2,6 @@
 const app = getApp();
 Page({
     data: {
-        goodInfo: {
-            id: "1",
-            goodImg: "http://bryanly.oss-cn-shenzhen.aliyuncs.com/benz.png",
-            goodTitle: "￥4980元铠甲镀晶",
-            time: 3,
-            inviteFlag: true
-        },
         options:{},
     },
     lookMine: function(event) {
@@ -18,19 +11,18 @@ Page({
     },
     onLoad: function(options) {
       this.setData({
-        options:options.query
+        options:JSON.parse(options.query)
       })
     },
     onShareAppMessage: function(res) {
-        if (res.from === 'button') {
-            // 来自页面内转发按钮
-            console.log(res.target)
-        }
+
+        let query = 'id='+this.data.options.id+'&userId='+this.data.options.userId+'&originId='+this.data.options.originId+'&orderId='+this.data.options.orderId;
+
         return {
-            title: '大众维修店',
-            path: '/pages/user/replace/replace?share=true',
+            title: app.globalData.userInfo.nickName+'邀请您代抽奖品',
+            path: '/pages/user/detail/detail?'+query,
             success: function(res) {
-                // 转发成功
+                console.log('分享成功:'+query)
             },
             fail: function(res) {
                 // 转发失败

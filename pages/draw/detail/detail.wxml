@@ -25,7 +25,7 @@
         <text class='title'>中奖记录</text>
         <text bindtap='goToMyAward' class='myaward'>我的奖品</text>
     </view>
-    <view class='record' wx:for="{{activitylist.awardDetails}}" wx:key="{{item.id}}">
+    <view class='record' wx:for="{{awardsRecord}}" wx:key="{{item.id}}">
         <text class='tel'>{{item.memberName}}</text>
         <text class='goodName'>{{item.awardName}}</text>
     </view>

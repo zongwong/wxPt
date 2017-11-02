@@ -34,107 +34,110 @@ Page({
         //入口,我未下单  我 已下单  inviteId判断
         //好友,已支付 , 未支付  iInList判断
         //先发起 凑够人 支付金额isEnough
+        app.tokenCheck(function(){
+            console.log(app.globalData)
 
-        if (typeof options.userId !== 'undefined' && options.userId) {
-            this.setData({
-                userId: options.userId
-            })
-        } else {
-            wx.showModal({
-                title: '提示',
-                content: '参数错误,请重新进入',
-                success: function() {
-                    wx.switchTab({
-                        url: '/pages/crowdfunding/crowdfunding'
-                    })
-                }
-            })
-            return false;
-        }
-
-        if (typeof options.originId !== 'undefined' && options.originId) {
-            this.setData({
-                originId: options.originId,
-            })
-            //判断众筹单是不是自己发起的
-            if (options.originId != app.globalData.memberId) {
+            if (typeof options.userId !== 'undefined' && options.userId) {
                 this.setData({
-                    isMyself:false
+                    userId: options.userId
                 })
-            }
-        }
-        if (typeof options.inviteId !== 'undefined' && options.inviteId) {
-            this.setData({
-                inviteId: options.inviteId
-            })
-        }
-
-
-
-        let that = this;
-        utils.ajax('GET', 'api/zc/zcActivity/info', {
-            actId: options.id,
-            inviteId: that.data.inviteId,
-        }, function(res) {
-
-            if (res.data.code == 0) {
-                let data = res.data.data;
-                that.setData({
-                    activityInfo: data,
-                    endTime: data.endTime,
-                });
-                if (typeof data.zcOrderDetails !='undefined' && data.zcOrderDetails) {
-                    
-                
-                    let helpList = data.zcOrderDetails.filter(function(item){
-                        return item.status == 2
-                    })
-                    
-
-                    if (helpList.length) {
-                        helpList.forEach(function(item) {
-                            //判断自己是否在列表
-                            if (item.headId == app.globalData.memberId) {
-                                that.setData({
-                                    iInList:true
-                                })
-                            }
-                        })
-                        that.setData({
-                            members: helpList
+            } else {
+                wx.showModal({
+                    title: '提示',
+                    content: '参数错误,请重新进入',
+                    success: function() {
+                        wx.switchTab({
+                            url: '/pages/crowdfunding/crowdfunding'
                         })
                     }
-                }
-                let endtime = timeUtil.countDown(that.data.endTime);
-
-                // if (!endtime) {
-                //     wx.showModal({
-                //         title: '提示',
-                //         content: '时间错误',
-                //         success: function(res) {
-                //             wx.switchTab({
-                //                 url: '/pages/crowdfunding/crowdfunding'
-                //             })
-                //         }
-                //     })
-                // } else if (endtime === '活动已结束') {
-                //     wx.showModal({
-                //         title: '提示',
-                //         content: '来晚啦,活动已结束~',
-                //         success: function(res) {
-                //             wx.switchTab({
-                //                 url: '/pages/crowdfunding/crowdfunding'
-                //             })
-                //         }
-                //     })
-                // } else {
-                //     setInterval(function() {
-                //         that.setData({
-                //             timeCountDown: timeUtil.countDown(that.data.endTime)
-                //         })
-                //     }, 1000);
-                // }
+                })
+                return false;
             }
+
+            if (typeof options.originId !== 'undefined' && options.originId) {
+                this.setData({
+                    originId: options.originId,
+                })
+                //判断众筹单是不是自己发起的
+                if (options.originId != app.globalData.memberId) {
+                    this.setData({
+                        isMyself:false
+                    })
+                }
+            }
+            if (typeof options.inviteId !== 'undefined' && options.inviteId) {
+                this.setData({
+                    inviteId: options.inviteId
+                })
+            }
+
+
+
+            let that = this;
+            utils.ajax('GET', 'api/zc/zcActivity/info', {
+                actId: options.id,
+                inviteId: that.data.inviteId,
+            }, function(res) {
+
+                if (res.data.code == 0) {
+                    let data = res.data.data;
+                    that.setData({
+                        activityInfo: data,
+                        endTime: data.endTime,
+                    });
+                    if (typeof data.zcOrderDetails !='undefined' && data.zcOrderDetails) {
+                        
+                    
+                        let helpList = data.zcOrderDetails.filter(function(item){
+                            return item.status == 1 && item.isHelp == 1
+                        })
+                        
+
+                        if (helpList.length) {
+                            helpList.forEach(function(item) {
+                                //判断自己是否在列表
+                                if (item.headId == app.globalData.memberId) {
+                                    that.setData({
+                                        iInList:true
+                                    })
+                                }
+                            })
+                            that.setData({
+                                members: helpList
+                            })
+                        }
+                    }
+                    let endtime = timeUtil.countDown(that.data.endTime);
+
+                    // if (!endtime) {
+                    //     wx.showModal({
+                    //         title: '提示',
+                    //         content: '时间错误',
+                    //         success: function(res) {
+                    //             wx.switchTab({
+                    //                 url: '/pages/crowdfunding/crowdfunding'
+                    //             })
+                    //         }
+                    //     })
+                    // } else if (endtime === '活动已结束') {
+                    //     wx.showModal({
+                    //         title: '提示',
+                    //         content: '来晚啦,活动已结束~',
+                    //         success: function(res) {
+                    //             wx.switchTab({
+                    //                 url: '/pages/crowdfunding/crowdfunding'
+                    //             })
+                    //         }
+                    //     })
+                    // } else {
+                    //     setInterval(function() {
+                    //         that.setData({
+                    //             timeCountDown: timeUtil.countDown(that.data.endTime)
+                    //         })
+                    //     }, 1000);
+                    // }
+                }
+            })
         })
     },
     startzc: function(fn) {
@@ -160,25 +163,6 @@ Page({
                     }
                 }
             })
-    },
-    onPullDownRefresh: function() {
-
-    },
-
-    onReachBottom: function() {
-
-    },
-    onShareAppMessage: function() {
-        return {
-            title: app.globalData.userInfo.nickName + '正在参与"' + this.data.activityInfo.zcGoods.name + '"众筹项目，邀请您为他支持！',
-            path: '/pages/crowdfunding/detail/detail?id=&userId&inviteId&originId',
-            success: function(res) {
-                // 转发成功
-            },
-            fail: function(res) {
-                // 转发失败
-            }
-        }
     },
     // 检测众筹是否发起
     checkOrder:function(e){
@@ -245,13 +229,28 @@ Page({
             'signType': 'MD5',
             'paySign': Payment.sign,
             'success': function(res) {
-                
+                wx.navigateTo({
+                    url:'/pages/crowdfunding/fpay/fpay'
+                })
                 
             },
             'fail': function(res) {
 
             }
         })
+    },
+    onShareAppMessage: function() {
+        let query = 'id='+this.data.activityInfo.id+'&userId='+this.data.userId+'&inviteId='+this.data.inviteId+'&originId='+this.data.originId;
+        return {
+            title: app.globalData.userInfo.nickName + '正在参与"' + this.data.activityInfo.zcGoods.name + '"众筹项目，邀请您为他支持！',
+            path: '/pages/crowdfunding/detail/detail?'+query,
+            success: function(res) {
+                console.log(query)
+            },
+            fail: function(res) {
+                // 转发失败
+            }
+        }
     },
 
 })

@@ -2,11 +2,7 @@ import utils from "../../utils/util.js";
 const app = getApp();
 Page({
     data: {
-        activitylist: [{
-            "id": 1,
-            "name": "VIP客户专享*幸运大转盘抽终身保养卡",
-            "imgUrl": "http://bryanly.oss-cn-shenzhen.aliyuncs.com/draw.png"
-        }],
+        activitylist: [],
         pageNo: 0,
         scrollEnd: false,
         isajaxLoad: false,
@@ -85,10 +81,12 @@ Page({
                     })
                     return false;
                 }
-                let newactivitylist = that.data.activitylist.concat(res.data.data);
+                let data = res.data.data;
+                let newactivitylist = that.data.activitylist.concat(data);
                 that.setData({
                     activitylist: newactivitylist
                 });
+
             }
         })
     },

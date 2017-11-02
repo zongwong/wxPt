@@ -91,7 +91,7 @@
     <text data-id='1111' bindtap='payImmediately' class='right'>立即付款</text>
 </view>
 <!-- 已下单 -->
-<view class='footer friendPay' wx:if="{{activityInfo.status==2}}">
+<view class='footer friendPay' wx:if="{{isMyself && activityInfo.status==2}}">
     <view class='left'>
         团购码:xxxx
     </view>
