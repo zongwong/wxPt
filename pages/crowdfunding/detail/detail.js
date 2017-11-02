@@ -29,6 +29,7 @@ Page({
         utils.phoneCallFn(telNum);
     },
     onLoad: function(options) {
+        let that = this;
         //userid必须
         //originId判断是否自己, 
         //入口,我未下单  我 已下单  inviteId判断
@@ -38,7 +39,7 @@ Page({
             console.log(app.globalData)
 
             if (typeof options.userId !== 'undefined' && options.userId) {
-                this.setData({
+                that.setData({
                     userId: options.userId
                 })
             } else {
@@ -55,25 +56,22 @@ Page({
             }
 
             if (typeof options.originId !== 'undefined' && options.originId) {
-                this.setData({
+                that.setData({
                     originId: options.originId,
                 })
                 //判断众筹单是不是自己发起的
                 if (options.originId != app.globalData.memberId) {
-                    this.setData({
+                    that.setData({
                         isMyself:false
                     })
                 }
             }
             if (typeof options.inviteId !== 'undefined' && options.inviteId) {
-                this.setData({
+                that.setData({
                     inviteId: options.inviteId
                 })
             }
 
-
-
-            let that = this;
             utils.ajax('GET', 'api/zc/zcActivity/info', {
                 actId: options.id,
                 inviteId: that.data.inviteId,

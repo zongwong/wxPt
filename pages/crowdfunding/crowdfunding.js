@@ -12,7 +12,9 @@ Page({
     },
     onLoad: function(options) {
         let that = this;
-        app.tokenCheck(function() {
+
+        app.tokenCheck(function(options) {
+
             try {
                 let userId = wx.getStorageSync('userId');
                 console.log('userId:' + userId);
@@ -35,13 +37,13 @@ Page({
             return false;
         }
         app.loading('open');
-        const that = this;
+        let that = this;
         that.setData({
             isajaxLoad: true,
             pageNo: that.data.pageNo + 1
         })
-        const pageNo = that.data.pageNo;
-
+        let pageNo = that.data.pageNo;
+        console.log(app.globalData)
         utils.ajax('get', 'api/zc/zcActivity/list', {
             pageNo: pageNo,
             pageSize: 10,

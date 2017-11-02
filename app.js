@@ -10,6 +10,7 @@ App({
         serverPath: 'https://www.baby25.cn/jeesite/',
         islogin: false,
     },
+    loginTimer:null,
     onLaunch: function() {
         this.toLogin();
     },
@@ -24,10 +25,12 @@ App({
             } else {
                 wx.login({
                     success: function(loginres) {
+                        console.log('1获取code')
                         if (loginres.code) {
                             that.globalData.code = loginres.code;
                             wx.getUserInfo({
                                 success: function(userres) {
+                                    console.log('2获取userinfo')
                                     that.globalData.userInfo = userres.userInfo;
                                     that.getOpenId(loginres.code, userres.userInfo, fn);
                                 }
@@ -50,6 +53,7 @@ App({
                 'content-type': 'application/x-www-form-urlencoded'
             },
             success: function(res) {
+                console.log('3获取openid')
                 that.globalData.openid = res.data.data.openid;
                 that.getMemberLogin(res.data.data.openid, userInfo, fn);
             }
@@ -84,6 +88,7 @@ App({
                     memberInfo.token = that.globalData.token;
                     wx.setStorageSync('memberInfo', memberInfo);
                     fn && fn();
+                    console.log('4获取token')
                     console.log(that.globalData)
                 }
 
@@ -92,12 +97,14 @@ App({
     },
     tokenCheck: function(fn) {
         let that = this;
-        let loginTimer = setInterval(function() {
+        that.loginTimer = setInterval(function() {
+            console.log('检测..')
             if (that.globalData.token) {
+                console.log('清除检测')
+                clearInterval(that.loginTimer);
                 typeof fn == 'function' && fn();
-                clearInterval(loginTimer);
             }
-        }, 10);
+        }, 50);
     },
     loading:function(type){
         if (type==='open') {
