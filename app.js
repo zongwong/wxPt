@@ -8,40 +8,52 @@ App({
         appid: 'wx15d6ca4ad6e41cd8',
         secret: '84f45a7e8b406edf3f802d8bbdbd7aa6',
         serverPath: 'https://www.baby25.cn/jeesite/',
-        islogin: false,
     },
-    loginTimer:null,
+    loginTimer: null,
     onLaunch: function() {
-        this.toLogin();
-    },
-    toLogin: function(fn) {
-        let that = this;
-        if (this.globalData.token) {
-            typeof fn == "function" && fn();
-            return false;
-        } else {
-            if (this.globalData.openid && this.globalData.userInfo) {
-                this.getMemberLogin(this.globalData.openid, this.globalData.userInfo, fn);
-            } else {
-                wx.login({
-                    success: function(loginres) {
-                        console.log('1获取code')
-                        if (loginres.code) {
-                            that.globalData.code = loginres.code;
-                            wx.getUserInfo({
-                                success: function(userres) {
-                                    console.log('2获取userinfo')
-                                    that.globalData.userInfo = userres.userInfo;
-                                    that.getOpenId(loginres.code, userres.userInfo, fn);
-                                }
-                            })
-                        }
-                    }
-                })
+        
+        try {
+            let mydata = wx.getStorageSync('mydata');
+
+            if (mydata) {
+                const nowTime = new Date().getTime();
+                if (nowTime - mydata.time < 6 * 60 * 60 * 1000) { //缓存6小时
+                    this.globalData.token = mydata.token;
+                    this.globalData.userInfo = mydata.userInfo;
+                    this.globalData.openid = mydata.openid;
+                    this.globalData.memberId = mydata.memberId;
+                    
+                }else{
+                    wx.clearStorageSync()
+                    this.toLogin();
+                }
+            }else{
+                this.toLogin();
             }
+        } catch (e) {
+
         }
     },
-    getOpenId: function(code, userInfo, fn) {
+    toLogin: function() {
+        let that = this;
+        wx.login({
+            success: function(loginres) {
+                console.log('1获取code')
+                if (loginres.code) {
+                    that.globalData.code = loginres.code;
+                    wx.getUserInfo({
+                        success: function(userres) {
+                            console.log('2获取userinfo')
+                            that.globalData.userInfo = userres.userInfo;
+                            that.getOpenId(loginres.code, userres.userInfo);
+                        }
+                    })
+                }
+            }
+        })
+
+    },
+    getOpenId: function(code, userInfo) {
         var that = this;
         wx.request({
             method: 'POST',
@@ -53,17 +65,16 @@ App({
                 'content-type': 'application/x-www-form-urlencoded'
             },
             success: function(res) {
-                console.log('3获取openid')
-                that.globalData.openid = res.data.data.openid;
-                that.getMemberLogin(res.data.data.openid, userInfo, fn);
+                if (res.data.status == 0) {
+                    console.log('3获取openid')
+                    that.globalData.openid = res.data.data.openid;
+                    that.getMemberLogin(res.data.data.openid, userInfo);
+                }
             }
+
         })
     },
-    getMemberLogin: function(openid, userInfo, fn) {
-        if (this.globalData.token) {
-            typeof fn == "function" && fn();
-            return false;
-        }
+    getMemberLogin: function(openid, userInfo) {
         let that = this;
         wx.request({
             method: 'POST',
@@ -78,16 +89,19 @@ App({
                 imgUrl: userInfo.avatarUrl,
             },
             success: function(res) {
-                if (res.data.code == '0') {
-                    let data = res.data.data
+                if (res.data.code == 0) {
+                    let data = res.data.data;
                     that.globalData.token = data.memberId + '_' + data.token;
                     that.globalData.memberId = data.memberId;
-                    let memberInfo = {};
-                    memberInfo.memberId = data.memberId;
-                    memberInfo.userId = data.memberId;
-                    memberInfo.token = that.globalData.token;
-                    wx.setStorageSync('memberInfo', memberInfo);
-                    fn && fn();
+
+                    let mydata = {
+                        token: that.globalData.token,
+                        userInfo: that.globalData.userInfo,
+                        openid: that.globalData.openid,
+                        memberId:that.globalData.memberId,
+                        time: new Date().getTime(),
+                    }
+                    wx.setStorageSync('mydata', mydata);
                     console.log('4获取token')
                     console.log(that.globalData)
                 }
@@ -97,21 +111,22 @@ App({
     },
     tokenCheck: function(fn) {
         let that = this;
+        that.loading('open', '检测token')
         that.loginTimer = setInterval(function() {
-            console.log('检测..')
             if (that.globalData.token) {
-                console.log('清除检测')
+                console.log('token有了')
                 clearInterval(that.loginTimer);
+                that.loading('close')
                 typeof fn == 'function' && fn();
             }
-        }, 50);
+        }, 200);
     },
-    loading:function(type){
-        if (type==='open') {
+    loading: function(type, text = "加载中") {
+        if (type === 'open') {
             wx.showLoading({
-                title:'加载中'
+                title: text
             })
-        }else if (type === 'close') {
+        } else if (type === 'close') {
             wx.hideLoading()
         }
     }

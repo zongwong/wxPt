@@ -1,9 +1,8 @@
-const utils = require('../../../utils/util.js');
+import utils from "../../../utils/util.js";
 import timeUtil from "../../../utils/timeUtil.js";
 const app = getApp();
 Page({
     data: {
-        scrolltop: null, //滚动位置
         showModalStatus: false,
         liwuIcon: '../../../images/user/liwu.png',
         awards: [],
@@ -27,6 +26,10 @@ Page({
         ableTime: 0,
         isPayed: false,
         payStatus: 0,
+        isChai:false,
+        isHead:false,
+        isFront:false,
+        isHeadTop:false,
     },
     onLoad: function(options) {
         // originId区分我自己,orderId区分支付,ableTime邀请次数,拆奖 记录本地openAward = orderId & true ,记录本地actId = orderId+actId
@@ -609,6 +612,28 @@ Page({
                 showModalStatus: true
             });
         }
+    },
+    chai:function(){
+        let that = this;
+        this.setData({
+            isChai:true
+        })
+        setTimeout(function(){
+            that.setData({
+                isChai:false,
+                isHeadTop:true,
+            })
+            setTimeout(function(){
+                that.setData({
+                    isFront:true,
+                })
+                setTimeout(function(){
+                    that.setData({
+                        isHead:true,
+                    })
+                }, 0);
+            }, 900);
+        }, 1000);
     },
     onShareAppMessage: function() {
 

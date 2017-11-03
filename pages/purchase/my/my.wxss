@@ -42,6 +42,7 @@ page {
   box-sizing: border-box;
   white-space: nowrap;
 }
-.container-body{
-  margin-top:2px;
+
+.container-body {
+  margin-top: 2px;
 }

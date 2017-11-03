@@ -1,5 +1,14 @@
+<view class="container-out" style="margin-top: 60rpx;">
+    <view class="circle" wx:for="{{circleList}}" wx:key="{{index}}" style="top:{{item.topCircle}}rpx;left:{{item.leftCircle}}rpx;background-color: {{(index%2==0)?colorCircleFirst:colorCircleSecond}};"></view>
+    <view class="container-in">
+        <view class="content-out" wx:for="{{awardList}}" wx:key="{{index}}" style="top:{{item.topAward}}rpx;left:{{item.leftAward}}rpx;background-color: {{(index==indexSelect)?colorAwardSelect:colorAwardDefault}};">
+            <image class="award-image" src="{{item.imageAward.imgUrl}}" binderror="imgError" data-err-img="awardList[{{index}}]"></image>
+        </view>
+        <view class="start-btn" bindtap="startGame" style=" background-image:url({{btnDrawImg}})"></view>
+    </view>
+</view>
 <view class="description" style='background-image:url("{{descImg}}");'>
-    <view class='title'>
+    <view class='title' style="font-weight: bold;">
         {{activitylist.name}}
     </view>
     <view class='desc'>
@@ -10,15 +19,7 @@
     </view>
 </view>
 <view class='chanceCount'>（当前您还有
-    <text class='count'>{{activitylist.memberCount}}</text>次机会）</view>
-<view class="container-out">
-    <view class="circle" wx:for="{{circleList}}" wx:key="{{index}}" style="top:{{item.topCircle}}rpx;left:{{item.leftCircle}}rpx;background-color: {{(index%2==0)?colorCircleFirst:colorCircleSecond}};"></view>
-    <view class="container-in">
-        <view class="content-out" wx:for="{{awardList}}" wx:key="{{index}}" style="top:{{item.topAward}}rpx;left:{{item.leftAward}}rpx;background-color: {{(index==indexSelect)?colorAwardSelect:colorAwardDefault}};">
-            <image class="award-image" src="{{item.imageAward.imgUrl}}" binderror="imgError" data-err-img="awardList[{{index}}]"></image>
-        </view>
-        <view class="start-btn" bindtap="startGame" style=" background-image:url({{btnDrawImg}})"></view>
-    </view>
+    <text class='count'>{{activitylist.memberCount}}</text>次机会）
 </view>
 <view class='records'>
     <view class='header'>

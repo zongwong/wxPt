@@ -13,6 +13,7 @@
                 </view>
             </navigator>
         </view>
+        <view wx:if="{{scrollEnd}}" class="emptyData">^_^没有数据了</view>
         <!-- <view class="gototop {{scrolltop>200?'active':''}}" bindtap="goToTop"></view> -->
         <!-- </scroll-view> -->
     </view>

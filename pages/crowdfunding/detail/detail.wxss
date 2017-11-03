@@ -73,7 +73,7 @@
 }
 
 .myPay.footer .right {
-  width: 33%;
+  width: 33.5%;
   display: inline-block;
   background-color: #ff7900;
   color: #fff;

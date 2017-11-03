@@ -12,6 +12,7 @@
             </navigator>
         </view>
     </view>
+    <view wx:if="{{scrollEnd}}" class="emptyData">^_^没有数据了</view>
     <!-- <view class="gototop {{scrolltop>200?'active':''}}" bindtap="goToTop"></view> -->
     <!-- </scroll-view> -->
     <navigator class='aside_item aside_center' url="./mine/mine"></navigator>

@@ -88,6 +88,8 @@ Page({
                     activitylist: newactivitylist
                 });
             }
+        },function(res){
+            console.log(res)
         })
     },
     onPullDownRefresh: function() {

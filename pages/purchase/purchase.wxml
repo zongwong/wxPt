@@ -24,7 +24,7 @@
             </block>
         </view>
         <!-- <view class="gototop {{scrolltop>200?'active':''}}" bindtap="goToTop"></view> -->
-        <view wx:if="{{!activitylist.length || scrollEnd}}" class="emptyData">^_^没有数据了</view>
+        <view wx:if="{{scrollEnd}}" class="emptyData">^_^没有数据了</view>
     </view>
     <!-- </scroll-view> -->
     <button bindtap='scanCode' class='aside_item aside_scan'></button>

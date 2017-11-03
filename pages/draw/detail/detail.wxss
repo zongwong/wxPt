@@ -5,7 +5,6 @@ page {
   background-repeat: repeat-y;
   height: 100%;
   background-size: 100% 100%;
-  /*background-repeat: no-repeat;*/
 }
 
 .description {
@@ -66,7 +65,7 @@ page {
 .container-in {
   width: 580rpx;
   height: 530rpx;
-  background-color: #FE9F67;
+  background-color: #f3365e;
   border-radius: 40rpx;
   position: absolute;
   left: 0;

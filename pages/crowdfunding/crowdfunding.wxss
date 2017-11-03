@@ -69,11 +69,9 @@ page{
 }
 
 .purchase-item-info .left {
-  /* flex: 1; */
   line-height: 100rpx;
 }
 
 .purchase-item-info .right {
-  /* flex: 2; */
   text-align: right;
 }

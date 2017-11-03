@@ -5,13 +5,13 @@ Page({
         descImg: 'http://bryanly.oss-cn-shenzhen.aliyuncs.com/shuo.png',
         drawImg: 'http://bryanly.oss-cn-shenzhen.aliyuncs.com/chou.png',
         //大转盘实例
-        btnDrawImg: 'http://bryanly.oss-cn-shenzhen.aliyuncs.com/btndraw.png',
+        btnDrawImg: '../../../images/draw/btndraw.png',
         circleList: [], //圆点数组
         awardList: [], //奖品数组
         colorCircleFirst: '#FFDF2F', //圆点颜色1
         colorCircleSecond: '#FE4D32', //圆点颜色2 //#FFDC7E
-        colorAwardDefault: '#F5F0FC', //奖品默认颜色
-        colorAwardSelect: '#F3365E', //奖品选中颜色
+        colorAwardDefault: '#fff', //奖品默认颜色
+        colorAwardSelect: '#fff000', //奖品选中颜色
         indexSelect: 0, //被选中的奖品index
         resultIndex: '',
         isRunning: false, //是否正在抽奖
@@ -151,7 +151,7 @@ Page({
             circleList: circleList
         })
 
-        //圆点闪烁
+        // //圆点闪烁
         // setInterval(function() {
         //     if (_this.data.colorCircleFirst == '#FFDF2F') {
         //         _this.setData({

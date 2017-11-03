@@ -1,12 +1,7 @@
 <swiper class='img-swiper' indicator-dots="{{indicatorDots}}" indicator-active-color='{{indicatorActivColor}}' autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-    <!-- <block wx:for="{{imgUrls}}" wx:key>
-    <swiper-item>
-      <image mode='aspectFit' src="{{item}}" class="slide-image" />
+    <swiper-item wx:if="{{activityInfo.ptGood.videoUrl!=''}}">
+        <video src="http://www.runoob.com/try/demo_source/movie.mp4" class="slide-image" objectFit="fill"></video>
     </swiper-item>
-  </block> -->
-  <swiper-item wx:if="{{activityInfo.ptGood.videoUrl!=''}}">
-    <video src="http://www.runoob.com/try/demo_source/movie.mp4" class="slide-image" objectFit="fill"></video>
-  </swiper-item>
     <swiper-item wx:for="{{goodsImgs}}" wx:key="*this">
         <image mode='aspectFill' src="{{item}}" class="slide-image" />
     </swiper-item>

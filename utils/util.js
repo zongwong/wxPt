@@ -1,4 +1,4 @@
-let app = getApp();
+const app = getApp();
 
 const formatTime = date => {
     date = new Date(date);
@@ -59,9 +59,9 @@ const getRandomArrayElement = arr => {
 
 // ajax请求
 function ajax(type = 'get', url = "", data = {}, success, fail) {
-    const memberInfo = wx.getStorageSync('memberInfo');
+    const mydata = wx.getStorageSync('mydata');
     let header = {
-        'authorization': memberInfo.token,
+        'authorization': mydata.token,
     };
     if (type == 'post' || type == 'POST') {
         header['content-type'] = 'application/x-www-form-urlencoded';
