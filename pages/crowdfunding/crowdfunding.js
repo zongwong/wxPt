@@ -22,9 +22,9 @@ Page({
                     that.setData({
                         userId: userId
                     })
-                    that.fetchPurchaseData(that.data.userId)
+                    that.fetchPurchaseData()
                 } else {
-                    that.fetchPurchaseData(that.data.userId)
+                    that.fetchPurchaseData()
                 }
             } catch (e) {
                 console.log(e)
@@ -68,20 +68,24 @@ Page({
         })
     },
     scanCode: function() {
-        var that = this;
-        this.setData({
-            pageNo: 0
-        });
+        let that = this;
         wx.scanCode({
             success: (res) => {
-                var userId = res.result;
-                var memberInfo = that.data.memberInfo;
-                memberInfo.userId = userId;
-                that.setData({
-                    memberInfo: memberInfo
-                });
-
-                this.fetchPurchaseData(userId);
+                let userId = res.result;
+                if (typeof userId !== 'undefined' && userId) {
+                    that.setData({
+                        userId: userId,
+                        pageNo: 0,
+                        scrollEnd: false,
+                    });
+                    this.fetchPurchaseData();
+                    wx.setStorageSync('userId',userId);
+                } else {
+                    wx.showModal({
+                        title: '提示',
+                        content: '参数错误,请重新扫码'
+                    })
+                }
             }
         })
     },

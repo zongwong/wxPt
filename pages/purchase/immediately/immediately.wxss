@@ -5,7 +5,7 @@ page {
 }
 
 .img-swiper {
-  height: 200px;
+  height: 832rpx;
 }
 
 .img-swiper .slide-image {
@@ -21,7 +21,8 @@ page {
 }
 
 .goodInfoBox {
-  height: 180rpx;
+  height: 163rpx;
+  background: #e02e24;
 }
 
 .goodInfoBox .triangle {
@@ -33,12 +34,14 @@ page {
   color: #fff;
   background-color: #e02e24;
   padding: 20rpx 30rpx;
-  width: 60%;
+  /*width: 60%;*/
   height: 100%;
   box-sizing: border-box;
+  flex: 1;
 }
 
 .goodInfoBox .infoRight {
+  width: 291rpx;
   color: #e02e24;
   background-color: #fdd51b;
   padding: 20rpx 30rpx;
@@ -50,11 +53,10 @@ page {
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  flex: 1;
 }
 
 .priceBox .priceRight {
-  width: 60%;
+  flex: 1;
 }
 
 .priceBox .priceLeft .text {
@@ -64,6 +66,7 @@ page {
 .priceBox .priceLeft {
   height: 45px;
   line-height: 45px;
+  margin-right: 14rpx;
 }
 
 .goodInfoBox .infoRight .text, .priceBox .priceRight .text {
@@ -83,13 +86,16 @@ page {
   background-color: #c7271d;
   padding: 3px;
   text-align: center;
-  width: 60%;
+  width: 6em;
+  overflow: hidden;
   border-radius: 5px;
+  font-size: 23rpx;
+  box-sizing: border-box;
+  white-space: nowrap;
 }
 
 .priceBox .priceRight .text:first-child {
   color: #f0aca9;
-  font-size: 10px;
   text-decoration: line-through;
 }
 
@@ -104,7 +110,7 @@ page {
   display: flex;
   align-items: center;
   background-color: #fff;
-  padding: 40rpx 0 40rpx 40rpx;
+  padding: 20rpx 0 20rpx 40rpx;
   margin: 20rpx 0;
 }
 

@@ -12,7 +12,7 @@
 </view>
 
 <view class='bottom'>
-  <navigator class='item' url="/pages/purchase/my/my">
+  <navigator class='item' url="/pages/purchase/my/my" style="border-bottom: none;">
     <view class='mid'>
       <image class='img' mode='aspectFit' src='../../../images/pintuan/my.png'></image>
       <text>我的拼团</text>

@@ -46,7 +46,7 @@
   <view class='remark'>
     <text>备注：</text>
   </view>
-  <textarea placeholder='如有其它要求请填写'></textarea>
+  <textarea placeholder='如有其它要求请填写' style="padding-left: 0;width: 100%;"></textarea>
 </view>
 <view class='footer'>
   <button bindtap='pay' type='warn'>支付</button>

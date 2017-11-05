@@ -2,6 +2,7 @@
 <view class="container">
     <view class="container-body">
         <view class="detail-1" style='background:url({{activityInfo.imgUrl}}) center / 100% no-repeat;'>
+            <view class="fdj" style='background:rgba(0,0,0,.4) url(../../../images/user/fdj.png) center / 80% no-repeat;' bindtap="previewImg" data-qrcode="{{activityInfo.imgUrl}}"></view>    
             <view class='bottom'>
                 <view>
                     <text class='price'>{{activityInfo.money}}元博</text>

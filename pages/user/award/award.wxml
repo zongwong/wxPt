@@ -1,6 +1,6 @@
 <view class="getward">
     <view class='congratulate'>恭喜您获得</view>
-    <image class='img' mode='aspectFit' src='{{options.imgUrl}}'></image>
+    <image class='img' mode='aspectFill' src='{{options.imgUrl}}'></image>
     <view class='goodTitle'>￥{{options.price}} {{options.awardName}}</view>
     <view wx:if="{{options.shareCount!=0}}" class='invite'>您还有{{options.shareCount}}次邀请好友代您抽奖的机会!</view>
     <button wx:if="{{options.shareCount!=0}}" open-type="share" class='btn-award'>邀请好友代抽</button>

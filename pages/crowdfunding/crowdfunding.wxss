@@ -1,6 +1,7 @@
 /* pages/purchase/purchase.wxss */
 page{
   font-size: 30rpx;
+  background-color:#F2F2F2;
 }
 .purchase-item {
   background-color: #fff;

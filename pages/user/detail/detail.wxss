@@ -7,6 +7,7 @@ page {
 
 .container {
     padding: 30rpx 20rpx;
+    margin-bottom:104rpx;
 }
 
 .detail-1 {
@@ -124,13 +125,18 @@ page {
 
 .detail-4 {
     background-color: #fff;
-    margin-top: 30rpx;
     padding: 20rpx;
     font-size: 32rpx;
     display: flex;
     justify-content: space-between;
     align-items: center;
     color: #818181;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    box-sizing: border-box;
+    border-top: 2rpx solid #f2f2f2;
 }
 
 .detail-4 .submit {
@@ -241,7 +247,8 @@ page {
 .pack_front-top {
     background-color: #ed3d28;
     background-position: center bottom;
-    background-size: 100% background:repeat:no-repeat;
+    background-size: 100%;
+    background-repeat:no-repeat;
     height: 550rpx;
     width: 100%;
     position: absolute;
@@ -289,18 +296,18 @@ page {
     bottom: -14rpx;
     left: 50%;
     margin-left: -87rpx;
-    animation: pluginScal .6s infinite
+    animation: pluginScal .6s infinite;
 }
 
 @keyframes pluginScal {
     0%,
     100% {
         -webkit-transform: scale(1);
-        transform: scale(1)
+        transform: scale(1);
     }
     50% {
         -webkit-transform: scale(1.1);
-        transform: scale(1.1)
+        transform: scale(1.1);
     }
 }
 
@@ -315,4 +322,12 @@ page {
     to {
         transform: rotateY(360deg);
     }
+}
+
+.fdj{
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 44rpx;
+    height: 44rpx;
 }

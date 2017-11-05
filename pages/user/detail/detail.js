@@ -438,7 +438,7 @@ Page({
         let that = this;
         utils.ajax('POST', 'api/hx/hxAwardDetail/smsCode', {
             mobile: that.data.mobile,
-            orderId: that.data.orderId || 8
+            orderId: that.data.orderId
         }, function(res) {
             if (res.data.code == 0) {
                 that.setData({
@@ -634,6 +634,9 @@ Page({
                 }, 0);
             }, 900);
         }, 1000);
+    },
+    previewImg:function(e){
+        utils.qrcodeShow(e);
     },
     onShareAppMessage: function() {
 

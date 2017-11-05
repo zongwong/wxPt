@@ -23,9 +23,9 @@ Page({
                     that.setData({
                         userId: userId
                     })
-                    that.fetchPurchaseData(that.data.userId)
+                    that.fetchPurchaseData()
                 } else {
-                    that.fetchPurchaseData(that.data.userId)
+                    that.fetchPurchaseData()
                 }
             } catch (e) {
                 console.log(e)
@@ -35,27 +35,7 @@ Page({
     },
     scanCode: function(event) {
         let that = this;
-        this.setData({
-            pageNo: 0,
-            scrollEnd: false,
-        });
-        wx.scanCode({
-            success: (res) => {
-                let userId = res.result;
-                if (typeof userId !== 'undefined' && userId) {
-                    that.setData({
-                        userId: userId
-                    });
-                    this.fetchPurchaseData();
-                } else {
-                    wx.showModal({
-                        title: '提示',
-                        content: '参数错误,请重新扫码',
-                        success: function(res) {}
-                    })
-                }
-            }
-        })
+        app.scanFunc(that,that.fetchPurchaseData);
     },
     fetchPurchaseData: function() {
         if (this.data.isajaxLoad) {

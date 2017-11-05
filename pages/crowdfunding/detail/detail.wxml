@@ -14,12 +14,11 @@
             </view>
             <view class='priceRight'>
                 <text class='text'>原价￥{{activityInfo.zcGoods.originalPrice}}</text>
-                <text class='text'>已售{{activityInfo.saleNum}}</text>
+                <text class='text'>参与人数:{{activityInfo.saleNum}}</text>
             </view>
         </view>
     </view>
-    <image class='triangle' src='{{triangleImg}}'></image>
-    <view class='infoRight'>
+    <view class='infoRight' style="background: url(../../../images/funding/timebg.png) center / 100% no-repeat;">
         <text class='text'>距离结束还剩</text>
         <text class='text'>{{timeCountDown}}</text>
     </view>

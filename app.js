@@ -11,7 +11,7 @@ App({
     },
     loginTimer: null,
     onLaunch: function() {
-        
+
         try {
             let mydata = wx.getStorageSync('mydata');
 
@@ -22,12 +22,12 @@ App({
                     this.globalData.userInfo = mydata.userInfo;
                     this.globalData.openid = mydata.openid;
                     this.globalData.memberId = mydata.memberId;
-                    
-                }else{
+
+                } else {
                     wx.clearStorageSync()
                     this.toLogin();
                 }
-            }else{
+            } else {
                 this.toLogin();
             }
         } catch (e) {
@@ -98,7 +98,7 @@ App({
                         token: that.globalData.token,
                         userInfo: that.globalData.userInfo,
                         openid: that.globalData.openid,
-                        memberId:that.globalData.memberId,
+                        memberId: that.globalData.memberId,
                         time: new Date().getTime(),
                     }
                     wx.setStorageSync('mydata', mydata);
@@ -129,6 +129,27 @@ App({
         } else if (type === 'close') {
             wx.hideLoading()
         }
+    },
+    scanFunc: function(that,fn) {
+        wx.scanCode({
+            success: (res) => {
+                let userId = res.result;
+                if (typeof userId !== 'undefined' && userId) {
+                    that.setData({
+                        userId: userId,
+                        pageNo: 0,
+                        scrollEnd: false,
+                    });
+                    fn();
+                    wx.setStorageSync('userId', userId);
+                } else {
+                    wx.showModal({
+                        title: '提示',
+                        content: '参数错误,请重新扫码'
+                    })
+                }
+            }
+        })
     }
 
 })

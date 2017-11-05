@@ -90,7 +90,8 @@ Page({
                             if (start > awardsRecord.length - 4) {
                                 start = 0;
                             }
-                            let nowList = awardsRecord.slice(start, start + 4)
+                            l
+                            nowList = awardsRecord.slice(start, start + 4)
                             that.setData({
                                 awardsRecord: nowList
                             })
@@ -107,10 +108,6 @@ Page({
             }
         });
     },
-    // onPullDownRefresh: function() {
-
-    // },
-
     loadDrawGame: function() {
         var _this = this;
         //圆点设置
@@ -205,13 +202,12 @@ Page({
         }, function(res) {
 
             if (res.data.code == 0) {
+                let num = that.data.activitylist.memberCount - 1;
+                that.setData({
+                    'activitylist.memberCount':num
+                })
                 let data = res.data.data;
-                if (data.isAward) {
-                    let num = that.data.activitylist.memberCount - 1;
-                    that.setData({
-                        'activitylist.memberCount':num
-                    })
-                    
+                if (Number(data.isAward)) {
                     const result = {};
                     result.awardName = data.awardName;
                     result.awardId = data.awardId;
@@ -230,7 +226,7 @@ Page({
                     })
                 }
 
-                fn && fn();
+                fn && fn(Number(data.isAward));
             }else{
                 wx.showModal({
                     title:'提示',
@@ -249,7 +245,7 @@ Page({
             isRunning: true
         })
         let that = this;
-        this.getResult(function(){
+        this.getResult(function(isAward){
 
         
         
@@ -273,10 +269,16 @@ Page({
                     if (dir === 0) {
                         clearInterval(timer)
                         //获奖提示
-                        var award = that.data.awardList[that.data.resultIndex];
+                        const award = that.data.awardList[that.data.resultIndex];
+                        let title = '恭喜您中奖';
+                        let contentpre = '奖品：';
+                        if (!isAward) {
+                            title='很遗憾';
+                            contentpre='';
+                        }
                         wx.showModal({
-                            title: '恭喜您中奖',
-                            content: '奖品：' + award.imageAward.name,
+                            title: title,
+                            content: contentpre + award.imageAward.name,
                             showCancel: false, //去掉取消按钮
                             success: function(res) {
                                 if (res.confirm) {

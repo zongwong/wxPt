@@ -5,7 +5,7 @@ page {
 }
 
 .img-swiper {
-    height: 200px;
+    height: 832rpx;
 }
 
 .img-swiper .slide-image {
@@ -22,7 +22,8 @@ page {
 }
 
 .goodInfoBox {
-    height: 180rpx;
+    height: 163rpx;
+    background: #ff7900;
 }
 
 .goodInfoBox .triangle {
@@ -34,14 +35,13 @@ page {
     color: #fff;
     background-color: #e02e24;
     padding: 20rpx 30rpx;
-    width: 60%;
+    flex: 1;
     height: 100%;
     box-sizing: border-box;
 }
 
 .goodInfoBox .infoRight {
     color: #e02e24;
-    background-color: #fdd51b;
     padding: 20rpx 30rpx;
     font-size: 32rpx;
     height: 100%;
@@ -50,18 +50,20 @@ page {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    flex: 1;
+    width: 291rpx;
     box-sizing: border-box;
 }
 
 .priceBox .priceRight {
-    width: 60%;
+    flex: 1;
 }
 
 
 .priceBox .priceLeft {
-    width: 40%;
-    height: 140rpx;
+
+    height: 45px;
+  line-height: 45px;
+  margin-right: 14rpx;
 }
 
 .priceBox .priceLeft .text {
@@ -91,13 +93,15 @@ page {
     background-color: #c7271d;
     padding: 3px;
     text-align: center;
-    width: 60%;
+    width: 8em;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 23rpx;
     border-radius: 5px;
 }
 
 .priceBox .priceRight .text:first-child {
     color: #f0aca9;
-    font-size: 10px;
     text-decoration: line-through;
 }
 
@@ -112,7 +116,7 @@ page {
     display: flex;
     align-items: center;
     background-color: #fff;
-    padding: 40rpx 0 40rpx 40rpx;
+    padding: 20rpx 0 20rpx 40rpx;
     margin: 20rpx 0;
 }
 
@@ -198,7 +202,7 @@ page {
 }
 
 .footer {
-    border-top: 2rpx solid #f2f2f2;
+    /*border-top: 2rpx solid #f2f2f2;*/
     background-color: #fff;
     height: 90rpx;
     line-height: 90rpx;
@@ -210,6 +214,8 @@ page {
     font-size: 28rpx;
     color: #979797;
     padding-left: 5%;
+    border-top: 2rpx solid #e2e2e2;
+    box-sizing:border-box;
 }
 
 .footer .left text {
@@ -222,6 +228,7 @@ page {
     background-color: #e02e24;
     color: #fff;
     text-align: center;
+    vertical-align: top;
 }
 
 .sharebtn {

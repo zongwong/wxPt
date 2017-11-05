@@ -1,9 +1,9 @@
 <swiper class='img-swiper' indicator-dots="{{indicatorDots}}" indicator-active-color='{{indicatorActivColor}}' autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
     <swiper-item wx:if="{{activityInfo.ptGood.videoUrl!=''}}">
-        <video src="http://www.runoob.com/try/demo_source/movie.mp4" class="slide-image" objectFit="fill"></video>
+        <video src="http://www.runoob.com/try/demo_source/movie.mp4" class="slide-image" objectFit="contain"></video>
     </swiper-item>
     <swiper-item wx:for="{{goodsImgs}}" wx:key="*this">
-        <image mode='aspectFill' src="{{item}}" class="slide-image" />
+        <image mode='aspectFit' src="{{item}}" class="slide-image" />
     </swiper-item>
 </swiper>
 <view class='goodInfoBox'>
@@ -21,8 +21,7 @@
             </view>
         </view>
     </view>
-    <image class='triangle' src='{{triangleImg}}'></image>
-    <view class='infoRight'>
+    <view class='infoRight' style="background: url(../../../images/pintuan/timebg.png) center / 100% no-repeat;">
         <text class='text'>距离结束还剩</text>
         <text class='text'>{{timeCountDown}}</text>
     </view>

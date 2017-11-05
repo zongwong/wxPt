@@ -30,23 +30,21 @@ Page({
     },
     scanCode: function(event) {
         let that = this;
-        this.setData({
-            pageNo: 0,
-            scrollEnd: false,
-        });
         wx.scanCode({
             success: (res) => {
                 let userId = res.result;
                 if (typeof userId !== 'undefined' && userId) {
                     that.setData({
-                        userId: userId
+                        userId: userId,
+                        pageNo: 0,
+                        scrollEnd: false,
                     });
                     this.fetchPurchaseData();
+                    wx.setStorageSync('userId',userId);
                 } else {
                     wx.showModal({
                         title: '提示',
-                        content: '参数错误,请重新扫码',
-                        success: function(res) {}
+                        content: '参数错误,请重新扫码'
                     })
                 }
             }

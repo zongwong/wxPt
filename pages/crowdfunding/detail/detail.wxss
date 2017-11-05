@@ -2,7 +2,6 @@
 
 .goodInfoBox .infoLeft {
   background-color: #ff7900;
-  padding: 20rpx 10rpx;
 }
 
 .priceBox .priceRight .text:last-child {
@@ -89,9 +88,15 @@
 .friendPay.footer .right {
   background-color: #ff7900;
 }
-.inviteBtn{
+.footer .right.inviteBtn{
   font-size:28rpx;
   vertical-align: top;
   border-radius: 0!important;
   line-height: 90rpx;
+  background-color: #ffd412;
+  border:none!important;
+  outline: none!important;
+}
+.footer .right.inviteBtn:after{
+  display: none;
 }

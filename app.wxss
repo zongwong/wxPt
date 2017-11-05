@@ -1,5 +1,7 @@
 /**app.wxss**/
-
+swiper-item{
+    background:#000;
+}
 .container {
     height: 100%;
     display: flex;

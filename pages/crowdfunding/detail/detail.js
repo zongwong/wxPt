@@ -14,7 +14,6 @@ Page({
         duration: 1000,
         house: '../../../images/funding/house.png',
         addr: '../../../images/funding/addr.png',
-        triangleImg: '../../../images/funding/ddd.png',
         inviteId: '',
         originId: '',
         isMyself: true,
