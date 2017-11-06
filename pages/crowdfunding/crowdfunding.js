@@ -5,10 +5,9 @@ Page({
         activitylist: [],
         scrolltop: null,
         pageNo: 0,
-        perpage: 5,
         scrollEnd: false,
         isajaxLoad: false,
-        userId: 2,
+        userId:14,
     },
     onLoad: function(options) {
         let that = this;
@@ -22,8 +21,6 @@ Page({
                     that.setData({
                         userId: userId
                     })
-                    that.fetchPurchaseData()
-                } else {
                     that.fetchPurchaseData()
                 }
             } catch (e) {
@@ -43,7 +40,6 @@ Page({
             pageNo: that.data.pageNo + 1
         })
         let pageNo = that.data.pageNo;
-        console.log(app.globalData)
         utils.ajax('get', 'api/zc/zcActivity/list', {
             pageNo: pageNo,
             pageSize: 10,
@@ -90,6 +86,10 @@ Page({
         })
     },
     onPullDownRefresh: function() {
+        if (!this.data.userId) {
+            wx.stopPullDownRefresh();
+            return false;
+        }
         this.setData({
             pageNo: 0,
             activitylist: []

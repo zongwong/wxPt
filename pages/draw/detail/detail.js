@@ -5,7 +5,6 @@ Page({
         descImg: 'http://bryanly.oss-cn-shenzhen.aliyuncs.com/shuo.png',
         drawImg: 'http://bryanly.oss-cn-shenzhen.aliyuncs.com/chou.png',
         //大转盘实例
-        btnDrawImg: '../../../images/draw/btndraw.png',
         circleList: [], //圆点数组
         awardList: [], //奖品数组
         colorCircleFirst: '#FFDF2F', //圆点颜色1
@@ -56,8 +55,6 @@ Page({
                 let dir = 8 - awards.length;
                 for (let i = 0; i < dir; i++) {
                     awards.push({
-                        actId: "-1",
-                        awardOdds: 0.1,
                         id: "-1",
                         imgUrl: "2",
                         name: "再接再厉",
@@ -90,8 +87,7 @@ Page({
                             if (start > awardsRecord.length - 4) {
                                 start = 0;
                             }
-                            l
-                            nowList = awardsRecord.slice(start, start + 4)
+                            let nowList = awardsRecord.slice(start, start + 4)
                             that.setData({
                                 awardsRecord: nowList
                             })
@@ -111,42 +107,42 @@ Page({
     loadDrawGame: function() {
         var _this = this;
         //圆点设置
-        var leftCircle = 7.5;
-        var topCircle = 7.5;
-        var circleList = [];
-        for (var i = 0; i < 24; i++) {
-            if (i == 0) {
-                topCircle = 15;
-                leftCircle = 15;
-            } else if (i < 6) {
-                topCircle = 7.5;
-                leftCircle = leftCircle + 102.5;
-            } else if (i == 6) {
-                topCircle = 15
-                leftCircle = 620;
-            } else if (i < 12) {
-                topCircle = topCircle + 94;
-                leftCircle = 620;
-            } else if (i == 12) {
-                topCircle = 565;
-                leftCircle = 620;
-            } else if (i < 18) {
-                topCircle = 570;
-                leftCircle = leftCircle - 102.5;
-            } else if (i == 18) {
-                topCircle = 565;
-                leftCircle = 15;
-            } else if (i < 24) {
-                topCircle = topCircle - 94;
-                leftCircle = 7.5;
-            } else {
-                return
-            }
-            circleList.push({ topCircle: topCircle, leftCircle: leftCircle });
-        }
-        this.setData({
-            circleList: circleList
-        })
+        // var leftCircle = 7.5;
+        // var topCircle = 7.5;
+        // var circleList = [];
+        // for (var i = 0; i < 24; i++) {
+        //     if (i == 0) {
+        //         topCircle = 15;
+        //         leftCircle = 15;
+        //     } else if (i < 6) {
+        //         topCircle = 7.5;
+        //         leftCircle = leftCircle + 102.5;
+        //     } else if (i == 6) {
+        //         topCircle = 15
+        //         leftCircle = 620;
+        //     } else if (i < 12) {
+        //         topCircle = topCircle + 94;
+        //         leftCircle = 620;
+        //     } else if (i == 12) {
+        //         topCircle = 565;
+        //         leftCircle = 620;
+        //     } else if (i < 18) {
+        //         topCircle = 570;
+        //         leftCircle = leftCircle - 102.5;
+        //     } else if (i == 18) {
+        //         topCircle = 565;
+        //         leftCircle = 15;
+        //     } else if (i < 24) {
+        //         topCircle = topCircle - 94;
+        //         leftCircle = 7.5;
+        //     } else {
+        //         return
+        //     }
+        //     circleList.push({ topCircle: topCircle, leftCircle: leftCircle });
+        // }
+        // this.setData({
+        //     circleList: circleList
+        // })
 
         // //圆点闪烁
         // setInterval(function() {
@@ -166,29 +162,31 @@ Page({
         //奖品item设置
         var awardList = [];
         //间距,怎么顺眼怎么设置吧.
-        var topAward = 25;
-        var leftAward = 25;
+        var dir = 13;
+        var topAward = dir;
+        var leftAward = dir;
         for (var j = 0; j < 8; j++) {
             if (j == 0) {
-                topAward = 25;
-                leftAward = 25;
+                topAward = dir;
+                leftAward = dir;
             } else if (j < 3) {
                 topAward = topAward;
                 //166.6666是宽.15是间距.下同
-                leftAward = leftAward + 166.6666 + 15;
+                leftAward = leftAward + 210 + dir;
             } else if (j < 5) {
                 leftAward = leftAward;
                 //150是高,15是间距,下同
-                topAward = topAward + 150 + 15;
+                topAward = topAward + 210 + dir;
             } else if (j < 7) {
-                leftAward = leftAward - 166.6666 - 15;
+                leftAward = leftAward - 210 - dir;
                 topAward = topAward;
             } else if (j < 8) {
                 leftAward = leftAward;
-                topAward = topAward - 150 - 15;
+                topAward = topAward - 210 - dir;
             }
             var imageAward = this.data.imageAward[j];
             awardList.push({ topAward: topAward, leftAward: leftAward, imageAward: imageAward });
+             // awardList.push({ imageAward: imageAward });
         }
         this.setData({
             awardList: awardList
@@ -213,7 +211,7 @@ Page({
                     result.awardId = data.awardId;
 
                     that.data.imageAward.forEach(function(item, index) {
-                        if (item.awardId === result.awardId && item.awardName === result.awardName) {
+                        if (item.id == result.awardId && item.name == result.awardName) {
                             that.setData({
                                 resultIndex: index
                             })
@@ -313,6 +311,7 @@ Page({
         let that = this;
         return {
             title:'我正在抽奖抽奖',
+            url:'/pages/draw/detail/detail?id='+that.data.activitylist.id+'&userId='+that.data.userId,
             success:function(){
                 utils.ajax('POST', 'api/cj/cjActivity/share', {
                     actId: that.data.actId,

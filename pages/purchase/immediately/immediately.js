@@ -26,6 +26,7 @@ Page({
         utils.phoneCallFn(telNum);
     },
     onLoad: function(options) {
+        console.log(options)
         //判断userId 必须有
         if (typeof options.userId !== 'undefined' && options.userId) {
             this.setData({
@@ -59,7 +60,7 @@ Page({
                 let data = res.data.data;
                 that.setData({
                     activityInfo: data,
-                    endTime: data.endTime,
+                    // endTime: data.endTime,
                 });
                 if (typeof data.memberList !== 'undefined' && data.memberList.length) {
                     let memberList = data.memberList;
@@ -76,7 +77,7 @@ Page({
                         menbers: memberList,
                     })
                 }
-                let endtime = timeUtil.countDown(that.data.endTime);
+                // let endtime = timeUtil.countDown(that.data.endTime);
 
                 // 商品img处理
                 let goodsImgs = data.ptGood.imgUrl.split(',')
@@ -118,12 +119,12 @@ Page({
     onShareAppMessage: function() {
 
         let query = '?id=' + this.data.activityInfo.id + '&inviteId=' + this.data.inviteId + '&userId='+this.data.userId;
-        console.log(query)
+        console.log('拼团分享url:'+query)
         return {
-            title: '我正在拼团快来',
+            title: '我正在拼团快来啊~',
             path: '/pages/purchase/immediately/immediately' + query,
             success: function(res) {
-                console.log('转发成功' + res)
+                console.log('拼团转发成功')
             },
             fail: function(res) {
 

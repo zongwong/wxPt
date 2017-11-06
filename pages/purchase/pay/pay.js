@@ -2,9 +2,9 @@ const utils = require('../../../utils/util.js');
 const app = getApp();
 Page({
     data: {
-        actid: '',
-        inviteId:'',
-        userId:'',
+        actId: '',
+        inviteId: '',
+        userId: '',
         counts: 1,
         goods: { price: '', name: '' },
         total: '',
@@ -14,6 +14,47 @@ Page({
         wechatIcon: '../../../images/pintuan/wechat.png',
         huiyuanIcon: '../../../images/pintuan/huiyuan.png',
         wxPayment: {},
+        number:'',
+    },
+
+    onLoad: function(options) {
+        let that = this;
+        app.tokenCheck(function() {
+
+            if (typeof options.userId !== 'undefined' && options.userId) {
+                that.setData({
+                    userId: options.userId
+                })
+            } else {
+                wx.showModal({
+                    title: '提示',
+                    content: '参数错误,请重新进入',
+                    success: function() {
+                        wx.switchTab({
+                            url: '/pages/purchase/purchase'
+                        })
+                    }
+                })
+                return false;
+            }
+
+            that.setData({
+                actId: options.actId,
+                total: options.price,
+                number:options.number,
+                goods: {
+                    name: options.name,
+                    price: options.price
+                }
+            })
+
+            if (typeof options.inviteId !== 'undefined' && options.inviteId) {
+                that.setData({
+                    inviteId: options.inviteId
+                })
+            }
+
+        })
     },
     changeCount: function(event) {
         var dataset = event.currentTarget.dataset;
@@ -38,6 +79,26 @@ Page({
             check: paytype
         })
     },
+    pay: function() {
+        let that = this;
+        let cs = {
+            type: that.data.check,
+            num: that.data.counts,
+            actId: that.data.actId,
+            userId: that.data.userId,
+            openid: app.globalData.openid,
+            inviteId: that.data.inviteId,
+        };
+        console.log(cs)
+        utils.ajax('post', 'api/pt/ptGroupOrder/pay', cs, function(res) {
+            console.log('统一下单')
+            console.log(res.data)
+            if (res.data.code == 0) {
+                let data = res.data.data;
+                that.wxPayment(data)
+            }
+        })
+    },
     wxPayment: function(wxPayment) {
         console.log('调用微信支付')
         let that = this;
@@ -49,11 +110,10 @@ Page({
             paySign: wxPayment.sign,
             success: function(res) {
                 wx.navigateTo({
-                    url: '/pages/purchase/paycomplete/paycomplate?type=success'
+                    url: '/pages/purchase/paycomplete/paycomplate?type=success&number='+that.data.number+'&actId='+that.data.actId+'&userId='+that.data.userId+'&inviteId='+that.data.inviteId
                 })
             },
             fail: function(res) {
-                console.log(res)
                 wx.navigateTo({
                     url: '/pages/purchase/paycomplete/paycomplate?type=fail'
                 })
@@ -64,63 +124,5 @@ Page({
         }
         console.log(data);
         wx.requestPayment(data);
-    },
-    onLoad: function(options) {
-        let that = this;
-        app.tokenCheck(function() {
-
-            if (typeof options.userId !=='undefined' && options.userId) {
-                that.setData({
-                    userId:options.userId
-                })
-            }else{
-                wx.showModal({
-                    title:'提示',
-                    content:'参数错误,请重新进入',
-                    success:function(){
-                        wx.switchTab({
-                            url:'/pages/purchase/purchase'
-                        })
-                    }
-                })
-                return false;
-            }
-
-            that.setData({
-                actid: options.actid,
-                total: options.price,
-                goods: {
-                    name: options.name,
-                    price: options.price
-                }
-            })
-
-            if (typeof options.inviteId !=='undefined' && options.inviteId) {
-                that.setData({
-                    inviteId:options.inviteId
-                })
-            }
-
-        })
-    },
-    pay: function() {
-        let that = this;
-        let cs = {
-            type: that.data.check,
-            num: that.data.counts,
-            actId: that.data.actid,
-            userId: that.data.userId,
-            openid: app.globalData.openid,
-            inviteId:that.data.inviteId,
-        };
-        console.log(cs)
-        utils.ajax('post', 'api/pt/ptGroupOrder/pay',cs, function(res) {
-            console.log('统一下单')
-            console.log(res.data)
-            if (res.data.code == 0) {
-                let data = res.data.data;
-                that.wxPayment(data)
-            }
-        })
     },
 })

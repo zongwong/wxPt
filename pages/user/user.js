@@ -24,8 +24,6 @@ Page({
                         userId: userId
                     })
                     that.fetchPurchaseData()
-                } else {
-                    that.fetchPurchaseData()
                 }
             } catch (e) {
                 console.log(e)
@@ -76,6 +74,10 @@ Page({
         })
     },
     onPullDownRefresh: function() {
+        if (!this.data.userId) {
+            wx.stopPullDownRefresh();
+            return false;
+        }
         this.setData({
             pageNo: 0,
             activitylist: [],

@@ -1,3 +1,4 @@
+<!-- 支付成功 -->
 <view class='payInfo success {{type=="success"?"show":"hide"}}'>
     <view class='first'>
         <image src='{{successImg}}' class='img'></image>
@@ -5,10 +6,10 @@
     </view>
     <view class='second'>
         再邀
-        <text class='count'>2</text>人购买即可完成拼单
+        <text class='count'>{{number}}</text>人购买即可完成拼单
     </view>
     <view class='third'>
-        <button open-type="share" bindtap='showShare' class='primary' type='primary'>邀请好友拼团</button>
+        <button open-type="share" class='primary' type='primary'>邀请好友拼团</button>
     </view>
 </view>
 <view class='payInfo success {{type=="success"?"show":"hide"}}'>
@@ -18,12 +19,13 @@
     </view>
     <view class='second'>
         再邀
-        <text class='count'>2</text>人购买即可完成拼单
+        <text class='count'>{{number}}</text>人购买即可完成拼单
     </view>
     <view class='third'>
         <button bindtap='invitePurchase' class='primary' type='primary'>查看拼团</button>
     </view>
 </view>
+<!-- 支付失败 -->
 <view class='payInfo error {{type=="fail"?"show":"hide"}}'>
     <view class='first'>
         <image src='{{failImg}}' class='img'></image>
@@ -36,6 +38,7 @@
         <button class='warn' type='warn' bindtap = 'rePt'>发起拼团</button>
     </view>
 </view>
+<!-- 提醒 -->
 <view class='message' wx:if="{{0}}">
     <view class='detail'>
         <view class=''>

@@ -6,7 +6,7 @@ Page({
         pageNo: 0,
         scrollEnd: false,
         isajaxLoad: false,
-        userId: 14,
+        userId: '',
     },
     onLoad: function(options) {
         let that = this;
@@ -18,8 +18,6 @@ Page({
                     that.setData({
                         userId: userId
                     })
-                    that.fetchPurchaseData()
-                }else{
                     that.fetchPurchaseData()
                 }
             } catch (e) {
@@ -89,6 +87,9 @@ Page({
         })
     },
     onPullDownRefresh: function() {
+        if (!this.data.userId) {
+            return false;
+        }
         this.setData({
             pageNo: 0,
             activitylist: []

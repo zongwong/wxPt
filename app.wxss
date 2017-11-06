@@ -82,7 +82,7 @@ swiper-item{
     width: 160rpx;
     text-align: center;
     display: inline-block;
-    font: 300 28rpx/30px "microsoft yahei";
+    /*font: 300 28rpx/30px "microsoft yahei";*/
 }
 
 .drawer_box .input_base {
@@ -107,7 +107,7 @@ swiper-item{
 }
 
 .drawer_box input {
-    font: 12px "microsoft yahei";
+    /*font: 12px "microsoft yahei";*/
     background: #fff;
     color: #000;
 }

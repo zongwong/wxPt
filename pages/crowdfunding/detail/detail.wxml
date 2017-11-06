@@ -1,6 +1,9 @@
 <swiper class='img-swiper' indicator-dots="{{indicatorDots}}" indicator-active-color='{{indicatorActivColor}}' autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-    <swiper-item>
-        <image mode='aspectFill' src="{{activityInfo.imgUrl}}" class="slide-image" />
+    <swiper-item wx:if="{{activityInfo.zcGoods.videoUrl!=''}}">
+        <video src="{{activityInfo.ptGood.videoUrl}}" class="slide-image" objectFit="contain"></video>
+    </swiper-item>
+    <swiper-item wx:for="{{goodsImgs}}">
+        <image mode='aspectFit' src="{{item}}" class="slide-image" />
     </swiper-item>
 </swiper>
 <view class='goodInfoBox'>
@@ -27,7 +30,7 @@
     <view class='tip' wx:if="{{inviteId}}">众筹说明</view>
     <view class='tip tip1' wx:if="{{!inviteId}}">
         <text>众筹说明</text>
-        <text bindtap='startzc' class='partake'>我要参与</text>
+        <text bindtap='startzc' class='partake' wx:if="{{!isMyself}}">我要参与</text>
     </view>
     <view class='tip'>请朋友代付{{activityInfo.payPrice}}元抵用{{activityInfo.discountPrice}}元，最多可找{{activityInfo.maxCount}}人付款</view>
 </view>
@@ -90,9 +93,9 @@
     <text data-id='1111' bindtap='payImmediately' class='right'>立即付款</text>
 </view>
 <!-- 已下单 -->
-<view class='footer friendPay' wx:if="{{isMyself && isEnough}}">
+<view class='footer friendPay' wx:if="{{0}}">
     <view class='left'>
-        团购码:xxxx
+        团购码:{{}}
     </view>
     <text class='right' data-qrcode = "{{}}" bindtap="qrcodePreview">查看二维码</text>
 </view>

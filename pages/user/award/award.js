@@ -15,11 +15,11 @@ Page({
       })
     },
     onShareAppMessage: function(res) {
-
-        let query = 'id='+this.data.options.id+'&userId='+this.data.options.userId+'&originId='+this.data.options.originId+'&orderId='+this.data.options.orderId;
+        let myname = app.globalData.userInfo.nickName;
+        let query = 'id='+this.data.options.id+'&userId='+this.data.options.userId+'&originId='+this.data.options.originId+'&orderId='+this.data.options.orderId+'&originName='+myname;
 
         return {
-            title: app.globalData.userInfo.nickName+'邀请您代抽奖品',
+            title: myname +'邀请您代抽奖品',
             path: '/pages/user/detail/detail?'+query,
             success: function(res) {
                 console.log('分享成功:'+query)

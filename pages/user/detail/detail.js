@@ -19,17 +19,18 @@ Page({
         orderId: '',
         isDjs: false,
         djsText: '获取验证码',
-        userId: '',
+        userId: 14,
         originId: '',
         isHelped: false,
         originName: '',
         ableTime: 0,
         isPayed: false,
         payStatus: 0,
-        isChai:false,
-        isHead:false,
-        isFront:false,
-        isHeadTop:false,
+        isChai: false,
+        isHead: false,
+        isFront: false,
+        isHeadTop: false,
+        fromShow: false,
     },
     onLoad: function(options) {
         // originId区分我自己,orderId区分支付,ableTime邀请次数,拆奖 记录本地openAward = orderId & true ,记录本地actId = orderId+actId
@@ -38,6 +39,7 @@ Page({
         // userId是必须的
         // 拆奖后-> 清理openAward
         let that = this;
+        console.log(options)
         let userId = options.userId,
             originId = options.originId,
             orderId = options.orderId || '',
@@ -45,7 +47,8 @@ Page({
         that.setData({
             originId: originId,
             userId: userId,
-            orderId: orderId
+            orderId: orderId,
+            originName: originName,
         })
 
 
@@ -60,23 +63,6 @@ Page({
                 that.setData({
                     orderId: orderId
                 })
-
-
-                try {
-                    let openAward = wx.getStorageSync('openAward')
-                    if (openAward) {
-                        //直接拆奖
-                        let record = openAward.split('&');
-                        if (record[0] == that.data.orderId && Boolean(record[1])) {
-                            that.createAnimation('open');
-                        }
-                    } else {
-                        //显示邀请按钮等
-
-                    }
-                } catch (e) {
-                    console.log(e)
-                }
             } else {
                 //未下单
 
@@ -278,6 +264,23 @@ Page({
             }
         })
     },
+    onShow: function() {
+        try {
+            let openAward = wx.getStorageSync('openAward')
+            if (openAward) {
+                //直接拆奖
+                let record = openAward.split('&');
+                if (record[0] == this.data.orderId && !Boolean(+record[1])) {
+                    this.createAnimation('open');
+                }
+            } else {
+                //显示邀请按钮等
+
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    },
     //跳转->我的奖品
     lookMyAward: function(event) {
         wx.redirectTo({
@@ -377,6 +380,7 @@ Page({
                     //支付
                     if (!that.data.activityInfo.money) { //0元博
                         that.createAnimation('open');
+                        wx.setStorageSync('openAward', that.data.orderId + '&0');
                     } else {
                         that.pay()
                     }
@@ -411,6 +415,7 @@ Page({
             'signType': 'MD5',
             'paySign': Payment.sign,
             'success': function(res) {
+                wx.setStorageSync('openAward', that.data.orderId + '&0');
                 that.createAnimation('open');
                 that.setData({
                     payStatus: 1
@@ -513,7 +518,7 @@ Page({
         }
 
         // 代抽
-        if (this.data.orderId && !this.data.isMyself) { //?orderId
+        if (this.data.orderId && !this.data.isMyself) {
             this.replaceGet();
             return false;
         }
@@ -528,7 +533,7 @@ Page({
         }, function(res) {
             if (res.data.code == 0) {
                 let data = res.data.data;
-
+                wx.setStorageSync('openAward', that.data.orderId + '&1')
                 that.setData({
                     payStatus: 3
                 })
@@ -613,35 +618,36 @@ Page({
             });
         }
     },
-    chai:function(){
+    chai: function() {
         let that = this;
         this.setData({
-            isChai:true
+            isChai: true
         })
-        setTimeout(function(){
+        setTimeout(function() {
             that.setData({
-                isChai:false,
-                isHeadTop:true,
+                isChai: false,
+                isHeadTop: true,
             })
-            setTimeout(function(){
+            setTimeout(function() {
                 that.setData({
-                    isFront:true,
+                    isFront: true,
+                    fromShow: true,
                 })
-                setTimeout(function(){
+                setTimeout(function() {
                     that.setData({
-                        isHead:true,
+                        isHead: true,
                     })
                 }, 0);
             }, 900);
         }, 1000);
     },
-    previewImg:function(e){
+    previewImg: function(e) {
         utils.qrcodeShow(e);
     },
     onShareAppMessage: function() {
 
         if (this.data.isMyself && this.data.orderId) {
-            let query = 'id=' + this.data.activityInfo.id + '&userId=' + this.data.userId + '&originId=' + this.data.originId + '&orderId=' + this.data.orderId;
+            let query = 'id=' + this.data.activityInfo.id + '&userId=' + this.data.userId + '&originId=' + this.data.originId + '&orderId=' + this.data.orderId + '&originName=' + myname;
             return {
                 title: app.globalData.userInfo.nickName + '邀请您代抽奖品',
                 path: '/pages/user/detail/detail?' + query,

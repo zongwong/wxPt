@@ -1,6 +1,6 @@
 <swiper class='img-swiper' indicator-dots="{{indicatorDots}}" indicator-active-color='{{indicatorActivColor}}' autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
     <swiper-item wx:if="{{activityInfo.ptGood.videoUrl!=''}}">
-        <video src="http://www.runoob.com/try/demo_source/movie.mp4" class="slide-image" objectFit="contain"></video>
+        <video src="{{activityInfo.ptGood.videoUrl}}" class="slide-image" objectFit="contain"></video>
     </swiper-item>
     <swiper-item wx:for="{{goodsImgs}}" wx:key="*this">
         <image mode='aspectFit' src="{{item}}" class="slide-image" />
@@ -59,15 +59,18 @@
         <view class='tip'>1. 有效期：{{activityInfo.beginTime}} 至{{activityInfo.endTime}}</view>
         <view class='tip'>2. 活动仅限高端客户</view>
         <view class='tip'>3. 需到店消费</view>
+        <view class='tip'>{{activityInfo.saleRemarks}}</view>
     </view>
 </view>
+<!-- 未下单 -->
 <view class='footer' wx:if="{{!inviteId || !iInList}}">
     <view class='left'>
         再邀
-        <text>{{activityInfo.num}}</text>人购买即可享受优惠
+        <text>{{activityInfo.num - menbers.length}}</text>人购买即可享受优惠
     </view>
-    <navigator url='../pay/pay?actid={{activityInfo.id}}&name={{activityInfo.ptGood.name}}&price={{activityInfo.ptGood.price}}&inviteId={{inviteId}}&userId={{userId}}' class='right'>立即抢购</navigator>
+    <navigator url='../pay/pay?actId={{activityInfo.id}}&inviteId={{inviteId}}&userId={{userId}}&name={{activityInfo.ptGood.name}}&price={{activityInfo.ptGood.price}}&number={{activityInfo.num - menbers.length}}' class='right'>立即抢购</navigator>
 </view>
+<!-- 已下单 -->
 <view class='footer' wx:if="{{inviteId && iInList}}">
     <view class='left'>
         再邀

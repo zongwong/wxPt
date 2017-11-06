@@ -6,7 +6,7 @@ Page({
         pageNo: 0,
         scrollEnd: false,
         isajaxLoad: false,
-        userId: 1,
+        userId: '',
     },
     onLoad: function(options) {
         let that = this;
@@ -18,9 +18,7 @@ Page({
                     that.setData({
                         userId: userId
                     })
-                    that.fetchPurchaseData(that.data.userId)
-                }else{
-                    that.fetchPurchaseData(that.data.userId)
+                    that.fetchPurchaseData();
                 }
             } catch (e) {
                 console.log(e)
@@ -32,6 +30,7 @@ Page({
         let that = this;
         wx.scanCode({
             success: (res) => {
+                console.log(res)
                 let userId = res.result;
                 if (typeof userId !== 'undefined' && userId) {
                     that.setData({
@@ -91,6 +90,10 @@ Page({
         })
     },
     onPullDownRefresh: function() {
+        if (!this.data.userId) {
+            wx.stopPullDownRefresh();
+            return false;
+        }
         this.setData({
             pageNo: 0,
             activitylist: []

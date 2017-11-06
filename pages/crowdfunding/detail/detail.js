@@ -3,7 +3,7 @@ import timeUtil from "../../../utils/timeUtil.js";
 const app = getApp();
 Page({
     data: {
-        imgUrls: [],
+        goodsImgs: [],
         activityInfo: null,
         endTime: null,
         timeCountDown: null,
@@ -103,6 +103,12 @@ Page({
                             })
                         }
                     }
+
+                    // 商品img处理
+                    let goodsImgs = data.zcGoods.imgUrl.split(',')
+                    that.setData({
+                        goodsImgs:goodsImgs
+                    })
                     let endtime = timeUtil.countDown(that.data.endTime);
 
                     // if (!endtime) {

@@ -1,34 +1,37 @@
 page {
   font-size: 32rpx;
   color: #262626;
-  background-image: url('http://bryanly.oss-cn-shenzhen.aliyuncs.com/choubg.png');
-  background-repeat: repeat-y;
-  height: 100%;
+/*  background-image: url('http://bryanly.oss-cn-shenzhen.aliyuncs.com/choubg.png');
+  background-repeat: repeat-y;*/
+  background-color: #fde867;
   background-size: 100% 100%;
 }
 
 .description {
-  width: 95%;
+  width: 678rpx;
   height: 300rpx;
   background-repeat: no-repeat;
   background-size: 100% auto;
   margin: 0 auto;
   position: relative;
   text-align: center;
+  font-size: 24rpx;
 }
 
 .description .time {
   position: absolute;
-  bottom: 11%;
+  bottom: 16.8%;
   width: 100%;
   color: #fff;
 }
 
 .description .desc {
   position: absolute;
-  bottom: 30%;
+  bottom: 35.5%;
   width: 100%;
-  font-size: 30rpx;
+  padding: 0 26rpx;
+  box-sizing: border-box;
+  text-align: left;
 }
 
 .description .title {
@@ -36,10 +39,12 @@ page {
   bottom: 60%;
   width: 100%;
   color: #f3365e;
+  font-weight: bold;
+  font-size: 28rpx;
 }
 
 .chanceCount {
-  width: 95%;
+  width: 678rpx;
   margin: 0rpx auto;
   margin-bottom: 30rpx;
   text-align: center;
@@ -53,18 +58,20 @@ page {
 /**大转盘实现start**/
 
 .container-out {
-  height: 600rpx;
-  width: 650rpx;
-  background-color: #FF5C5D;
+  height: 678rpx;
+  width: 678rpx;
+  background-color: #f3365e;
   margin: 0rpx auto;
-  border-radius: 40rpx;
-  box-shadow: 0 10px 0 #E81B54;
+  border-radius: 15rpx;
+  box-shadow: 0 5px 0 #E81B54;
   position: relative;
 }
 
 .container-in {
-  width: 580rpx;
-  height: 530rpx;
+  /*width: 580rpx;*/
+  /*height: 530rpx;*/
+  width: 100%;
+  height: 100%;
   background-color: #f3365e;
   border-radius: 40rpx;
   position: absolute;
@@ -88,11 +95,11 @@ box-shadow: inset 3px 3px 3px #fff2af;*/
 
 .content-out {
   position: absolute;
-  height: 150rpx;
-  width: 166.6666rpx;
+  height: 210rpx;
+  width: 210rpx;
   /* background-color: #f5f0fc; */
   border-radius: 15rpx;
-  /* box-shadow: 0 5px 0 #d87fde; */
+   /*box-shadow: 0 5px 0 #d87fde; */
 }
 
 /**居中 加粗*/
@@ -105,14 +112,15 @@ box-shadow: inset 3px 3px 3px #fff2af;*/
   bottom: 0;
   right: 0;
   border-radius: 15rpx;
-  height: 150rpx;
-  width: 166.6666rpx;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
+  height: 210rpx;
+  width: 210rpx;
+  /*background-repeat: no-repeat;*/
+  /*background-size: 100% 100%;*/
   color: #F3365E;
   text-align: center;
   font-weight: bolder;
   line-height: 150rpx;
+  z-index: 11;
 }
 
 .start-btn .text{
@@ -127,16 +135,13 @@ box-shadow: inset 3px 3px 3px #fff2af;*/
   left: 0;
   bottom: 0;
   right: 0;
-  height: 140rpx;
-  width: 130rpx;
+  height: 182rpx;
+  width: 182rpx;
 }
 
 /**大转盘结束end****/
 
 .records{
-  width: 95%;
-  margin: 0rpx auto;
-  margin-top: 50rpx;
   border: 4rpx solid #F3365E;
   border-radius: 10rpx;
 }
