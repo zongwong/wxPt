@@ -19,6 +19,7 @@ Page({
 
     onLoad: function(options) {
         let that = this;
+        console.log(options)
         app.tokenCheck(function() {
 
             if (typeof options.userId !== 'undefined' && options.userId) {
