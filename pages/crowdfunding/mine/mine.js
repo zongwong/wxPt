@@ -65,7 +65,6 @@ Page({
             this.fetchData(this.data.status);
         }
     },
-
     onShareAppMessage: function() {
 
     },

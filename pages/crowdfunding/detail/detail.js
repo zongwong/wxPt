@@ -186,7 +186,7 @@ Page({
     },
     payImmediately: function(event) {
 
-        //人数判断
+        //人数判断?
         if (this.data.members.length >= this.data.activityInfo.maxCount) {
             this.setData({
                 isEnough: true
@@ -231,8 +231,15 @@ Page({
             'signType': 'MD5',
             'paySign': Payment.sign,
             'success': function(res) {
+                let query = {
+                    id:that.data.activityInfo.id,
+                    userId:that.data.userId,
+                    inviteId:that.data.inviteId,
+                    originId:that.data.originId,
+                }
+
                 wx.navigateTo({
-                    url: '/pages/crowdfunding/fpay/fpay'
+                    url: '/pages/crowdfunding/fpay/fpay'+JSON.stringify(query)
                 })
 
             },

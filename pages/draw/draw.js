@@ -6,7 +6,7 @@ Page({
         pageNo: 0,
         scrollEnd: false,
         isajaxLoad: false,
-        userId: '',
+        userId: 14,
     },
     onLoad: function(options) {
         let that = this;

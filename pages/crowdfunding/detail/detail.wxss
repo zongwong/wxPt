@@ -23,8 +23,13 @@ page {
     position: relative;
 }
 
+.priceBox {
+    margin-top: 6rpx;
+    height: 50rpx;
+}
+
 .goodInfoBox {
-    height: 163rpx;
+    height: 130rpx;
     background: #ff7900;
 }
 
@@ -45,7 +50,7 @@ page {
 .goodInfoBox .infoRight {
     color: #e02e24;
     padding: 20rpx 30rpx;
-    font-size: 32rpx;
+    font-size: 24rpx;
     height: 100%;
     text-align: center;
     display: flex;
@@ -58,23 +63,23 @@ page {
 
 .priceBox .priceRight {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 
 
 .priceBox .priceLeft {
-
-    height: 45px;
-    line-height: 45px;
     margin-right: 14rpx;
+    font-weight: bold;
+    font-size: 32rpx;
 }
 
 .priceBox .priceLeft .text {
-    font-size: 60rpx;
-}
-
-.priceBox .priceLeft {
-    height: 45px;
-    line-height: 45px;
+    font-size: 50rpx;
+    line-height: 50rpx;
+    display: inline-block;
+    vertical-align: bottom;
 }
 
 .goodInfoBox .infoRight .text,
@@ -84,27 +89,35 @@ page {
 
 .goodInfoBox .infoLeft .pintuan {
     color: #fff000;
-    border: 2rpx solid #fff000;
-    font-size: 28rpx;
-    padding: 4rpx 8rpx;
     margin-right: 10rpx;
     border-radius: 10rpx;
+    border: 1px solid #fff000;
+    font-size: 20rpx;
+    height: 28rpx;
+    line-height: 26rpx;
+    box-sizing: border-box;
+    padding: 0 8rpx;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .priceBox .priceRight .text:last-child {
     background-color: #c7271d;
-    padding: 3px;
+    /*padding: 0 4rpx;*/
     text-align: center;
-    width: 8em;
+    max-width: 8em;
     overflow: hidden;
     white-space: nowrap;
-    font-size: 23rpx;
+    font-size: 20rpx;
     border-radius: 5px;
+    margin-top: 1rpx;
+    line-height: 1.1;
 }
 
 .priceBox .priceRight .text:first-child {
-    color: #f0aca9;
+    color: #ffbc80;
     text-decoration: line-through;
+    font-size: 20rpx;
 }
 
 .goodInfoBox .infoRight .text:last-child {
@@ -144,6 +157,7 @@ page {
 .contactInfo .left .addr {
     width: 20rpx;
     height: 26rpx;
+    margin-left: 3.5rpx;
 }
 
 .contactInfo .left .text {
@@ -218,7 +232,7 @@ page {
     padding-left: 5%;
     border-top: 2rpx solid #e2e2e2;
     box-sizing: border-box;
-    flex:1;
+    flex: 1;
 }
 
 .footer .left text {
@@ -251,11 +265,23 @@ page {
 
 .goodInfoBox .infoLeft .zhongchou {
     color: #fff000;
-    border: 2rpx solid #fff000;
-    font-size: 28rpx;
-    padding: 4rpx 8rpx;
+    border: 1px solid #fff000;
+    font-size: 20rpx;
+    height: 28rpx;
+    line-height: 26rpx;
+    box-sizing: border-box;
+    padding: 0 8rpx;
     margin-right: 10rpx;
     border-radius: 10rpx;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.goodInfoBox .infoLeft .goodsName {
+    font-size: 28rpx;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 1;
 }
 
 .shuoming {

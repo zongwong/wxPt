@@ -202,17 +202,17 @@ Page({
                         }
                     })
                     that.setData({
-                        awards: awardsRecord.slice(0, 2)
+                        awards: awardsRecord.slice(0, 1)
                     })
                     let start = 0;
-                    if (awardsRecord.length >= 3) {
+                    if (awardsRecord.length >= 2) {
 
                         setInterval(function() {
                             start += 1;
-                            if (start > awardsRecord.length - 2) {
+                            if (start > awardsRecord.length - 1) {
                                 start = 0;
                             }
-                            let nowList = awardsRecord.slice(start, start + 2)
+                            let nowList = awardsRecord.slice(start, start + 1)
                             that.setData({
                                 awards: nowList
                             })
