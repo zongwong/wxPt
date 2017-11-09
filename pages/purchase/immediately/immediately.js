@@ -60,7 +60,7 @@ Page({
                 let data = res.data.data;
                 that.setData({
                     activityInfo: data,
-                    // endTime: data.endTime,
+                    endTime: data.endTime,
                 });
                 if (typeof data.memberList !== 'undefined' && data.memberList.length) {
                     let memberList = data.memberList;
@@ -77,41 +77,41 @@ Page({
                         menbers: memberList,
                     })
                 }
-                // let endtime = timeUtil.countDown(that.data.endTime);
-
                 // 商品img处理
                 let goodsImgs = data.ptGood.imgUrl.split(',')
                 that.setData({
                     goodsImgs:goodsImgs
                 })
+                //时间处理
+                let endtime = timeUtil.countDown(that.data.endTime);
 
-                // if (!endtime) {
-                //     wx.showModal({
-                //           title: '提示',
-                //           content: '时间错误',
-                //           success: function(res) {
-                //             wx.switchTab({
-                //               url: '/pages/purchase/purchase'
-                //             })
-                //           }
-                //     })
-                // }else if ( endtime === '活动已结束') {
-                //     wx.showModal({
-                //           title: '提示',
-                //           content: '来晚啦,活动已结束~',
-                //           success: function(res) {
-                //             wx.switchTab({
-                //               url: '/pages/purchase/purchase'
-                //             })
-                //           }
-                //     })
-                // }else{
-                //     setInterval(function() {
-                //         that.setData({
-                //             timeCountDown: timeUtil.countDown(that.data.endTime)
-                //         })
-                //     }, 1000);
-                // }
+                if (!endtime) {
+                    wx.showModal({
+                          title: '提示',
+                          content: '时间错误',
+                          success: function(res) {
+                            // wx.switchTab({
+                            //   url: '/pages/purchase/purchase'
+                            // })
+                          }
+                    })
+                }else if ( endtime === '活动已结束') {
+                    wx.showModal({
+                          title: '提示',
+                          content: '来晚啦,活动已结束~',
+                          success: function(res) {
+                            // wx.switchTab({
+                            //   url: '/pages/purchase/purchase'
+                            // })
+                          }
+                    })
+                }else{
+                    setInterval(function() {
+                        that.setData({
+                            timeCountDown: timeUtil.countDown(that.data.endTime)
+                        })
+                    }, 1000);
+                }
             }
         });
 

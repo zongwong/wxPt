@@ -315,7 +315,8 @@ Page({
             success:function(){
                 utils.ajax('POST', 'api/cj/cjActivity/share', {
                     actId: that.data.actId,
-                    userId: that.data.userId
+                    userId: that.data.userId,
+                    memberId:app.globalData.memberId,
                 }, function(res) {
                     if (res.data.code == 0) {
                         let num = that.data.activitylist.memberCount + that.data.activitylist.shareCount;

@@ -1,5 +1,4 @@
-<!-- 支付成功 -->
-<view class='payInfo success {{type=="success"?"show":"hide"}}'>
+<!-- <view class='payInfo success {{type=="success"?"show":"hide"}}'>
     <view class='first'>
         <image src='{{successImg}}' class='img'></image>
         <text class='title'>支付成功</text>
@@ -11,7 +10,8 @@
     <view class='third'>
         <button open-type="share" class='primary' type='primary'>邀请好友拼团</button>
     </view>
-</view>
+</view> -->
+<!-- 支付成功 -->
 <view class='payInfo success {{type=="success"?"show":"hide"}}'>
     <view class='first'>
         <image src='{{successImg}}' class='img'></image>

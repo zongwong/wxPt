@@ -9,8 +9,7 @@ function countDown(time_val) {
     }
 
     var sec = (new Date(time_val.replace(/-/ig, '/')).getTime() - new Date().getTime()) / 1000;
-
-    if (sec<=0) {
+    if (sec <= 0) {
         return '活动已结束';
     }
     if (!(sec > 0)) {
@@ -31,10 +30,10 @@ function countDown(time_val) {
             }
         }
     }
-
     if (Math.floor(sec) == 0) { str = '00'; }
     var len = str.length;
     str = str.substring(0, len - 1);
+
     return str;
 }
 const formatNumber = n => {
