@@ -256,6 +256,7 @@ Page({
         return {
             title: app.globalData.userInfo.nickName + '正在参与"' + this.data.activityInfo.zcGoods.name + '"众筹项目，邀请您为他支持！',
             path: '/pages/crowdfunding/detail/detail?' + query,
+            imageUrl:this.data.goodsImgs[0],
             success: function(res) {
                 console.log(query)
             },

@@ -151,7 +151,17 @@ Page({
                     activityInfo: data,
                     endTime: data.endTime,
                 });
+                if (that.data.orderId) {
+                    
+                    let details = data.details.filter(function(item){
+                        return item.orderId == that.data.orderId;
+                    })
 
+                    that.setData({
+                        ableTime:details[0].ableTime
+                    })
+                
+                }
                 // 时间
                 // let endtime = timeUtil.countDown(that.data.endTime);
 
@@ -651,6 +661,7 @@ Page({
             return {
                 title: app.globalData.userInfo.nickName + '邀请您代抽奖品',
                 path: '/pages/user/detail/detail?' + query,
+                imageUrl:this.data.activityInfo.imgUrl,
                 success: function(res) {
                     console.log('分享成功:' + query)
                 },
@@ -660,6 +671,9 @@ Page({
             }
         } else {
             //默认分享
+            return {
+                imageUrl:this.data.activityInfo.imgUrl,
+            }
         }
     },
 })

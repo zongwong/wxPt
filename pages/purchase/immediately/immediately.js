@@ -123,6 +123,7 @@ Page({
         return {
             title: '我正在拼团快来啊~',
             path: '/pages/purchase/immediately/immediately' + query,
+            imageUrl:this.data.goodsImgs[0],
             success: function(res) {
                 console.log('拼团转发成功')
             },

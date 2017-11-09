@@ -1,98 +1,98 @@
 <!--pages/purchase/purchase.wxml-->
 <view class="container">
-    <view class="container-body">
-        <view class="detail-1" style='background:url({{activityInfo.imgUrl}}) center / 100% no-repeat;'>
-            <view class="fdj" bindtap="previewImg" data-qrcode="{{activityInfo.imgUrl}}"></view>
-            <view class='bottom'>
-                <view>
-                    <text class='price'>{{activityInfo.money}}元博</text>
-                    <text class='title'>{{activityInfo.name}}</text>
-                </view>
-                <view>
-                    <text class='peple'>{{activityInfo.saleNum}}人参与</text>
-                </view>
-            </view>
-        </view>
-        <view class='detail-2'>
-            <view class='top'>
-                <text class='left'>中奖记录</text>
-                <text bindtap='lookMyAward' class='right'>我的奖品</text>
-            </view>
-            <view class='bottom'>
-                <view class="item" wx:if="{{awards.length==0}}">
-                    <text>暂无中奖记录</text>
-                </view>
-                <view wx:for="{{awards}}" wx:key="{{item.id}}" class='item'>
-                    <text>{{item.mobile}}</text>
-                    <text>{{item.awardName}}</text>
-                </view>
-            </view>
-        </view>
-        <view class='detail-3'>
-            <view class='top' wx:for="{{allSelects}}" wx:for-item="parent" wx:for-index="pi" wx:key="parent.id">
-                <text class='title'>{{pi+1}}.{{parent.question}}</text>
-                <view class='cell' wx:for="{{parent.items}}" wx:for-item="cell" wx:key="{{cell.id}}" wx:for-index="ci">
-                    <image data-parentid="{{parent.id}}" data-parentindex="{{pi}}" data-type="{{parent.type}}" data-childindex="{{ci}}" data-check="{{cell.checked}}" bindtap='changeState' class='icon' src='{{cell.checked?ckeckImg:unckeckImg}}' data-set="allSelects[{{pi}}].items[{{ci}}]"></image>
-                    <text>{{cell.name}}</text>
-                </view>
-            </view>
-        </view>
-        <!-- 我未下单 -->
-        <view class='detail-4' wx:if="{{isMyself && !orderId}}">
-            <text>支付{{activityInfo.money}}元,立即参与</text>
-            <text data-statu="open" bindtap='wjSubmit' class='submit' type='submit'>提交</text>
-        </view>
-        <!-- 我已下单,有次数 -->
-        <view class='detail-4' wx:if="{{isMyself && orderId && ableTime}}">
-            <text>还可要{{ableTime}}人代抽</text>
-            <text data-statu="open" bindtap='' class='submit' open-data="share">邀请好友抽奖</text>
-        </view>
-        <!-- 我已下单,无次数 -->
-        <view class='detail-4' wx:if="{{isMyself && orderId && !ableTime}}">
-            <text>还可要0人代抽</text>
-            <text data-statu="open" bindtap='' class='submit' disabled="true" style="background: #ccc;">邀请好友抽奖</text>
-        </view>
-        <!-- 好友,已拆奖 -->
-        <view class='detail-4' wx:if="{{!isMyself && isHelped}}">
-            <text>活动结束/代抽次数为0/已拆</text>
-            <text data-statu="open" bindtap='' class='submit' disabled="true" style="background: #ccc;">为Ta抽奖</text>
-        </view>
-        <!-- 好友,未拆奖 -->
-        <view class='detail-4' wx:if="{{!isMyself && !isHelped}}">
-            <text>{{originName}}邀您</text>
-            <text data-statu="open" bindtap='wjSubmit' class='submit'>为Ta抽奖</text>
-        </view>
-    </view>
+	<view class="container-body">
+		<view class="detail-1" style='background:url({{activityInfo.imgUrl}}) center / 100% no-repeat;'>
+			<view class="fdj" bindtap="previewImg" data-qrcode="{{activityInfo.imgUrl}}"></view>
+			<view class='bottom'>
+				<view>
+					<text class='price'>{{activityInfo.money}}元博</text>
+					<text class='title'>{{activityInfo.name}}</text>
+				</view>
+				<view>
+					<text class='peple'>{{activityInfo.saleNum}}人参与</text>
+				</view>
+			</view>
+		</view>
+		<view class='detail-2'>
+			<view class='top'>
+				<text class='left'>中奖记录</text>
+				<text bindtap='lookMyAward' class='right'>我的奖品</text>
+			</view>
+			<view class='bottom'>
+				<view class="item" wx:if="{{awards.length==0}}">
+					<text>暂无中奖记录</text>
+				</view>
+				<view wx:for="{{awards}}" wx:key="{{item.id}}" class='item'>
+					<text>{{item.mobile}}</text>
+					<text>{{item.awardName}}</text>
+				</view>
+			</view>
+		</view>
+		<view class='detail-3'>
+			<view class='top' wx:for="{{allSelects}}" wx:for-item="parent" wx:for-index="pi" wx:key="parent.id">
+				<text class='title'>{{pi+1}}.({{parent.type==1?'单选':'多选'}}){{parent.question}}</text>
+				<view class='cell' wx:for="{{parent.items}}" wx:for-item="cell" wx:key="{{cell.id}}" wx:for-index="ci">
+					<image data-parentid="{{parent.id}}" data-parentindex="{{pi}}" data-type="{{parent.type}}" data-childindex="{{ci}}" data-check="{{cell.checked}}" bindtap='changeState' class='icon' src='{{cell.checked?ckeckImg:unckeckImg}}' data-set="allSelects[{{pi}}].items[{{ci}}]"></image>
+					<text>{{cell.name}}</text>
+				</view>
+			</view>
+		</view>
+		<!-- 我未下单 -->
+		<view class='detail-4' wx:if="{{isMyself && !orderId}}">
+			<text>支付{{activityInfo.money}}元,立即参与</text>
+			<text data-statu="open" bindtap='wjSubmit' class='submit' type='submit'>提交</text>
+		</view>
+		<!-- 我已下单,有次数 -->
+		<view class='detail-4' wx:if="{{isMyself && orderId && ableTime}}">
+			<text>还可要{{ableTime}}人代抽</text>
+			<text data-statu="open" bindtap='' class='submit' open-data="share">邀请好友抽奖</text>
+		</view>
+		<!-- 我已下单,无次数 -->
+		<view class='detail-4' wx:if="{{isMyself && orderId && !ableTime}}">
+			<text>还可要0人代抽</text>
+			<text data-statu="open" bindtap='' class='submit' disabled="true" style="background: #ccc;">邀请好友抽奖</text>
+		</view>
+		<!-- 好友,已拆奖 -->
+		<view class='detail-4' wx:if="{{!isMyself && isHelped}}">
+			<text>活动结束/代抽次数为0/已拆</text>
+			<text data-statu="open" bindtap='' class='submit' disabled="true" style="background: #ccc;">为Ta抽奖</text>
+		</view>
+		<!-- 好友,未拆奖 -->
+		<view class='detail-4' wx:if="{{!isMyself && !isHelped}}">
+			<text>{{originName}}邀您</text>
+			<text data-statu="open" bindtap='wjSubmit' class='submit'>为Ta抽奖</text>
+		</view>
+	</view>
 </view>
 <!-- 弹框 -->
 <view class="drawer_screen" data-statu="close" wx:if="{{showModalStatus}}"></view>
 <view animation="{{animationData}}" class="drawer_box" wx:if="{{showModalStatus}}" >
-    <view class="from {{fromShow?'fromShow':''}}">
-        <view class="pack_head {{isHead?'pack_head-on':''}}"></view>
-        <view class='inputGroup' style="padding-bottom: 60rpx">
-            <view class="drawer_content">
-                <view class="top grid pack_grid">
-                    <label class="title col-0 pack_label">车牌号：</label>
-                    <input class="input_base input_h30 col-1" data-name="carNum" placeholder='请填写车牌号' bindinput="bindKeyInput" placeholder-style="color:#ff9f93;"></input>
-                </view>
-                <view class="top grid pack_grid">
-                    <label class="title col-0 pack_label">手机号码：</label>
-                    <input class="input_base input_h30 col-1" data-name="mobile" type="number" placeholder='请填写手机号' bindinput="bindKeyInput" placeholder-style="color:#ff9f93;"></input>
-                </view>
-                <view class="top grid pack_grid" style="padding-bottom:8px">
-                    <input class="input_base input_h30 col-1" data-name="vcode" type="number" placeholder='请填写验证码' bindinput="bindKeyInput" placeholder-style="color:#ff9f93;"></input>
-                    <button class="getSMSCode pack_sms" bindtap="getCode" disabled="{{isDjs?true:false}}">{{djsText}}</button>
-                </view>
-            </view>
-            <view class='btnBox'>
-                <view class="btn_ok pack_btn" bindtap="getReward">立即拆奖</view>
-            </view>
-        </view>
-    </view>
-    <view class="pack_front {{isFront?'pack_front_hide':''}}" style="z-index: 99;">
-        <view class="pack_front-top {{isHeadTop?'pack_front-top_on':''}}">
-            <view class="pack_text">恭喜您已中奖</view>
-            <view class="pack_chai {{isChai?'rotate':''}}" bindtap="chai"></view>
-        </view>
-    </view>
+	<view class="from {{fromShow?'fromShow':''}}">
+		<view class="pack_head {{isHead?'pack_head-on':''}}"></view>
+		<view class='inputGroup' style="padding-bottom: 60rpx">
+			<view class="drawer_content">
+				<view class="top grid pack_grid">
+					<label class="title col-0 pack_label">车牌号：</label>
+					<input class="input_base input_h30 col-1" data-name="carNum" placeholder='请填写车牌号' bindinput="bindKeyInput" placeholder-style="color:#ff9f93;"></input>
+				</view>
+				<view class="top grid pack_grid">
+					<label class="title col-0 pack_label">手机号码：</label>
+					<input class="input_base input_h30 col-1" data-name="mobile" type="number" placeholder='请填写手机号' bindinput="bindKeyInput" placeholder-style="color:#ff9f93;"></input>
+				</view>
+				<view class="top grid pack_grid" style="padding-bottom:8px">
+					<input class="input_base input_h30 col-1" data-name="vcode" type="number" placeholder='请填写验证码' bindinput="bindKeyInput" placeholder-style="color:#ff9f93;"></input>
+					<button class="getSMSCode pack_sms" bindtap="getCode" disabled="{{isDjs?true:false}}">{{djsText}}</button>
+				</view>
+			</view>
+			<view class='btnBox'>
+				<view class="btn_ok pack_btn" bindtap="getReward">立即拆奖</view>
+			</view>
+		</view>
+	</view>
+	<view class="pack_front {{isFront?'pack_front_hide':''}}" style="z-index: 99;">
+		<view class="pack_front-top {{isHeadTop?'pack_front-top_on':''}}">
+			<view class="pack_text">恭喜您已中奖</view>
+			<view class="pack_chai {{isChai?'rotate':''}}" bindtap="chai"></view>
+		</view>
+	</view>
 </view>
