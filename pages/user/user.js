@@ -6,7 +6,7 @@ Page({
         pageNo: 0,
         scrollEnd: false,
         isajaxLoad: false,
-        userId: 1,
+        userId: 14,
         originId:'',
         orderId:'',
     },
@@ -52,7 +52,7 @@ Page({
         utils.ajax('GET', url, {
             pageNo: pageNo,
             pageSize: 5,
-            status: 0,
+            status: 1,
             userId: that.data.userId
         }, function(res) {
             that.setData({

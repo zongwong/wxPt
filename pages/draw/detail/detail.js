@@ -49,6 +49,14 @@ Page({
                     activitylist: data
                 })
 
+                if (data.status != 1) {
+                    wx.showModal({
+                        title:'提示',
+                        content:'抱歉,活动已过期~'
+                    })
+                    return false;
+                }
+
 
                 // 奖项处理 不足八个 补全未中奖
                 let awards = data.awards;
@@ -106,59 +114,6 @@ Page({
     },
     loadDrawGame: function() {
         var _this = this;
-        //圆点设置
-        // var leftCircle = 7.5;
-        // var topCircle = 7.5;
-        // var circleList = [];
-        // for (var i = 0; i < 24; i++) {
-        //     if (i == 0) {
-        //         topCircle = 15;
-        //         leftCircle = 15;
-        //     } else if (i < 6) {
-        //         topCircle = 7.5;
-        //         leftCircle = leftCircle + 102.5;
-        //     } else if (i == 6) {
-        //         topCircle = 15
-        //         leftCircle = 620;
-        //     } else if (i < 12) {
-        //         topCircle = topCircle + 94;
-        //         leftCircle = 620;
-        //     } else if (i == 12) {
-        //         topCircle = 565;
-        //         leftCircle = 620;
-        //     } else if (i < 18) {
-        //         topCircle = 570;
-        //         leftCircle = leftCircle - 102.5;
-        //     } else if (i == 18) {
-        //         topCircle = 565;
-        //         leftCircle = 15;
-        //     } else if (i < 24) {
-        //         topCircle = topCircle - 94;
-        //         leftCircle = 7.5;
-        //     } else {
-        //         return
-        //     }
-        //     circleList.push({ topCircle: topCircle, leftCircle: leftCircle });
-        // }
-        // this.setData({
-        //     circleList: circleList
-        // })
-
-        // //圆点闪烁
-        // setInterval(function() {
-        //     if (_this.data.colorCircleFirst == '#FFDF2F') {
-        //         _this.setData({
-        //             colorCircleFirst: '#FE4D32',
-        //             colorCircleSecond: '#FFDF2F',
-        //         })
-        //     } else {
-        //         _this.setData({
-        //             colorCircleFirst: '#FFDF2F',
-        //             colorCircleSecond: '#FE4D32',
-        //         })
-        //     }
-        // }, 500) //设置圆点闪烁的效果
-
         //奖品item设置
         var awardList = [];
         //间距,怎么顺眼怎么设置吧.
@@ -186,7 +141,6 @@ Page({
             }
             var imageAward = this.data.imageAward[j];
             awardList.push({ topAward: topAward, leftAward: leftAward, imageAward: imageAward });
-             // awardList.push({ imageAward: imageAward });
         }
         this.setData({
             awardList: awardList
@@ -245,12 +199,9 @@ Page({
         let that = this;
         this.getResult(function(isAward){
 
-        
-        
             var indexSelect = that.data.indexSelect;
             var start = that.data.indexSelect;
             var i = 0;
-            // var randomMaxCount = Math.floor(Math.random() * 1000);
 
             var timer = setInterval(function() {
                 indexSelect += 1;
@@ -312,6 +263,7 @@ Page({
         return {
             title:'我正在抽奖抽奖',
             url:'/pages/draw/detail/detail?id='+that.data.activitylist.id+'&userId='+that.data.userId,
+            imageUrl:that.data.imageAward[0].imgUrl,
             success:function(){
                 utils.ajax('POST', 'api/cj/cjActivity/share', {
                     actId: that.data.actId,

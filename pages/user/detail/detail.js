@@ -31,6 +31,7 @@ Page({
         isFront: false,
         isHeadTop: false,
         fromShow: false,
+        isRuning: false,
     },
     onLoad: function(options) {
         // originId区分我自己,orderId区分支付,ableTime邀请次数,拆奖 记录本地openAward = orderId & true ,记录本地actId = orderId+actId
@@ -151,16 +152,12 @@ Page({
                     activityInfo: data,
                     endTime: data.endTime,
                 });
-                if (that.data.orderId) {
-                    
-                    let details = data.details.filter(function(item){
-                        return item.orderId == that.data.orderId;
-                    })
+                if (typeof data.ableTime != 'undefined' && data.ableTime) {
 
                     that.setData({
-                        ableTime:details[0].ableTime
+                        ableTime: data.ableTime
                     })
-                
+
                 }
                 // 时间
                 // let endtime = timeUtil.countDown(that.data.endTime);
@@ -370,7 +367,8 @@ Page({
             topicIds: topocIds,
             answers: answers,
             userId: that.data.userId,
-            actId: that.data.activityInfo.id
+            actId: that.data.activityInfo.id,
+            orderId: that.data.orderId,
         }, function(res) {
             that.setData({
                 isAjax: true
@@ -487,29 +485,50 @@ Page({
     // 代抽
     replaceGet: function() {
         let that = this;
+        if (this.data.isRuning) {
+            return false;
+        }
+
         utils.ajax('POST', 'api/hx/hxAwardDetail/replace', {
             orderId: that.data.orderId,
         }, function(res) {
-
+            that.setData({
+                isRuning: true
+            })
+            console.log(res)
             if (res.data.code == 0) {
                 // 代抽成功
                 let data = res.data.data;
-                let query = {
-                    awardName: data.myAward.awardName,
-                    imgUrl: data.myAward.imgUrl,
-                    price: data.myAward.rice,
-                    originName: that.data.originName,
-                    myAwardName: data.friendAward.awardName,
-                    myImgUrl: data.friendAward.imgUrl,
-                    myPrice: data.friendAward.price,
+                if (+data.friendAward.isAward || +data.myAward.isAward) {
+                    let query = {
+                        friendAward: data.friendAward.isAward,
+                        myAward: data.myAward.isAward,
+                        awardName: data.myAward.awardName,
+                        imgUrl: data.myAward.imgUrl,
+                        price: data.myAward.price,
+                        originName: that.data.originName,
+                        myAwardName: data.friendAward.awardName,
+                        myImgUrl: data.friendAward.imgUrl,
+                        myPrice: data.friendAward.price,
+                    }
+                    wx.redirectTo({
+                        url: '/pages/user/replaceAward/replaceAward?query=' + JSON.stringify(query)
+                    })
+                } else {
+                    wx.showModal({
+                        title: '提示',
+                        content: '很遗憾,没有中奖,感谢您的参与',
+                        complete: function(res) {
+                            wx.switchTab({
+                                url: '/pages/user/user'
+                            })
+                        }
+                    })
                 }
-                wx.redirectTo({
-                    url: '/pages/user/replaceAward/replaceAward?query=' + JSON.stringify(query)
-                })
             } else {
                 wx.showModal({
                     title: '提示',
-                    content: res.data.message
+                    content: '' + res.data.message
                 })
             }
 
@@ -517,9 +536,11 @@ Page({
     },
     // 立即抽奖
     getReward: function() {
-
+        if (this.data.isRuning) {
+            return false;
+        }
         // 字段验证
-        if (!this.data.mobile || !this.data.mobile || !this.data.mobile) {
+        if (!this.data.mobile || !this.data.carNum || !this.data.vcode) {
             wx.showModal({
                 title: '提示',
                 content: '内容不能为空'
@@ -535,13 +556,19 @@ Page({
 
 
         let that = this;
+
         utils.ajax('POST', 'api/hx/hxAwardDetail/openAward', {
-            orderId: that.data.orderId || 8,
+            orderId: that.data.orderId,
             mobile: that.data.mobile,
             licensePlate: that.data.carNum,
             smsCode: that.data.vcode,
         }, function(res) {
+            that.setData({
+                isRuning: true
+            })
+            console.log(res)
             if (res.data.code == 0) {
+
                 let data = res.data.data;
                 wx.setStorageSync('openAward', that.data.orderId + '&1')
                 that.setData({
@@ -549,11 +576,11 @@ Page({
                 })
 
 
-                if (data.isAward) { //中奖
+                if (+data.isAward) { //中奖
 
                     let query = {
                         awardName: data.awardName,
-                        imgUrl: 'https://www.baidu.com' || data.imgUrl,
+                        imgUrl: data.imgUrl,
                         price: data.price,
                         shareCount: data.ableTime,
                         orderId: that.data.orderId,
@@ -565,7 +592,15 @@ Page({
                         url: '/pages/user/award/award?query=' + JSON.stringify(query)
                     })
                 } else {
-
+                    wx.showModal({
+                        title: '提示',
+                        content: '很遗憾,没有中奖,感谢您的参与',
+                        complete: function(res) {
+                            wx.switchTab({
+                                url: '/pages/user/user'
+                            })
+                        }
+                    })
                 }
 
             } else {
@@ -661,7 +696,7 @@ Page({
             return {
                 title: app.globalData.userInfo.nickName + '邀请您代抽奖品',
                 path: '/pages/user/detail/detail?' + query,
-                imageUrl:this.data.activityInfo.imgUrl,
+                imageUrl: this.data.activityInfo.imgUrl,
                 success: function(res) {
                     console.log('分享成功:' + query)
                 },
@@ -672,7 +707,7 @@ Page({
         } else {
             //默认分享
             return {
-                imageUrl:this.data.activityInfo.imgUrl,
+                imageUrl: this.data.activityInfo.imgUrl,
             }
         }
     },

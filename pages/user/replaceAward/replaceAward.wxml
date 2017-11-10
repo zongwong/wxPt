@@ -1,23 +1,27 @@
-<view class="top">
+<view class="top" wx:if="{{friendAward}}">
     <view class='left'>
-        <image class='img' mode='aspectFill' src='{{options.imgUrl}}'></image>
+        <image class='img' mode='aspectFill' src='{{options.myImgUrl}}'></image>
     </view>
     <view class='right'>
         <view>恭喜您为[
             <text class='userName'>{{options.originName}}</text>]抽中</view>
-        <view class='goodTitle'>￥{{options.price}} {{options.awardName}}</view>
+        <view class='goodTitle'>￥{{options.myPrice}} {{options.myAwardName}}</view>
     </view>
 </view>
-<view class="getward">
+
+<view class="getward" wx:if="{{myAward}}">
     <view class='congratulate'>
         <text class='title'>代替抽奖</text>
         <view class='ganxie'>为感谢您的支持,赠送您
-            <text class='giftName'>￥{{options.myPrice}} {{options.myAwardName}}</text>
+            <text class='giftName'>￥{{options.price}} {{options.awardName}}</text>
         </view>
     </view>
-    <image class='img' mode='aspectFill' src='{{options.myImgUrl}}'></image>
+    <image class='img' mode='aspectFill' src='{{options.imgUrl}}'></image>
     <button bindtap='lookMine' class='btn-award'>查看奖品</button>
 </view>
+
+
+
 
 
 
