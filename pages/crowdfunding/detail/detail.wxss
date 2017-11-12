@@ -39,12 +39,12 @@ page {
 }
 
 .goodInfoBox .infoLeft {
-    color: #fff;
-    background-color: #e02e24;
-    padding: 20rpx 30rpx;
-    flex: 1;
-    height: 100%;
-    box-sizing: border-box;
+  color: #fff;
+  background-color: #e02e24;
+  padding: 20rpx 30rpx;
+  height: 100%;
+  box-sizing: border-box;
+  flex: 1;
 }
 
 .goodInfoBox .infoRight {
@@ -101,21 +101,26 @@ page {
 }
 
 .priceBox .priceRight .sale {
-    background-color: #F60;
-    padding: 0 4rpx;
-    text-align: center;
-    overflow: hidden;
-    white-space: nowrap;
-    font-size: 22rpx;
-    border-radius: 5px;
-    margin-top: 1rpx;
-    line-height: 1.1;
+    background-color: #f60;
+
+  text-align: center;
+    
+  border-radius: 5px;
+  font-size: 24rpx;
+  box-sizing: border-box;
+  white-space: nowrap;
+  line-height: 1;
+  padding: 0 2rpx;
+  position: absolute;
+  bottom: 2rpx;
+  left: 0;
 }
 
 .priceBox .priceRight .text:first-child {
     color: #ffbc80;
     text-decoration: line-through;
     font-size: 20rpx;
+/*    padding-top:4rpx;*/
 }
 
 .goodInfoBox .infoRight .text:last-child {
@@ -263,23 +268,23 @@ page {
 
 .goodInfoBox .infoLeft .zhongchou {
     color: #fff000;
-    border: 1px solid #fff000;
+    border: 1rpx solid #fff000;
     font-size: 22rpx;
-    height: 28rpx;
-    line-height: 26rpx;
+    /*height: 26rpx;*/
+    line-height: 24rpx;
     box-sizing: border-box;
     padding: 0 8rpx;
     margin-right: 10rpx;
     border-radius: 4rpx;
-    /*display: inline-block;*/
+    display: inline-block;
     vertical-align: middle;
 }
 
 .goodInfoBox .infoLeft .goodsName {
-    font-size: 29rpx;
-    display: inline-block;
-    vertical-align: middle;
-    line-height: 1;
+      font-size: 28rpx;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1;
 }
 
 .shuoming {

@@ -231,7 +231,7 @@ Page({
                             showCancel: true,
                             confirmText:'查看奖品',
                             cancelColor:'#ccc',
-                            confirmColor:'#F3365E',
+                            confirmColor:'#ccc',
                             success: function(res) {
                                 that.setData({
                                     isRunning: false,

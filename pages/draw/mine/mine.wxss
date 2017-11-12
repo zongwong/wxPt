@@ -63,16 +63,19 @@ page {
   align-items: center;  
 }
 .myItems .bottom .left {
-  width: 30%;
-  height: 140rpx;
+  width: 150rpx;
+  height: 150rpx;
   overflow:hidden;
   display: inline-block;
+  vertical-align: top;
 }
 
 .myItems .bottom .right {
-  width: 70%;
-  height: 140rpx;
+  width: calc(100% - 150rpx);
+  height: 150rpx;
   display: inline-block;
+  vertical-align: top;
+  position: relative;
 }
 .myItems .bottom .right-1{
   font-size: 25rpx;
@@ -91,6 +94,9 @@ page {
   text-align: right;
   color: #F33736;
   font-size: 27rpx;
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }
 .myItems .top .code{
   margin-left: 20rpx;
