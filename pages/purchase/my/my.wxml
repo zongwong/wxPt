@@ -19,18 +19,14 @@
                     <view class="purchase-item-text">
                         <view class="purchase-item-title">{{item.actName}}</view>
                         <view wx:if="{{item.status == 1}}" class="purchase-item-info btn-group">
-                            <view class='left'>
-                                再邀请
-                                <text class="icon-price">{{item.count - item.groupNum }}</text>人购买即可享受优惠
+                            <view class='left'>再邀请<text class="icon-price">{{item.count - item.groupNum }}</text>人购买即可享受优惠
                             </view>
                             <view class='right'>
-                                <button type='warn' class='btn-purchase' open-type="share" data-index="{{index}}">邀请好友 > </button>
+                                <button type='warn' class='btn-purchase' open-type="share" data-index="{{index}}"><text style="vertical-align: middle;">邀请好友</text><text class="icon_left"></text></button>
                             </view>
                         </view>
                         <view wx:if="{{item.status == 2}}" class="purchase-item-info btn-group">
-                            <view class='left'>
-                                团购码：
-                                <text class="icon-code">{{item.redeemCode}}</text>
+                            <view class='left'>团购码：<text class="icon-code">{{item.redeemCode}}</text>
                             </view>
                             <view class='right'>
                                 <button class='btn-purchase btn-check-code' data-qrcode="{{item.actImgUrl}}" bindtap="qrcodeShow">查看二维码</button>

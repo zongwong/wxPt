@@ -239,7 +239,7 @@ Page({
                 }
 
                 wx.navigateTo({
-                    url: '/pages/crowdfunding/fpay/fpay'+JSON.stringify(query)
+                    url: '/pages/crowdfunding/fpay/fpay?query='+JSON.stringify(query)
                 })
 
             },

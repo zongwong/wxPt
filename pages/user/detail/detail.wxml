@@ -1,8 +1,8 @@
 <!--pages/purchase/purchase.wxml-->
 <view class="container">
 	<view class="container-body">
-		<view class="detail-1" style='background:url({{activityInfo.imgUrl}}) center / 100% no-repeat;'>
-			<view class="fdj" bindtap="previewImg" data-qrcode="{{activityInfo.imgUrl}}"></view>
+		<view class="detail-1" style='background:url({{activityInfo.imgUrl}}) center / 100% no-repeat;' bindtap="previewImg" data-qrcode="{{activityInfo.imgUrl}}">
+			<!-- <view class="fdj" bindtap="previewImg" data-qrcode="{{activityInfo.imgUrl}}"></view> -->
 			<view class='bottom'>
 				<view>
 					<text class='price'>{{activityInfo.money}}元博</text>
@@ -44,18 +44,18 @@
 		</view>
 		<!-- 我已下单,有次数 -->
 		<view class='detail-4' wx:if="{{isMyself && orderId && ableTime}}">
-			<text>还可要{{ableTime}}人代抽</text>
-			<text data-statu="open" bindtap='' class='submit' open-data="share">邀请好友抽奖</text>
+			<text>还可邀{{ableTime}}人代抽</text>
+			<text data-statu="open" class='submit' open-data="share">邀请好友抽奖</text>
 		</view>
 		<!-- 我已下单,无次数 -->
 		<view class='detail-4' wx:if="{{isMyself && orderId && !ableTime}}">
-			<text>还可要0人代抽</text>
-			<text data-statu="open" bindtap='' class='submit' disabled="true" style="background: #ccc;">邀请好友抽奖</text>
+			<text>还可邀0人代抽</text>
+			<text data-statu="open" class='submit' disabled="true" style="background: #ccc;">邀请好友抽奖</text>
 		</view>
 		<!-- 好友,已拆奖 -->
 		<view class='detail-4' wx:if="{{!isMyself && isHelped}}">
 			<text>活动结束/代抽次数为0/已拆</text>
-			<text data-statu="open" bindtap='' class='submit' disabled="true" style="background: #ccc;">为Ta抽奖</text>
+			<text data-statu="open" class='submit' disabled="true" style="background: #ccc;">为Ta抽奖</text>
 		</view>
 		<!-- 好友,未拆奖 -->
 		<view class='detail-4' wx:if="{{!isMyself && !isHelped}}">
@@ -70,7 +70,7 @@
 	<view class="from {{fromShow?'fromShow':''}}">
 		<view class="pack_head {{isHead?'pack_head-on':''}}"></view>
 		<view class='inputGroup' style="padding-bottom: 60rpx">
-			<view class="drawer_content">
+			<view class="drawer_content" style="margin-top:38rpx;">
 				<view class="top grid pack_grid">
 					<label class="title col-0 pack_label">车牌号：</label>
 					<input class="input_base input_h30 col-1" data-name="carNum" placeholder='请填写车牌号' bindinput="bindKeyInput" placeholder-style="color:#ff9f93;"></input>
@@ -79,9 +79,9 @@
 					<label class="title col-0 pack_label">手机号码：</label>
 					<input class="input_base input_h30 col-1" data-name="mobile" type="number" placeholder='请填写手机号' bindinput="bindKeyInput" placeholder-style="color:#ff9f93;"></input>
 				</view>
-				<view class="top grid pack_grid" style="padding-bottom:8px">
+				<view class="top grid pack_grid">
 					<input class="input_base input_h30 col-1" data-name="vcode" type="number" placeholder='请填写验证码' bindinput="bindKeyInput" placeholder-style="color:#ff9f93;"></input>
-					<button class="getSMSCode pack_sms" bindtap="getCode" disabled="{{isDjs?true:false}}">{{djsText}}</button>
+					<view class="input_h30 pack_sms_wrap"><button class="getSMSCode pack_sms" bindtap="getCode" disabled="{{isDjs?true:false}}">{{djsText}}</button></view>
 				</view>
 			</view>
 			<view class='btnBox'>

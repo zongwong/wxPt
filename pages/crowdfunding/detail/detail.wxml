@@ -9,7 +9,7 @@
 <view class='goodInfoBox'>
     <view class='infoLeft'>
         <text class='zhongchou'>众筹</text>
-        <text class="goodsName">{{activityInfo.zcGoods.name}}</text>
+        <text class="goodsName">{{activityInfo.zcGoods.name}}按时大大说</text>
         <view class='priceBox'>
             <view class='priceLeft'>
                 ￥
@@ -17,7 +17,7 @@
             </view>
             <view class='priceRight'>
                 <text class='text'>原价￥{{activityInfo.zcGoods.originalPrice}}</text>
-                <text class='text'>参与人数:{{activityInfo.saleNum}}</text>
+                <view><text class='sale'>参与人数:{{activityInfo.saleNum}}</text></view>
             </view>
         </view>
     </view>

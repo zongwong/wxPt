@@ -42,7 +42,7 @@ Page({
         let that = this;
         console.log(options)
         let userId = options.userId,
-            originId = options.originId,
+            originId = options.originId||app.globalData.memberId,
             orderId = options.orderId || '',
             originName = options.originName;
         that.setData({
@@ -539,8 +539,17 @@ Page({
         if (this.data.isRuning) {
             return false;
         }
+        if (+this.data.activityInfo.carCheck) {
+            if (!this.data.carNum) {
+                wx.showModal({
+                    title: '提示',
+                    content: '请输入车牌号'
+                })
+                return false;
+            }
+        }
         // 字段验证
-        if (!this.data.mobile || !this.data.carNum || !this.data.vcode) {
+        if (!this.data.mobile || !this.data.vcode) {
             wx.showModal({
                 title: '提示',
                 content: '内容不能为空'
@@ -706,8 +715,14 @@ Page({
             }
         } else {
             //默认分享
+            
+            let query = 'id=' + this.data.activityInfo.id + '&userId=' + this.data.userId + '&originId=';
             return {
+                path: '/pages/user/detail/detail?' + query,
                 imageUrl: this.data.activityInfo.imgUrl,
+                success:function(){
+                    console.log('默认:'+query)
+                }
             }
         }
     },

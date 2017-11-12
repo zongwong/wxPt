@@ -1,5 +1,6 @@
 /* pages/user/mine/mine.wxss */
 @import "../user.wxss";
+@import "../../draw/mine/mine.wxss";
 .purchase-list{
   width: 100%;
   margin-top:20rpx;
@@ -36,10 +37,11 @@ page {
 .myItems {
   background-color: #fff;
   margin-top: 20rpx;
+  margin-bottom: 0;
   width: 100%;
 }
 
-.myItems .top {
+/*.myItems .top {
   display: flex;
   justify-content: space-between;
   height: 100rpx;
@@ -101,3 +103,4 @@ page {
   height: 140rpx;
   width: 100%;
 }
+*/

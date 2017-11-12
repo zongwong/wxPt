@@ -228,11 +228,17 @@ Page({
                         wx.showModal({
                             title: title,
                             content: contentpre + award.imageAward.name,
-                            showCancel: false, //去掉取消按钮
+                            showCancel: true,
+                            confirmText:'查看奖品',
+                            cancelColor:'#ccc',
+                            confirmColor:'#F3365E',
                             success: function(res) {
+                                that.setData({
+                                    isRunning: false,
+                                })
                                 if (res.confirm) {
-                                    that.setData({
-                                        isRunning: false,
+                                    wx.navigateTo({
+                                      url: '/pages/draw/mine/mine'
                                     })
                                 }
                             }

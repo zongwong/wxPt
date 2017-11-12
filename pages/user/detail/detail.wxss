@@ -30,8 +30,8 @@ page {
 }
 
 .detail-1 .bottom .price {
-    font-size: 32rpx;
-    padding: 10rpx 20rpx;
+    font-size: 30rpx;
+    padding: 0 20rpx;
     border: 2rpx solid #fff;
     border-radius: 8rpx;
     margin: 0 20rpx;
@@ -65,15 +65,16 @@ page {
 .detail-2 .top .left {
     background-color: #6c4176;
     color: #fff;
-    padding: 8rpx 20rpx;
+    padding: 2rpx 20rpx;
     border-radius: 10rpx;
 }
 
 .detail-2 .top .right {
     color: #6c4176;
-    padding: 8rpx 20rpx;
-    border: 1rpx solid #6c4176;
+    padding: 2rpx 20rpx;
+    border: 2rpx solid #6c4176;
     border-radius: 10rpx;
+    box-sizing: border-box;
 }
 
 .detail-2 .bottom .item {
@@ -94,8 +95,14 @@ page {
 
 .detail-3 .top {
     border-bottom: 1rpx solid #6c4176;
+    margin-top: 10rpx;
 }
-
+.detail-3 .top:first-child {
+    margin-top: 0;
+}
+.detail-3 .top:last-child {
+    border-bottom: none;
+}
 .detail-3 .top .left {
     background-color: #6c4176;
     color: #fff;
@@ -142,9 +149,12 @@ page {
 .detail-4 .submit {
     color: #fff;
     background-color: #6c4176;
-    padding: 10rpx 60rpx;
-    font-size: 32rpx;
+    /*padding: 10rpx 60rpx;*/
+    font-size: 30rpx;
     border-radius: 10rpx;
+    text-align: center;
+    width: 300rpx;
+    line-height: 62rpx;
 }
 
 .drawer_box {
@@ -153,7 +163,7 @@ page {
 
 .drawer_box .inputGroup {
     background-color: #df3121;
-    border-radius: 0 0 20rpx 20rpx;
+    border-radius: 0 0 60rpx 60rpx;
     height: 458rpx;
     width: 100%;
     position: absolute;
@@ -182,7 +192,9 @@ page {
 .drawer_box .btnBox {
     padding: 30rpx;
 }
-
+.drawer_box .top{
+    padding: 8rpx 0;
+}
 
 
 
@@ -198,17 +210,25 @@ page {
     height: 765rpx;
     overflow: visible;
 }
-
+.pack_sms_wrap{
+    position: relative;
+    width: 180rpx;
+}
 .drawer_box .pack_sms {
     margin: 0;
     padding: 0 20rpx;
     font-size: 28rpx;
-    vertical-align: bottom;
     background-color: #ffd736;
     color: #df3121;
     border-radius: 50rpx;
     outline: none;
     border: none;
+    height: 60rpx;
+    line-height: 60rpx;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .drawer_box .pack_btn {
@@ -226,6 +246,8 @@ page {
 
 .drawer_box .pack_grid {
     color: #ff9f93;
+    /*height: 60rpx;*/
+    line-height: 60rpx;
 }
 
 .drawer_box input {
@@ -262,7 +284,7 @@ page {
     position: absolute;
     top: 0;
     left: 0;
-    border-radius: 20rpx 20rpx 0 0;
+    border-radius: 60rpx 60rpx 0 0;
     transition: height 1s ease-in-out;
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA3sAAAEWBAMAAAAtFpN9AAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAVUExURd8xIe09KNAbEdUiFtooGt0tHuc2IzBdDJEAAApfSURBVHja7Z1Nc9s2FEWZtMrandhaZ8C064RSuk5kqmtFkbK2ndb//ydUBAEQpChZFr/wyHMnq87YncHpfe9eQGqiP5Bc3UScAfgQ+BD4wIfAh8CHwAc+BD4EPgQ+8CHwIfCBD4EPgQ+BD3wIfAh8CHzgQ2Hie+QQJOP7zCFIxveRQ5CMT33nFMTqIVJ/cQpi9SlSilOQqrsPUaIIL1L19CFaqD85B5maqwyfovrJ1PsDvvuE8CJUK/UpShcq5iRElj4VZ/gIL0KDS4Zvd094kalELb5G+8P0VG84DHG6VfHyazTbEV5EaqsWGT5tP05DXulTi3QTZdOT8CIyuCzXB3x6evJsJDC4pPsDPsKL0OBywHegR3iRGVzy2RmZ8PLIkQjSTRZctPkIL4KDi5meXHzK0sF8y73Bl4eXbxyKGL13wcWFFy4+5WjlzU4bXugOUnTnBRcXXugOooKLh0+HF7qDEGXXnd7stOGF7iAxuLjwQneQoaRqPhNe6A4SdFsJLnp60h2kaFtqDX54oTuEr/y6s4KP7iCoNRzNTrqD3NbgdQfsJ9N8dAcxrSGuM5/pDlT30Cu7qjWf6Q7YL2ytKted1fBCdQ9Z+q2hbnba7sBHBkPW2xPBpbDfdw5JXGvw7MfNmbzWwM2ZEPPFp81HdQ/efOqM+Ux34OYs6Mp+Bt8M+wVf2U/PTuwXvPnOzc4svGC/kM13Lri47oD9QtTqbGvwuwP2C0+3F5gP+4k2n7Xf3xxXYLq7yHzGfjH2C0zbFyp72X6fObCgdKNeqOwV+3FiQSl/KdpE2G/c5sN+QZpPXWg+fXOG/YKSfilKLzOfvrjGfiHp6cxHXLCfBPMtLjUf9gvRfMuLzYf9RJvPPtty9SLTfPbZlptPkeaz9uPhIZTO9zrzWfvx7hfGhcsrzYf9ZJvPhk/sJ9J8tvthP5nms/b7wAEOqrvrzOfs950jHFLbK81n7ccXjkSaz9nvG4c4nFZXm8/aj6/bDqfb682H/YZX0sB81n48HA2l903M5+z3mYOUaD77oTMejobRr2bmc9944OpsCM1VQ/NZ+/F/KxhCT6/5eNlJ+2UPR3T3/pXfVTcyn/26LVdn/Wvbgvms/ejufeuuDfNRHoa9LmtqPtfdKQ9DNPZNY3wzysNgjb25+az9KA8DNPZNC/iM/SgPvTf2Nszn7PeNY+1Lb9sznysPvDz0WBqaXpfVdHc+M99jaVik+6gtHezHh3b7LA2qhcZOehkmt+jS0KL5SC996qnV3OLbj/TSvW7aLA0V+3H30kduadt8RXrh7qWP3NK2+fLywMtRL7mlA/O58fmZI+7+vmXdOj2bXih/3d+3pPuofRn78ZUxcbmllF4of53pVze5pZReKH+d5RbVofkof11rm+eWbsxXpJfvnHQXuu0ut1j7Uf7kVb6j9MLLXwd66jK3lMcnd2edVL6OzefSC+OzdSVd3bdU7Mf47G50pvuoW5nyx/gUODoZnx2Ozq5zSzm9MD47GJ2dm8+VP8p766Nz3QM9V/64+2yzsPczOv3xyd2nvNHJ+OxsdPZjPm98PnL20kanPz55eW9Bb1X+lYZNb/jc+PzG6TfVbd+j0xuffHBJ3ui045PLlxa07X90+uOTy5dG+jXE6PTuPmkPTZR9H6X/0ek/HdEeGijpt7DXjU++tNnoumWQ0WnHJ+uvcWdYDkNvZscn6+/KzqCGG53++GT9XaXVkKOT9dfK4lsOR8+lT9bfdYtvyNHpX75w+Xnd4lsMSo/1J3fxldsDl5/XLL6BzeetP97+hC2+yvojvrzqqjMOYHT664/2fnFsScJYfOX1R3y5UNkbXxLE6CytP+LLRfoVzOIjvlwbW0IZnXb9EV8ujy3hLD7iy1WxJZzR6can5vcGQi/GFhUYPW/9ET/P6m1wi6+y/oifL4bO8Oh5/IifJ3Wn7BvfJjR8MxdfiJ/nQ2doi68aX/6B1MnQqWPLPopC5kd9qNMq2MVn1p+Nn9SHE5UhjsOl58UX6kN96NT0NqHimxX1AX619MKMLcfxk/p3fE8dBxtbjuMLn/2sFr4keHo+P+p7ufCFHDor8VPz+wQ3Qy9x9DZR8PxsfIFfqa7LoGf4cX1Wphd66KyrD/A70FvJolfix/XnSkZlqMRP+FXorcXQM/UBfuazEYmIynBcHyb/fLRVokJnXf2bMD/Pe7LowU+y9xy/Ke8/0fQm7z9HLxVJT1+/WH5/Q080v4ndf+Z3LbLpTZefoyfpsqX++szym9D7bX5LLZ6e5Zfnz8l8/mU09Mr+mwi/m/HQK/tvEp8f1J9rGQs957/80fLN6On9Oy565fmpfk6CXqIbwyjolefnyC9gflNF3xsJvfL956gL4HZ83jviN9oAasp6PDp6mp/9/NlYA4wpDGOkZ/nF4w0wJnLG+oVobPTK/hvhC0QeWuJY7Pveq/j9Oa4FON8WdW+c9DJ+XoEY1QI0a2/U9CoFcEQNsFh7Y6bn+Jn/Vr+MhN4PZetedlE2XnoZP38BjqIBmrZ3GJy6MIyZnuNnB6j8BvGfKiJnOsLCUBdAiwX45XEUg9OElvHTcwE0GUECtYkzmQ69aoBRX6UnznztrUe+9k4uQKEJxmYWu/amQq9YgLHgCmgyS9720okMzvoFKM+A8x+q1NWnRS9fgFkDTEQa8L9ETajtnVyAvgHfiNt6eeKcJD1vgEqLoDZwZtab4uD0+WUJ1PKLJVzC3HjW031hqvS8AWoBLh+lRBa1iCc8OE8ZMPAJ+m+C9c4bMOAJ+rDCejX8Kgb8+C7wuemsBz09QCsGDHEFFvCc9fagKxswdkcU2EPS/HeF9V424EIFCfB3Nxdie8WJ9WoNGCDAMjysd9qA5QkaAsB5AU/PTax32oBmghYHppbvQtl5dm5ivddMUPXxZwhp085NrHfRBE08B8ZfB5mhD/fAu26CVgGqL88Drjz9tMDcfM0Eva8CjDePwxgvd14OD+tdNkHrAPYVY8rGA14TgIsSwHjd9RCdz+5VDbxs6TE3rwIYq74IVtgBrzHA9BjggeC7Htjpkg68VgCWl2C2BzetmvBhV/kXaOMBrxWANTM0O+H0Zyth9Hl3X/3NObw0DyzAawRwn9alGHPQzVw4f9gtjn9nbO42gdcSQDtDj4eoLtXp/t2rffj8sLuv+WWJ3niZ8bKpCbyWbmIygIagqlcG8RInzp+jfVr/Sw4zM/aMR89rEWCxBWv2oH+/pb+q9ZzJAcuU/8VYyemfzH2H8TqbodkWvIDgFcqzSs4O43VnQU0wn6KHRZi0ws7YrmCH8XoiuFg0NJ1xnd53OTuM1xNBhzC5xocVdLDrC2BOcJcjXC4KiBfOyiRxP2PQ6awCu56TjEWYLko6YcY47+NVcgYd+26QMeoQViGekQVnBia2Gxjhfl1ATJfLemj3GTZHbmd+cr/BdyEM0syIO49ijXbZnwO3nSMHukDizGxf1triXKc7LfPP8Fyo2kQHOxWEdvsabXCcCJSz2QHlwZQZUs0MagghhBBCCCGEEEIIIYQQQgghhBCKov8BCnplRBEir2cAAAAASUVORK5CYII=);
 }
@@ -288,7 +310,7 @@ page {
     height: 100%;
     background: #df3121;
     z-index: 99;
-    border-radius: 20rpx;
+    border-radius: 60rpx;
     opacity: 1;
     transition: .3s linear;
 }
@@ -302,7 +324,7 @@ page {
     width: 174rpx;
     height: 176rpx;
     position: absolute;
-    bottom: -14rpx;
+    bottom: -50rpx;
     left: 50%;
     margin-left: -87rpx;
     z-index: 999;

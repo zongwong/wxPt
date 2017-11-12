@@ -38,15 +38,16 @@ page {
 .myItems .top {
   display: flex;
   justify-content: space-between;
-  height: 100rpx;
+  height: 93rpx;
   align-items: center;
-  padding: 0 40rpx;
+  margin: 0 40rpx;
   border-bottom:2rpx solid #CBCBCB;
+  font-size: 26rpx;
 }
 
 .myItems .top .qrcodeImg {
-  width: 60rpx;
-  height: 60rpx;
+  width: 54rpx;
+  height: 54rpx;
 }
 
 .myItems .bottom {
@@ -63,6 +64,8 @@ page {
 }
 .myItems .bottom .left {
   width: 30%;
+  height: 140rpx;
+  overflow:hidden;
   display: inline-block;
 }
 
@@ -72,19 +75,22 @@ page {
   display: inline-block;
 }
 .myItems .bottom .right-1{
-  font-size: 32rpx;
+  font-size: 25rpx;
   display: block;
   padding-left: 30rpx;
+  line-height:1;
 }
 .myItems .bottom .right-2{
   display: block;
+  font-size: 22rpx;
   padding-left: 30rpx;
-  margin-top: 20rpx;
+  margin-top: 15rpx;
 }
 .myItems .bottom .right-3{
   display: block;
   text-align: right;
   color: #F33736;
+  font-size: 27rpx;
 }
 .myItems .top .code{
   margin-left: 20rpx;
@@ -95,6 +101,6 @@ page {
 }
 
 .myItems .bottom .myImg {
-  height: 140rpx;
   width: 100%;
+  height: 100%;
 }

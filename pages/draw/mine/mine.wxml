@@ -11,7 +11,7 @@
   <view class='myItems' wx:for="{{myitems}}" wx:key="{{item.id}}">
     <view class='top'>
       <view class='left'>
-        <image mode='aspectFit' class='qrcodeImg' src='{{qrcodeImg}}' data-qrcode='{{item.redeemCodeUrl}}' bindtap = 'previewCode'></image>
+        <image mode='aspectFill' class='qrcodeImg' src='{{qrcodeImg}}' data-qrcode='{{item.redeemCodeUrl}}' bindtap = 'previewCode'></image>
         <text class='code'>{{item.redeemCode}}</text>
       </view>
       <view class='right'>

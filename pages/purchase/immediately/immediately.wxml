@@ -8,7 +8,6 @@
 </swiper>
 <view class='goodInfoBox'>
     <view class='infoLeft'>
-        <text class='pintuan'>拼团</text>
         <text class='goodsName'>{{activityInfo.ptGood.name}}</text>
         <view class='priceBox'>
             <view class='priceLeft'>
@@ -17,7 +16,7 @@
             </view>
             <view class='priceRight'>
                 <text class='text'>原价￥{{activityInfo.ptGood.originalPrice}}</text>
-                <text class='text'>已售{{activityInfo.saleNum}}</text>
+                <view><text class='sale'>已售{{activityInfo.saleNum}}</text></view>
             </view>
         </view>
     </view>
@@ -64,17 +63,13 @@
 </view>
 <!-- 未下单 -->
 <view class='footer' wx:if="{{!inviteId || !iInList}}">
-    <view class='left'>
-        再邀
-        <text>{{activityInfo.count-activityInfo.groupNum}}</text>人购买即可享受优惠
+    <view class='left'>再邀<text>{{activityInfo.num-menbers.length}}</text>人购买即可享受优惠
     </view>
     <navigator url='../pay/pay?actId={{activityInfo.id}}&inviteId={{inviteId}}&userId={{userId}}&name={{activityInfo.ptGood.name}}&price={{activityInfo.ptGood.price}}&number={{activityInfo.num - menbers.length}}' class='right'>立即抢购</navigator>
 </view>
 <!-- 已下单 -->
 <view class='footer' wx:if="{{inviteId && iInList}}">
-    <view class='left'>
-        再邀
-        <text>{{activityInfo.count-activityInfo.groupNum}}</text>人购买即可享受优惠
+    <view class='left'>再邀<text>{{activityInfo.count-activityInfo.groupNum}}</text>人购买即可享受优惠
     </view>
     <button class='right sharebtn' open-type="share" type="default">邀请好友拼团</button>
 </view>

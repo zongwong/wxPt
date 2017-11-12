@@ -9,7 +9,7 @@
       <text>数量</text>
     </view>
     <view class='inputgroup'>
-      <text class='option' data-type='minus' bindtap='changeCount'>-</text>
+      <text class='option {{ counts == 1?"on":"" }}' data-type='minus' bindtap='changeCount'>-</text>
       <text class='numbershow'>{{counts}}</text>
       <text class='option' data-type='plus' bindtap='changeCount'>+</text>
     </view>
@@ -43,10 +43,7 @@
   </view>
 </view>
 <view class='common remarks'>
-  <view class='remark'>
-    <text>备注：</text>
-  </view>
-  <textarea placeholder='如有其它要求请填写' style="padding-left: 0;width: 100%;"></textarea>
+  <view class='remark'><text>备注：</text></view><textarea placeholder='如有其它要求请填写' style="padding-left: 0;width: 100%;box-sizing: border-box;"></textarea>
 </view>
 <view class='footer'>
   <button bindtap='pay' type='warn'>支付</button>

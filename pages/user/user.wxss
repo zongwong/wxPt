@@ -13,16 +13,18 @@ page {
 }
 
 .purchase-item .ac-item{
-  margin-left: 30rpx;
+  margin:0 auto;
+  width:90%;
 }
 
 .purchase-item .ac-item .price{
-  font-size: 32rpx;
-  padding: 10rpx 20rpx;
+  font-size: 30rpx;
+  padding: 2rpx 15rpx;
   color: #6C4176;
   border: 2rpx solid #6C4176;
   border-radius: 8rpx;
   margin-right: 20rpx;
+  box-sizing: border-box;
 }
 
 .purchase-item .ac-item .title{

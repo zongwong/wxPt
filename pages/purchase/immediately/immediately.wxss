@@ -67,15 +67,15 @@ page {
 }
 
 .priceBox .priceLeft .text {
-  font-size: 50rpx;
-  line-height: 50rpx;
+  font-size: 66rpx;
+  line-height: 66rpx;
   display: inline-block;
   vertical-align: bottom;
 }
 
 .priceBox .priceLeft {
     margin-right: 14rpx;
-    font-weight: bold;
+    /*font-weight: bold;*/
     font-size: 32rpx;
 }
 
@@ -101,13 +101,13 @@ page {
   vertical-align: middle;
   line-height: 1;
 }
-.priceBox .priceRight .text:last-child {
+.priceBox .priceRight .sale{
   background-color: #c7271d;
   padding: 0 2rpx;
   text-align: center;
-  width: 6em;
+  padding: 0 6rpx;
   border-radius: 5px;
-  font-size: 20rpx;
+  font-size: 24rpx;
   box-sizing: border-box;
   white-space: nowrap;
   margin-top: 1rpx;
@@ -188,8 +188,8 @@ page {
 
 .menbers .tips .tip {
   color: #5b5b5b;
-  line-height: 50rpx;
-  margin-top: 20rpx;
+  line-height: 41rpx;
+  margin-top: 21rpx;
 }
 
 .menbers .face {

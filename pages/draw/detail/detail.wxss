@@ -9,9 +9,9 @@ page {
 
 .description {
   width: 678rpx;
-  height: 300rpx;
+  height: 281rpx;
   background-repeat: no-repeat;
-  background-size: 100% auto;
+  background-size: 100% 100%;
   margin: 0 auto;
   position: relative;
   text-align: center;
@@ -20,14 +20,15 @@ page {
 
 .description .time {
   position: absolute;
-  bottom: 16.8%;
+  bottom: 0;
   width: 100%;
   color: #fff;
+  line-height: 44rpx;
 }
 
 .description .desc {
   position: absolute;
-  bottom: 35.5%;
+  bottom: 28%;
   width: 100%;
   padding: 0 26rpx;
   box-sizing: border-box;
@@ -45,8 +46,7 @@ page {
 
 .chanceCount {
   width: 678rpx;
-  margin: 0rpx auto;
-  margin-bottom: 30rpx;
+  margin: 28rpx auto;
   text-align: center;
   font-weight: 600;
 }
@@ -164,12 +164,12 @@ box-shadow: inset 3px 3px 3px #fff2af;*/
 .records .title{
   color: #fff;
   background-color: #F3365E;
-  border-radius: 20rpx;
+  border-radius: 50rpx;
   padding: 6rpx 20rpx;
 }
 .records .myaward{
   color: #F3365E;
-  border-radius: 20rpx;
+  border-radius: 50rpx;
   padding: 6rpx 20rpx;
   border: 2rpx solid #F3365E;
 }

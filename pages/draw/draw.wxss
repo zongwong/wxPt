@@ -9,11 +9,12 @@ page {
   background-color: #fff;
   width: 100%;
   margin-bottom: 20rpx;
-  padding: 30rpx 0;
+  padding: 22rpx 0;
 }
 
 .purchase-item .ac-item{
-  margin-left: 30rpx;
+  width: 90%;
+  margin: 0 auto;
 }
 
 .purchase-item .purchase-item-img {
@@ -21,7 +22,7 @@ page {
   overflow: hidden;
   position: relative;
   width: 90%;
-  margin: 30rpx auto;
+  margin: 22rpx auto 6rpx auto;
 }
 
 .purchase-item .purchase-item-img .image {

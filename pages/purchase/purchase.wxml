@@ -16,7 +16,7 @@
                                 <text class="icon-count">已售{{item.saleNum}}</text>
                             </view>
                             <view class='right'>
-                                <button type='warn' class='btn-purchase'>马上开团 ></button>
+                                <button type='warn' class='btn-purchase'><text style="vertical-align: middle;">马上开团</text><text class="icon_left"></text></button>
                             </view>
                         </view>
                     </view>

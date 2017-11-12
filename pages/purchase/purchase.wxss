@@ -10,6 +10,7 @@ page {
   width: 90%;
   margin: 20rpx;
   padding: 20rpx;
+  padding-bottom:0;
 }
 
 .purchase-item .purchase-item-img {
@@ -52,7 +53,8 @@ page {
 
 .btn-group {
   display: flex;
-  justify-content: space-between;
+  width:100%;
+  /*justify-content: space-between;*/
 }
 
 .btn-group .btn-purchase {
@@ -64,8 +66,9 @@ page {
 }
 
 .purchase-item-info .left {
-  /* flex: 1; */
+   flex: 1; 
   line-height: 100rpx;
+  text-align: left;
 }
 
 .purchase-item-info .right {

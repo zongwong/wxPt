@@ -29,8 +29,8 @@ page {
 }
 
 .userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
+  width: 85rpx;
+  height: 85rpx;
   margin: 20rpx;
   border-radius: 50%;
 }
@@ -47,12 +47,15 @@ page {
   width: 90%;
   color: #e6c053;
   margin: 0rpx 30rpx;
+  height:46rpx;
+  line-height: 46rpx;
 }
 
 .cardinfo text:first-child {
   border: 2rpx solid #e6c053;
-  padding: 10rpx 30rpx;
+  padding: 0 30rpx;
   border-radius: 20rpx;
+  box-sizing: border-box;
 }
 
 .bottom {

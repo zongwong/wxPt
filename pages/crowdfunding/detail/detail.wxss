@@ -71,13 +71,12 @@ page {
 
 .priceBox .priceLeft {
     margin-right: 14rpx;
-    font-weight: bold;
-    font-size: 32rpx;
+    font-size: 30rpx;
 }
 
 .priceBox .priceLeft .text {
-    font-size: 50rpx;
-    line-height: 50rpx;
+    font-size: 60rpx;
+    line-height: 60rpx;
     display: inline-block;
     vertical-align: bottom;
 }
@@ -101,14 +100,13 @@ page {
     vertical-align: middle;
 }
 
-.priceBox .priceRight .text:last-child {
-    background-color: #c7271d;
-    /*padding: 0 4rpx;*/
+.priceBox .priceRight .sale {
+    background-color: #F60;
+    padding: 0 4rpx;
     text-align: center;
-    max-width: 8em;
     overflow: hidden;
     white-space: nowrap;
-    font-size: 20rpx;
+    font-size: 22rpx;
     border-radius: 5px;
     margin-top: 1rpx;
     line-height: 1.1;
@@ -188,8 +186,8 @@ page {
 
 .members .tips .tip {
     color: #5b5b5b;
-    line-height: 50rpx;
-    margin-top: 20rpx;
+    line-height: 40rpx;
+    margin-top: 22rpx;
 }
 
 .members .face {
@@ -266,19 +264,19 @@ page {
 .goodInfoBox .infoLeft .zhongchou {
     color: #fff000;
     border: 1px solid #fff000;
-    font-size: 20rpx;
+    font-size: 22rpx;
     height: 28rpx;
     line-height: 26rpx;
     box-sizing: border-box;
     padding: 0 8rpx;
     margin-right: 10rpx;
-    border-radius: 10rpx;
-    display: inline-block;
+    border-radius: 4rpx;
+    /*display: inline-block;*/
     vertical-align: middle;
 }
 
 .goodInfoBox .infoLeft .goodsName {
-    font-size: 28rpx;
+    font-size: 29rpx;
     display: inline-block;
     vertical-align: middle;
     line-height: 1;
