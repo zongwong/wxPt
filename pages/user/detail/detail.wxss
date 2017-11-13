@@ -31,7 +31,7 @@ page {
 
 .detail-1 .bottom .price {
     font-size: 30rpx;
-    padding: 0 20rpx;
+    padding: 4rpx 20rpx;
     border: 2rpx solid #fff;
     border-radius: 8rpx;
     margin: 0 20rpx;
@@ -67,6 +67,8 @@ page {
     color: #fff;
     padding: 2rpx 20rpx;
     border-radius: 10rpx;
+    line-height: 44rpx;
+    border: 2rpx solid #6c4176;
 }
 
 .detail-2 .top .right {
@@ -75,6 +77,7 @@ page {
     border: 2rpx solid #6c4176;
     border-radius: 10rpx;
     box-sizing: border-box;
+    line-height: 44rpx;
 }
 
 .detail-2 .bottom .item {

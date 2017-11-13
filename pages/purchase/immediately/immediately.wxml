@@ -11,12 +11,13 @@
         <text class='goodsName'>{{activityInfo.ptGood.name}}</text>
         <view class='priceBox'>
             <view class='priceLeft'>
-                <text>￥</text>    
-                <text class='text'>{{activityInfo.ptGood.price}}</text>
+                <view class='priceLeft' style="height: 100%;"><text style="vertical-align: bottom;">￥</text>
+                    <text class='text'>{{activityInfo.ptGood.price}}</text>
+                </view>
             </view>
-            <view class='priceRight'>
+            <view class='priceRight' style="height: 100%;">
                 <text class='text'>原价￥{{activityInfo.ptGood.originalPrice}}</text>
-                <view><text class='sale'>已售{{activityInfo.saleNum}}</text></view>
+                <view style="position: relative;height: 28rpx;margin-top: 1rpx;"><text class='sale'>参与人数:{{activityInfo.saleNum}}</text></view>
             </view>
         </view>
     </view>

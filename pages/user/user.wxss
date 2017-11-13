@@ -19,7 +19,7 @@ page {
 
 .purchase-item .ac-item .price{
   font-size: 30rpx;
-  padding: 2rpx 15rpx;
+  padding: 4rpx 15rpx;
   color: #6C4176;
   border: 2rpx solid #6C4176;
   border-radius: 8rpx;

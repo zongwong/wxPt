@@ -8,14 +8,16 @@
 </swiper>
 <view class='goodInfoBox'>
     <view class='infoLeft'>
-        <text class='zhongchou'>众筹</text>
-        <text class="goodsName">{{activityInfo.zcGoods.name}}按时大大说</text>
-        <view class='priceBox' >
-            <view class='priceLeft' style="height: 60rpx;"><text style="vertical-align: bottom;">￥</text><text class='text'>{{activityInfo.zcGoods.price}}</text>
+        <view style="height: 38rpx;">
+            <text class='zhongchou'>众筹</text>
+            <text class="goodsName">{{activityInfo.zcGoods.name}}按时大大说</text>
+        </view>    
+        <view class='priceBox'>
+            <view class='priceLeft' style="height: 100%;"><text style="vertical-align: bottom;">￥</text><text class='text'>{{activityInfo.zcGoods.price}}</text>
             </view>
-            <view class='priceRight' style="height: 60rpx;">
+            <view class='priceRight' style="height: 100%;">
                 <text class='text'>原价￥{{activityInfo.zcGoods.originalPrice}}</text>
-                <view style="position: relative;flex: 1;height: 31rpx;margin-top: 1rpx;"><text class='sale'>参与人数:{{activityInfo.saleNum}}</text></view>
+                <view style="position: relative;height: 28rpx;margin-top: 1rpx;"><text class='sale'>参与人数:{{activityInfo.saleNum}}</text></view>
             </view>
         </view>
     </view>
