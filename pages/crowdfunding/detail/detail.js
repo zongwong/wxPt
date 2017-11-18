@@ -45,7 +45,7 @@ Page({
                     title: '提示',
                     content: '参数错误,请重新进入',
                     success: function() {
-                        wx.switchTab({
+                        wx.navigateTo({
                             url: '/pages/crowdfunding/crowdfunding'
                         })
                     }
@@ -116,7 +116,7 @@ Page({
                     //         title: '提示',
                     //         content: '时间错误',
                     //         success: function(res) {
-                    //             wx.switchTab({
+                    //             wx.navigateTo({
                     //                 url: '/pages/crowdfunding/crowdfunding'
                     //             })
                     //         }
@@ -126,7 +126,7 @@ Page({
                     //         title: '提示',
                     //         content: '来晚啦,活动已结束~',
                     //         success: function(res) {
-                    //             wx.switchTab({
+                    //             wx.navigateTo({
                     //                 url: '/pages/crowdfunding/crowdfunding'
                     //             })
                     //         }

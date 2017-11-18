@@ -1,4 +1,4 @@
-<swiper class='img-swiper' indicator-dots="{{indicatorDots}}" indicator-active-color='{{indicatorActivColor}}' autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+<swiper class='img-swiper' indicator-dots="{{indicatorDots}}" indicator-color="#fff" indicator-active-color='{{indicatorActivColor}}' autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
     <swiper-item wx:if="{{activityInfo.ptGood.videoUrl!=''}}">
         <video src="{{activityInfo.ptGood.videoUrl}}" class="slide-image" objectFit="contain"></video>
     </swiper-item>

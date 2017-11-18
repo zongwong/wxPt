@@ -31,7 +31,7 @@ Page({
                     title: '提示',
                     content: '参数错误,请重新进入',
                     success: function() {
-                        wx.switchTab({
+                        wx.navigateTo({
                             url: '/pages/purchase/purchase'
                         })
                     }

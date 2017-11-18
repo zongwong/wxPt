@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/index/index",
     "pages/purchase/purchase",
     "pages/purchase/center/center",
     "pages/purchase/pay/pay",
@@ -21,41 +22,11 @@
     "pages/crowdfunding/fpay/fpay",
     "pages/crowdfunding/center/center"
   ],
-  "tabBar": {
-    "color": "#B2B2B2",
-    "selectedColor": "#838383",
-    "list": [
-      {
-        "pagePath": "pages/purchase/purchase",
-        "text": "拼团",
-        "iconPath": "images/pintuan.png",
-        "selectedIconPath": "images/pintuanfull.png"
-      },
-      {
-        "pagePath": "pages/draw/draw",
-        "text": "抽奖",
-        "iconPath": "images/choujiang.png",
-        "selectedIconPath": "images/choujiangfull.png"
-      },
-      {
-        "pagePath": "pages/crowdfunding/crowdfunding",
-        "text": "众筹",
-        "iconPath": "images/zhongchou.png",
-        "selectedIconPath": "images/zhongchoufull.png"
-      },
-      {
-        "pagePath": "pages/user/user",
-        "text": "用户画像",
-        "iconPath": "images/user.png",
-        "selectedIconPath": "images/userfull.png"
-      }
-    ]
-  },
   "window": {
     "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#E02E24",
     "navigationBarTitleText": "拼团活动列表",
     "navigationBarTextStyle": "white",
-    "onReachBottomDistance" : 50
+    "onReachBottomDistance": 50
   }
 }
