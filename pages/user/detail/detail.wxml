@@ -66,6 +66,7 @@
 </view>
 <!-- 弹框 -->
 <view class="drawer_screen" data-statu="close" wx:if="{{showModalStatus}}"></view>
+<form report-submit="true" bindsubmit="getReward">
 <view animation="{{animationData}}" class="drawer_box" wx:if="{{showModalStatus}}" >
 	<view class="from {{fromShow?'fromShow':''}}">
 		<view class="pack_head {{isHead?'pack_head-on':''}}"></view>
@@ -85,7 +86,7 @@
 				</view>
 			</view>
 			<view class='btnBox'>
-				<view class="btn_ok pack_btn" bindtap="getReward">立即拆奖</view>
+				<button class="btn_ok pack_btn" form-type="submit">立即拆奖</button>
 			</view>
 		</view>
 	</view>
@@ -96,3 +97,4 @@
 		</view>
 	</view>
 </view>
+</form>

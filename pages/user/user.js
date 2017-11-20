@@ -6,7 +6,7 @@ Page({
         pageNo: 0,
         scrollEnd: false,
         isajaxLoad: false,
-        userId: 14,
+        userId: 17,
         originId:'',
         orderId:'',
     },

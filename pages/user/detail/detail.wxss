@@ -239,6 +239,8 @@ page {
     color: #df3121;
     width: 100%;
     box-sizing: border-box;
+    font-size:32rpx;
+    line-height: 1.5;
 }
 
 .drawer_box .pack_label {

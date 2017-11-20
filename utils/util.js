@@ -66,9 +66,12 @@ function ajax(type = 'get', url = "", data = {}, success, fail) {
     if (type == 'post' || type == 'POST') {
         header['content-type'] = 'application/x-www-form-urlencoded';
     }
+    if(url.slice(0,4)!="http"){
+        url = 'https://www.baby25.cn/jeesite/' + url;
+    }
     wx.request({
         method: type,
-        url: 'https://www.baby25.cn/jeesite/' + url,
+        url: url,
         data: data,
         header: header,
         success: function(res) {

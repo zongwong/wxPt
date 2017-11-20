@@ -19,7 +19,7 @@ Page({
         orderId: '',
         isDjs: false,
         djsText: '获取验证码',
-        userId: 14,
+        userId: 17,
         originId: '',
         isHelped: false,
         originName: '',
@@ -32,6 +32,7 @@ Page({
         isHeadTop: false,
         fromShow: false,
         isRuning: false,
+        myAwardInfo:{},
     },
     onLoad: function(options) {
         // originId区分我自己,orderId区分支付,ableTime邀请次数,拆奖 记录本地openAward = orderId & true ,记录本地actId = orderId+actId
@@ -535,7 +536,9 @@ Page({
         })
     },
     // 立即抽奖
-    getReward: function() {
+    getReward: function(e) {
+        let formId = e.detail.formId;
+
         if (this.data.isRuning) {
             return false;
         }
@@ -597,9 +600,19 @@ Page({
                         originId: that.data.originId,
                         id: that.data.activityInfo.id
                     }
-                    wx.redirectTo({
-                        url: '/pages/user/award/award?query=' + JSON.stringify(query)
+                    that.setData({
+                        myAwardInfo:{
+                            awardName:data.awardName,
+                            price:data.price,
+                        }
                     })
+
+                    that.sendResult(formId,function(){
+                        wx.redirectTo({
+                            url: '/pages/user/award/award?query=' + JSON.stringify(query)
+                        })
+                    });
+
                 } else {
                     wx.showModal({
                         title: '提示',
@@ -694,6 +707,57 @@ Page({
                 }, 0);
             }, 900);
         }, 1000);
+    },
+    sendResult:function(formId,fn){
+        console.log('formId:'+formId)
+        let that = this;
+        utils.ajax('GET','https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='+app.globalData.appid+'&secret='+app.globalData.secret,{
+        },function(res){
+            console.log('access_token:'+res.data.access_token)
+            let access_token = res.data.access_token;
+            let query = {
+                "touser":app.globalData.openid,
+                "template_id":'pKHQMIqlSHKII6vyx99Oi_b0RLgiI2KvZV2baAvXvgQ',
+                "form_id":formId,
+                "page":'/pages/user/mine/mine',
+                "data":{
+                      "keyword1": {
+                          "value": '['+that.data.activityInfo.money+'元博]'+that.data.activityInfo.name, 
+                      }, 
+                      "keyword2": {
+                          "value": that.data.myAwardInfo.awardName+'(价值:￥'+that.data.myAwardInfo.price+')', 
+                          "color": "#6C4176"
+                      }, 
+                      "keyword3": {
+                          "value": '众途各大门店',
+                      },
+                      "keyword4": {
+                          "value": '10086', 
+                      }
+                }
+            };
+            console.log(query)
+            wx.request({
+              url: 'https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token='+access_token,query,
+              data: query,
+              method:'POST',
+              header: {
+                  'content-type': 'application/json' 
+              },
+              success: function(res) {
+                console.log('通知结果:')
+                console.log(res.data)
+                fn && fn();
+              }
+            })
+            // utils.ajax('POST','https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token='+access_token,query,function(res){
+            //     console.log('通知结果:')
+            //     console.log(res)
+            // })
+
+        })
+
+        
     },
     previewImg: function(e) {
         utils.qrcodeShow(e);
