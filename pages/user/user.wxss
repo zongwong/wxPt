@@ -2,7 +2,7 @@
 
 page {
   font-size: 30rpx;
-  background-color:#F2F2F2;
+  background-color: #F2F2F2;
 }
 
 .purchase-item {
@@ -12,12 +12,12 @@ page {
   padding: 30rpx 0;
 }
 
-.purchase-item .ac-item{
-  margin:0 auto;
-  width:90%;
+.purchase-item .ac-item {
+  margin: 0 auto;
+  width: 90%;
 }
 
-.purchase-item .ac-item .price{
+.purchase-item .ac-item .price {
   font-size: 30rpx;
   padding: 4rpx 15rpx;
   color: #6C4176;
@@ -27,7 +27,7 @@ page {
   box-sizing: border-box;
 }
 
-.purchase-item .ac-item .title{
+.purchase-item .ac-item .title {
   color: #F33535;
 }
 

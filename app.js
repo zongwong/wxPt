@@ -10,8 +10,8 @@ App({
         serverPath: 'https://www.baby25.cn/jeesite/',
     },
     loginTimer: null,
-    timeout:0,
-    onLaunch: function() {
+    timeout: 0,
+    onLaunch: function () {
         // wx.clearStorageSync();
         wx.removeStorageSync('mydata');
         this.toLogin();
@@ -37,15 +37,15 @@ App({
 
         // }
     },
-    toLogin: function() {
+    toLogin: function () {
         let that = this;
         wx.login({
-            success: function(loginres) {
+            success: function (loginres) {
                 console.log('1获取code')
                 if (loginres.code) {
                     that.globalData.code = loginres.code;
                     wx.getUserInfo({
-                        success: function(userres) {
+                        success: function (userres) {
                             console.log('2获取userinfo')
                             that.globalData.userInfo = userres.userInfo;
                             that.getOpenId(loginres.code, userres.userInfo);
@@ -56,7 +56,7 @@ App({
         })
 
     },
-    getOpenId: function(code, userInfo) {
+    getOpenId: function (code, userInfo) {
         var that = this;
         wx.request({
             method: 'POST',
@@ -67,7 +67,7 @@ App({
             header: {
                 'content-type': 'application/x-www-form-urlencoded'
             },
-            success: function(res) {
+            success: function (res) {
                 if (res.data.status == 0) {
                     console.log('3获取openid')
                     let openid = res.data.data.openid;
@@ -78,7 +78,7 @@ App({
 
         })
     },
-    getMemberLogin: function(openid, userInfo,fn) {
+    getMemberLogin: function (openid, userInfo, fn) {
         let that = this;
         wx.request({
             method: 'POST',
@@ -92,7 +92,7 @@ App({
                 mobile: '',
                 imgUrl: userInfo.avatarUrl,
             },
-            success: function(res) {
+            success: function (res) {
                 if (res.data.code == 0) {
                     let data = res.data.data;
                     that.globalData.token = data.memberId + '_' + data.token;
@@ -114,11 +114,11 @@ App({
             }
         })
     },
-    tokenCheck: function(fn) {
+    tokenCheck: function (fn) {
         let that = this;
         that.loading('open', '检测token');
-        that.loginTimer = setInterval(function() {
-            that.timeout+=200;
+        that.loginTimer = setInterval(function () {
+            that.timeout += 200;
             if (that.globalData.token) {
                 console.log('已登录')
                 clearInterval(that.loginTimer);
@@ -127,16 +127,16 @@ App({
                 that.timeout = 0;
             }
 
-            if (that.timeout>=60000) {
+            if (that.timeout >= 60000) {
                 console.log('登录超时,重新登录');
                 clearInterval(that.loginTimer);
                 that.timeout = 0;
-                that.getMemberLogin(that.globalData.openid,that.globalData.userInfo,fn);
+                that.getMemberLogin(that.globalData.openid, that.globalData.userInfo, fn);
             }
 
         }, 200);
     },
-    loading: function(type, text = "加载中") {
+    loading: function (type, text = "加载中") {
         if (type === 'open') {
             wx.showLoading({
                 title: text
@@ -145,7 +145,7 @@ App({
             wx.hideLoading()
         }
     },
-    scanFunc: function(that, fn) {
+    scanFunc: function (that, fn) {
         wx.scanCode({
             success: (res) => {
                 let userId = res.result;
