@@ -23,7 +23,7 @@ Page({
                     that.setData({
                         userId: userId
                     })
-                    that.fetchPurchaseData()
+                    that.fetchPurchaseData();
                 }
             } catch (e) {
                 console.log(e)

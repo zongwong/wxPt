@@ -10,8 +10,9 @@ App({
         serverPath: 'https://www.baby25.cn/jeesite/',
     },
     loginTimer: null,
+    timeout:0,
     onLaunch: function() {
-        // wx.clearStorageSync()
+        // wx.clearStorageSync();
         wx.removeStorageSync('mydata');
         this.toLogin();
         // try {
@@ -69,14 +70,15 @@ App({
             success: function(res) {
                 if (res.data.status == 0) {
                     console.log('3获取openid')
-                    that.globalData.openid = res.data.data.openid;
-                    that.getMemberLogin(res.data.data.openid, userInfo);
+                    let openid = res.data.data.openid;
+                    that.globalData.openid = openid;
+                    that.getMemberLogin(openid, userInfo);
                 }
             }
 
         })
     },
-    getMemberLogin: function(openid, userInfo) {
+    getMemberLogin: function(openid, userInfo,fn) {
         let that = this;
         wx.request({
             method: 'POST',
@@ -104,6 +106,7 @@ App({
                         time: new Date().getTime(),
                     }
                     wx.setStorageSync('mydata', mydata);
+                    fn && fn();
                     console.log('4获取token')
                     console.log(that.globalData)
                 }
@@ -113,14 +116,24 @@ App({
     },
     tokenCheck: function(fn) {
         let that = this;
-        that.loading('open', '检测token')
+        that.loading('open', '检测token');
         that.loginTimer = setInterval(function() {
+            that.timeout+=200;
             if (that.globalData.token) {
-                console.log('token有了')
+                console.log('已登录')
                 clearInterval(that.loginTimer);
                 that.loading('close')
                 typeof fn == 'function' && fn();
+                that.timeout = 0;
             }
+
+            if (that.timeout>=60000) {
+                console.log('登录超时,重新登录');
+                clearInterval(that.loginTimer);
+                that.timeout = 0;
+                that.getMemberLogin(that.globalData.openid,that.globalData.userInfo,fn);
+            }
+
         }, 200);
     },
     loading: function(type, text = "加载中") {

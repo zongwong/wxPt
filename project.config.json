@@ -8,7 +8,7 @@
 		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "1.5.0",
+	"libVersion": "1.5.4",
 	"appid": "wx15d6ca4ad6e41cd8",
 	"projectname": "wxPt",
 	"condition": {
