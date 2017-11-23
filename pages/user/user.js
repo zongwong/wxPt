@@ -12,6 +12,7 @@ Page({
     },
     onLoad: function(options) {
         let that = this;
+        utils.userInfoCb(app);
         app.tokenCheck(function() {
             that.setData({
                 originId:app.globalData.memberId

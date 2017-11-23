@@ -1,5 +1,3 @@
-const app = getApp();
-
 const formatTime = date => {
     date = new Date(date);
     const year = date.getFullYear()
@@ -98,6 +96,13 @@ function qrcodeShow(e){
         urls: [qrcodeUrl]
     })
 }
+function userInfoCb(app){
+    if (JSON.stringify(app.globalData.userInfo) === '{}') {  
+        app.userInfoReadyCallback = function(res){
+            app.globalData.userInfo = res.userInfo;
+        }
+    } 
+}
 module.exports = {
     ajax: ajax,
     formatTime: formatTime,
@@ -105,5 +110,6 @@ module.exports = {
     qrcodeShow:qrcodeShow,
     getRandomArray: getRandomArray,
     getRandomArrayElement: getRandomArrayElement,
-    phoneCallFn: phoneCallFn
+    phoneCallFn: phoneCallFn,
+    userInfoCb:userInfoCb
 }

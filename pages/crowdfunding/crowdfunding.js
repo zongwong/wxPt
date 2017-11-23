@@ -12,6 +12,9 @@ Page({
     onLoad: function(options) {
         let that = this;
 
+        //获取用户信息回调
+        utils.userInfoCb(app);
+
         app.tokenCheck(function(options) {
 
             try {

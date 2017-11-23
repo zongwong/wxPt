@@ -22,7 +22,14 @@
 		},
 		"miniprogram": {
 			"current": -1,
-			"list": []
+			"list": [
+				{
+					"id": 0,
+					"name": "直达众筹页",
+					"pathName": "pages/purchase/immediately/immediately",
+					"query": "id=2&userId=14"
+				}
+			]
 		}
 	}
 }

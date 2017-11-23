@@ -41,235 +41,239 @@ Page({
         // userId是必须的
         // 拆奖后-> 清理openAward
         let that = this;
+        utils.userInfoCb(app);
         console.log(options)
-        let userId = options.userId,
-            originId = options.originId||app.globalData.memberId,
-            orderId = options.orderId || '',
-            originName = options.originName;
-        that.setData({
-            originId: originId,
-            userId: userId,
-            orderId: orderId,
-            originName: originName,
-        })
-
-
-        if (originId == app.globalData.memberId) {
-            //我自己
+        
+        app.tokenCheck(function(){
+            let userId = options.userId,
+                originId = options.originId||app.globalData.memberId,
+                orderId = options.orderId || '',
+                originName = options.originName;
             that.setData({
-                isMyself: true,
+                originId: originId,
+                userId: userId,
+                orderId: orderId,
+                originName: originName,
             })
 
-            if (typeof orderId != 'undefined' && orderId) {
-                //已下单
+
+            if (originId == app.globalData.memberId) {
+                //我自己
                 that.setData({
-                    orderId: orderId
+                    isMyself: true,
+                })
+
+                if (typeof orderId != 'undefined' && orderId) {
+                    //已下单
+                    that.setData({
+                        orderId: orderId
+                    })
+                } else {
+                    //未下单
+
+                }
+
+
+
+
+            } else {
+                //好友
+                that.setData({
+                    isMyself: false,
+                })
+
+                try {
+                    let chaiRecord = wx.getStorageSync('chaiRecord')
+                    if (chaiRecord) {
+                        //已帮忙拆奖
+                        let record = chaiRecord.split('&');
+                        if (record[0] == that.data.orderId && Boolean(record[1])) {
+                            that.setData({
+                                isHelped: true
+                            })
+                        }
+                    } else {
+                        //未帮忙拆奖
+
+                    }
+                } catch (e) {
+                    console.log(e)
+                }
+
+
+
+            }
+
+
+
+
+            // app.tokenCheck(function() {})
+
+            if (typeof options.userId !== 'undefined' && options.userId) {
+                that.setData({
+                    userId: options.userId
                 })
             } else {
-                //未下单
-
-            }
-
-
-
-
-        } else {
-            //好友
-            that.setData({
-                isMyself: false,
-            })
-
-            try {
-                let chaiRecord = wx.getStorageSync('chaiRecord')
-                if (chaiRecord) {
-                    //已帮忙拆奖
-                    let record = chaiRecord.split('&');
-                    if (record[0] == that.data.orderId && Boolean(record[1])) {
-                        that.setData({
-                            isHelped: true
+                wx.showModal({
+                    title: '提示',
+                    content: '参数错误,请重新进入',
+                    success: function() {
+                        wx.navigateTo({
+                            url: '/pages/user/user'
                         })
                     }
-                } else {
-                    //未帮忙拆奖
-
-                }
-            } catch (e) {
-                console.log(e)
+                })
+                return false;
             }
 
-
-
-        }
-
-
-
-
-        // app.tokenCheck(function() {})
-
-        if (typeof options.userId !== 'undefined' && options.userId) {
-            this.setData({
-                userId: options.userId
-            })
-        } else {
-            wx.showModal({
-                title: '提示',
-                content: '参数错误,请重新进入',
-                success: function() {
-                    wx.navigateTo({
-                        url: '/pages/user/user'
-                    })
-                }
-            })
-            return false;
-        }
-
-        // if (typeof options.inviteId !== 'undefined' && options.inviteId) {
-        //     this.setData({
-        //         inviteId: options.inviteId
-        //     })
-        // }
-        // if (typeof options.originId !== 'undefined' && options.originId) {
-        //     this.setData({
-        //         originId: options.originId,
-        //     })
-        //     //判断众筹单是不是自己发起的
-        //     if (options.originId != app.globalData.memberId) {
-        //         this.setData({
-        //             isMyself: false
-        //         })
-        //     }
-        // }
+            // if (typeof options.inviteId !== 'undefined' && options.inviteId) {
+            //     this.setData({
+            //         inviteId: options.inviteId
+            //     })
+            // }
+            // if (typeof options.originId !== 'undefined' && options.originId) {
+            //     this.setData({
+            //         originId: options.originId,
+            //     })
+            //     //判断众筹单是不是自己发起的
+            //     if (options.originId != app.globalData.memberId) {
+            //         this.setData({
+            //             isMyself: false
+            //         })
+            //     }
+            // }
 
 
 
-        utils.ajax('GET', 'api/hx/hxActivity/info', {
-            actId: options.id,
-            orderId: that.data.orderId,
-        }, function(res) {
+            utils.ajax('GET', 'api/hx/hxActivity/info', {
+                actId: options.id,
+                orderId: that.data.orderId,
+            }, function(res) {
 
-            if (res.data.code == 0) {
-                let data = res.data.data;
-                that.setData({
-                    activityInfo: data,
-                    endTime: data.endTime,
-                });
-                if (typeof data.ableTime != 'undefined' && data.ableTime) {
-
+                if (res.data.code == 0) {
+                    let data = res.data.data;
                     that.setData({
-                        ableTime: data.ableTime
-                    })
+                        activityInfo: data,
+                        endTime: data.endTime,
+                    });
+                    if (typeof data.ableTime != 'undefined' && data.ableTime) {
 
-                }
-                // 时间
-                // let endtime = timeUtil.countDown(that.data.endTime);
+                        that.setData({
+                            ableTime: data.ableTime
+                        })
 
-                // if (!endtime) {
-                //     wx.showModal({
-                //         title: '提示',
-                //         content: '时间错误',
-                //         success: function(res) {
-                //             wx.navigateTo({
-                //                 url: '/pages/crowdfunding/crowdfunding'
-                //             })
-                //         }
-                //     })
-                // } else if (endtime === '活动已结束') {
-                //     wx.showModal({
-                //         title: '提示',
-                //         content: '来晚啦,活动已结束~',
-                //         success: function(res) {
-                //             wx.navigateTo({
-                //                 url: '/pages/crowdfunding/crowdfunding'
-                //             })
-                //         }
-                //     })
-                // } else {
-                //     setInterval(function() {
-                //         that.setData({
-                //             timeCountDown: timeUtil.countDown(that.data.endTime)
-                //         })
-                //     }, 1000);
-                // }
+                    }
+                    // 时间
+                    // let endtime = timeUtil.countDown(that.data.endTime);
 
-                // 中奖记录手机号处理
-                if (typeof data.details != 'undefined') {
-                    let awards = Array.from(data.details);
+                    // if (!endtime) {
+                    //     wx.showModal({
+                    //         title: '提示',
+                    //         content: '时间错误',
+                    //         success: function(res) {
+                    //             wx.navigateTo({
+                    //                 url: '/pages/crowdfunding/crowdfunding'
+                    //             })
+                    //         }
+                    //     })
+                    // } else if (endtime === '活动已结束') {
+                    //     wx.showModal({
+                    //         title: '提示',
+                    //         content: '来晚啦,活动已结束~',
+                    //         success: function(res) {
+                    //             wx.navigateTo({
+                    //                 url: '/pages/crowdfunding/crowdfunding'
+                    //             })
+                    //         }
+                    //     })
+                    // } else {
+                    //     setInterval(function() {
+                    //         that.setData({
+                    //             timeCountDown: timeUtil.countDown(that.data.endTime)
+                    //         })
+                    //     }, 1000);
+                    // }
 
-                    let awardsRecord = awards.filter(function(item, index) {
-                        return (item.isAward == 1 && (typeof item.member != 'undefined'))
-                    })
-                    awardsRecord.forEach(function(item, index) {
-                        let mobile = item.member.mobile;
-                        if (mobile.length === 11) {
-                            item.mobile = mobile.substring(0, 3) + "****" + mobile.substring(8, 11);
-                        } else if (mobile.length < 11) {
-                            item.mobile = mobile + "****";
-                        } else {
-                            mobile = mobile.slice(0, 11);
-                            item.mobile = mobile.substring(0, 3) + "****" + mobile.substring(8, 11);
-                        }
-                    })
-                    that.setData({
-                        awards: awardsRecord.slice(0, 1)
-                    })
-                    let start = 0;
-                    if (awardsRecord.length >= 2) {
+                    // 中奖记录手机号处理
+                    if (typeof data.details != 'undefined') {
+                        let awards = Array.from(data.details);
 
-                        setInterval(function() {
-                            start += 1;
-                            if (start > awardsRecord.length - 1) {
-                                start = 0;
+                        let awardsRecord = awards.filter(function(item, index) {
+                            return (item.isAward == 1 && (typeof item.member != 'undefined'))
+                        })
+                        awardsRecord.forEach(function(item, index) {
+                            let mobile = item.member.mobile;
+                            if (mobile.length === 11) {
+                                item.mobile = mobile.substring(0, 3) + "****" + mobile.substring(8, 11);
+                            } else if (mobile.length < 11) {
+                                item.mobile = mobile + "****";
+                            } else {
+                                mobile = mobile.slice(0, 11);
+                                item.mobile = mobile.substring(0, 3) + "****" + mobile.substring(8, 11);
                             }
-                            let nowList = awardsRecord.slice(start, start + 1)
-                            that.setData({
-                                awards: nowList
-                            })
-                        }, 1500)
-                    } else {
-                        that.setData({
-                            awards: awardsRecord
                         })
+                        that.setData({
+                            awards: awardsRecord.slice(0, 1)
+                        })
+                        let start = 0;
+                        if (awardsRecord.length >= 2) {
+
+                            setInterval(function() {
+                                start += 1;
+                                if (start > awardsRecord.length - 1) {
+                                    start = 0;
+                                }
+                                let nowList = awardsRecord.slice(start, start + 1)
+                                that.setData({
+                                    awards: nowList
+                                })
+                            }, 1500)
+                        } else {
+                            that.setData({
+                                awards: awardsRecord
+                            })
+                        }
+                    }
+                    // 问卷题目处理
+
+                    if (typeof data.topics != 'undefined') {
+                        let topics = Array.from(data.topics);
+                        // {
+                        //       id: "1",
+                        //       type:1,
+                        //       title: "您驾驶的汽车属于",
+                        //       items: [{
+                        //           id: "1",
+                        //           name: "公车",
+                        //           checked: false
+                        //       }, {
+                        //           id: "2",
+                        //           name: "私车",
+                        //           checked: false
+                        //       }]
+                        //   }
+
+                        topics.forEach(function(item, index) {
+
+                            let options = item.option.split(';');
+                            let selects = [];
+
+                            options.forEach(function(option, index) {
+                                selects.push({
+                                    id: index + 1,
+                                    name: option,
+                                    checked: false
+                                })
+                            })
+                            item.items = selects;
+                        })
+                        that.setData({
+                            allSelects: topics
+                        })
+
                     }
                 }
-                // 问卷题目处理
-
-                if (typeof data.topics != 'undefined') {
-                    let topics = Array.from(data.topics);
-                    // {
-                    //       id: "1",
-                    //       type:1,
-                    //       title: "您驾驶的汽车属于",
-                    //       items: [{
-                    //           id: "1",
-                    //           name: "公车",
-                    //           checked: false
-                    //       }, {
-                    //           id: "2",
-                    //           name: "私车",
-                    //           checked: false
-                    //       }]
-                    //   }
-
-                    topics.forEach(function(item, index) {
-
-                        let options = item.option.split(';');
-                        let selects = [];
-
-                        options.forEach(function(option, index) {
-                            selects.push({
-                                id: index + 1,
-                                name: option,
-                                checked: false
-                            })
-                        })
-                        item.items = selects;
-                    })
-                    that.setData({
-                        allSelects: topics
-                    })
-
-                }
-            }
+            })
         })
     },
     onShow: function() {

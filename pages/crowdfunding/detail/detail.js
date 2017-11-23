@@ -29,6 +29,7 @@ Page({
     },
     onLoad: function(options) {
         let that = this;
+        utils.userInfoCb(app);
         //userid必须
         //originId判断是否自己, 
         //入口,我未下单  我 已下单  inviteId判断

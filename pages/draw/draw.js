@@ -10,6 +10,7 @@ Page({
     },
     onLoad: function(options) {
         let that = this;
+        utils.userInfoCb(app);
         app.tokenCheck(function() {
             try {
                 let userId = wx.getStorageSync('userId');

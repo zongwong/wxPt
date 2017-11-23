@@ -22,6 +22,7 @@ Page({
     },
     onLoad: function(options) {
         let that = this;
+        utils.userInfoCb(app);
         app.tokenCheck(function() {
             let actId = options.id;
             that.setData({
