@@ -19,7 +19,7 @@ Page({
         orderId: '',
         isDjs: false,
         djsText: '获取验证码',
-        userId: 17,
+        userId: '',
         originId: '',
         isHelped: false,
         originName: '',
@@ -35,7 +35,7 @@ Page({
         myAwardInfo:{},
     },
     onLoad: function(options) {
-        // originId区分我自己,orderId区分支付,ableTime邀请次数,拆奖 记录本地openAward = orderId & true ,记录本地actId = orderId+actId
+        // originId区分我自己,payStatus区分支付,ableTime邀请次数,拆奖 记录本地openAward = orderId & true ,记录本地actId = orderId+actId
         // 1.我的入口, 我(未支付,信息展示, '无orderId' , )   我(已支付,未拆奖) 我(已支付,已拆奖[有无邀请次数])
         // 2.好友入口,已拆奖 / 未拆奖 
         // userId是必须的
@@ -63,19 +63,6 @@ Page({
                     isMyself: true,
                 })
 
-                if (typeof orderId != 'undefined' && orderId) {
-                    //已下单
-                    that.setData({
-                        orderId: orderId
-                    })
-                } else {
-                    //未下单
-
-                }
-
-
-
-
             } else {
                 //好友
                 that.setData({
@@ -92,22 +79,12 @@ Page({
                                 isHelped: true
                             })
                         }
-                    } else {
-                        //未帮忙拆奖
-
                     }
                 } catch (e) {
                     console.log(e)
                 }
-
-
-
             }
 
-
-
-
-            // app.tokenCheck(function() {})
 
             if (typeof options.userId !== 'undefined' && options.userId) {
                 that.setData({
@@ -126,25 +103,6 @@ Page({
                 return false;
             }
 
-            // if (typeof options.inviteId !== 'undefined' && options.inviteId) {
-            //     this.setData({
-            //         inviteId: options.inviteId
-            //     })
-            // }
-            // if (typeof options.originId !== 'undefined' && options.originId) {
-            //     this.setData({
-            //         originId: options.originId,
-            //     })
-            //     //判断众筹单是不是自己发起的
-            //     if (options.originId != app.globalData.memberId) {
-            //         this.setData({
-            //             isMyself: false
-            //         })
-            //     }
-            // }
-
-
-
             utils.ajax('GET', 'api/hx/hxActivity/info', {
                 actId: options.id,
                 orderId: that.data.orderId,
@@ -152,17 +110,22 @@ Page({
 
                 if (res.data.code == 0) {
                     let data = res.data.data;
+                    console.log(data)
                     that.setData({
                         activityInfo: data,
                         endTime: data.endTime,
+                        payStatus:data.payStatus
                     });
                     if (typeof data.ableTime != 'undefined' && data.ableTime) {
-
                         that.setData({
-                            ableTime: data.ableTime
+                            ableTime: parseInt(data.ableTime)
                         })
-
                     }
+                    // if (!parseInt(that.data.activityInfo.money)) { //0元博
+                    //     that.setData({
+                    //         payStatus: 1
+                    //     })
+                    // } 
                     // 时间
                     // let endtime = timeUtil.countDown(that.data.endTime);
 
@@ -203,14 +166,11 @@ Page({
                         })
                         awardsRecord.forEach(function(item, index) {
                             let mobile = item.member.mobile;
-                            if (mobile.length === 11) {
-                                item.mobile = mobile.substring(0, 3) + "****" + mobile.substring(8, 11);
-                            } else if (mobile.length < 11) {
-                                item.mobile = mobile + "****";
-                            } else {
-                                mobile = mobile.slice(0, 11);
-                                item.mobile = mobile.substring(0, 3) + "****" + mobile.substring(8, 11);
+                            if (mobile.length !== 11) {
+                                mobile = '1'+[3,5,8,7][Math.floor(Math.random()*4)]+(Math.floor(Math.random()*788899899+121254896)); 
                             }
+                            console.log(mobile)
+                            item.mobile = mobile.substring(0, 3) + "****" + mobile.substring(7, 11);
                         })
                         that.setData({
                             awards: awardsRecord.slice(0, 1)
@@ -238,20 +198,6 @@ Page({
 
                     if (typeof data.topics != 'undefined') {
                         let topics = Array.from(data.topics);
-                        // {
-                        //       id: "1",
-                        //       type:1,
-                        //       title: "您驾驶的汽车属于",
-                        //       items: [{
-                        //           id: "1",
-                        //           name: "公车",
-                        //           checked: false
-                        //       }, {
-                        //           id: "2",
-                        //           name: "私车",
-                        //           checked: false
-                        //       }]
-                        //   }
 
                         topics.forEach(function(item, index) {
 
@@ -277,21 +223,10 @@ Page({
         })
     },
     onShow: function() {
-        try {
-            let openAward = wx.getStorageSync('openAward')
-            if (openAward) {
+            if (this.data.payStatus==2) {
                 //直接拆奖
-                let record = openAward.split('&');
-                if (record[0] == this.data.orderId && !Boolean(+record[1])) {
-                    this.createAnimation('open');
-                }
-            } else {
-                //显示邀请按钮等
-
+                this.createAnimation('open');
             }
-        } catch (e) {
-            console.log(e)
-        }
     },
     //跳转->我的奖品
     lookMyAward: function(event) {
@@ -330,6 +265,10 @@ Page({
     },
     // 问卷提交
     wjSubmit: function(event) {
+        if(this.data.orderId && !this.data.payStatus){
+            that.pay();
+            return false;
+        }
         let that = this;
         let topocIds = '',
             answers = '';
@@ -382,18 +321,18 @@ Page({
                 //问卷提交成功
                 let data = res.data.data;
                 that.setData({
+                    ableTime:parseInt(data.ableTime),
                     orderId: data.id,
                     payStatus: data.payStatus
                 })
 
-                if (that.data.isPayed) {
+                if (!that.data.isMyself) {
                     //代抽
                     that.createAnimation('open');
                 } else {
                     //支付
-                    if (!that.data.activityInfo.money) { //0元博
+                    if (!parseInt(that.data.activityInfo.money)) { //0元博
                         that.createAnimation('open');
-                        wx.setStorageSync('openAward', that.data.orderId + '&0');
                     } else {
                         that.pay()
                     }
@@ -428,10 +367,9 @@ Page({
             'signType': 'MD5',
             'paySign': Payment.sign,
             'success': function(res) {
-                wx.setStorageSync('openAward', that.data.orderId + '&0');
                 that.createAnimation('open');
                 that.setData({
-                    payStatus: 1
+                    payStatus: 2
                 })
             },
             'fail': function(res) {
@@ -497,6 +435,7 @@ Page({
         utils.ajax('POST', 'api/hx/hxAwardDetail/replace', {
             orderId: that.data.orderId,
         }, function(res) {
+            wx.setStorageSync('chaiRecord',that.data.orderId+'&1');
             that.setData({
                 isRuning: true
             })
@@ -506,15 +445,15 @@ Page({
                 let data = res.data.data;
                 if (+data.friendAward.isAward || +data.myAward.isAward) {
                     let query = {
-                        friendAward: data.friendAward.isAward,
-                        myAward: data.myAward.isAward,
-                        awardName: data.myAward.awardName,
-                        imgUrl: data.myAward.imgUrl,
-                        price: data.myAward.price,
                         originName: that.data.originName,
-                        myAwardName: data.friendAward.awardName,
-                        myImgUrl: data.friendAward.imgUrl,
-                        myPrice: data.friendAward.price,
+                        friendAward: data.friendAward.isAward,
+                        friendAwardName: data.friendAward.awardName,
+                        friendImgUrl: data.friendAward.imgUrl,
+                        friendPrice: data.friendAward.price,
+                        myAward: data.myAward.isAward,
+                        myAwardName: data.myAward.awardName,
+                        myImgUrl: data.myAward.imgUrl,
+                        myPrice: data.myAward.price,
                     }
                     wx.redirectTo({
                         url: '/pages/user/replaceAward/replaceAward?query=' + JSON.stringify(query)
@@ -558,10 +497,10 @@ Page({
             }
         }
         // 字段验证
-        if (!this.data.mobile || !this.data.vcode) {
+        if (!(/^1[34578]\d{9}$/.test(this.data.mobile)) || !this.data.vcode) {
             wx.showModal({
                 title: '提示',
-                content: '内容不能为空'
+                content: '请填写正确的手机号和验证码'
             })
             return false;
         }
@@ -578,7 +517,7 @@ Page({
         utils.ajax('POST', 'api/hx/hxAwardDetail/openAward', {
             orderId: that.data.orderId,
             mobile: that.data.mobile,
-            licensePlate: that.data.carNum,
+            licensePlate: that.data.carNum||'',
             smsCode: that.data.vcode,
         }, function(res) {
             that.setData({
@@ -588,7 +527,6 @@ Page({
             if (res.data.code == 0) {
 
                 let data = res.data.data;
-                wx.setStorageSync('openAward', that.data.orderId + '&1')
                 that.setData({
                     payStatus: 3
                 })
@@ -600,7 +538,7 @@ Page({
                         awardName: data.awardName,
                         imgUrl: data.imgUrl,
                         price: data.price,
-                        shareCount: data.ableTime,
+                        ableTime: data.ableTime,
                         orderId: that.data.orderId,
                         userId: that.data.userId,
                         originId: that.data.originId,
@@ -613,20 +551,21 @@ Page({
                         }
                     })
 
-                    that.sendResult(formId,function(){
+                    // that.sendResult(formId,function(){
                         wx.redirectTo({
                             url: '/pages/user/award/award?query=' + JSON.stringify(query)
                         })
-                    });
+                    // });
 
                 } else {
                     wx.showModal({
                         title: '提示',
                         content: '很遗憾,没有中奖,感谢您的参与',
                         complete: function(res) {
-                            wx.navigateTo({
-                                url: '/pages/user/user'
-                            })
+                            that.createAnimation('close');
+                            // wx.navigateTo({
+                            //     url: '/pages/user/user'
+                            // })
                         }
                     })
                 }
@@ -634,12 +573,9 @@ Page({
             } else {
                 wx.showModal({
                     title: '提示',
-                    content: res.data.message
+                    content: '系统错误'
                 })
             }
-
-
-
         })
     },
     //弹窗
@@ -771,9 +707,10 @@ Page({
     onShareAppMessage: function() {
 
         if (this.data.isMyself && this.data.orderId) {
+            let myname = app.globalData.userInfo.nickName;
             let query = 'id=' + this.data.activityInfo.id + '&userId=' + this.data.userId + '&originId=' + this.data.originId + '&orderId=' + this.data.orderId + '&originName=' + myname;
             return {
-                title: app.globalData.userInfo.nickName + '邀请您代抽奖品',
+                title: myname + '邀请您代抽奖品',
                 path: '/pages/user/detail/detail?' + query,
                 imageUrl: this.data.activityInfo.imgUrl,
                 success: function(res) {

@@ -1,15 +1,25 @@
 <!--pages/purchase/purchase.wxml-->
 <view class="container">
 	<view class="container-body">
-		<view class="detail-1" style='background:url({{activityInfo.imgUrl}}) center / 100% no-repeat;' bindtap="previewImg" data-qrcode="{{activityInfo.imgUrl}}">
-			<!-- <view class="fdj" bindtap="previewImg" data-qrcode="{{activityInfo.imgUrl}}"></view> -->
+		<view class="detail-1" >
+
+
+			<swiper class='img-swiper' indicator-dots="false" autoplay="true">
+				<swiper-item wx:if="{{activityInfo.videoUrl!=''}}">
+					<video src="{{activityInfo.videoUrl}}" class="slide-image" objectFit="contain"></video>
+				</swiper-item>
+				<swiper-item>
+					<image mode='aspectFill' src="{{activityInfo.imgUrl}}" class="slide-image" bindtap="previewImg" data-qrcode="{{activityInfo.imgUrl}}" />
+				</swiper-item>
+			</swiper>
+
 			<view class='bottom'>
-				<view>
+				<view class="infowrapL">
 					<text class='price'>{{activityInfo.money}}元博</text>
 					<text class='title'>{{activityInfo.name}}</text>
 				</view>
-				<view>
-					<text class='peple'>{{activityInfo.saleNum}}人参与</text>
+				<view class="infowrapR">
+					<text class='peple'>{{activityInfo.saleNum + activityInfo.num}}人参与</text>
 				</view>
 			</view>
 		</view>
@@ -24,7 +34,7 @@
 				</view>
 				<view wx:for="{{awards}}" wx:key="{{item.id}}" class='item'>
 					<text>{{item.mobile}}</text>
-					<text>{{item.awardName}}</text>
+					<text class="recordAwardName">{{item.awardName}}</text>
 				</view>
 			</view>
 		</view>
@@ -33,22 +43,22 @@
 				<text class='title'>{{pi+1}}.({{parent.type==1?'单选':'多选'}}){{parent.question}}</text>
 				<view class='cell' wx:for="{{parent.items}}" wx:for-item="cell" wx:key="{{cell.id}}" wx:for-index="ci">
 					<image data-parentid="{{parent.id}}" data-parentindex="{{pi}}" data-type="{{parent.type}}" data-childindex="{{ci}}" data-check="{{cell.checked}}" bindtap='changeState' class='icon' src='{{cell.checked?ckeckImg:unckeckImg}}' data-set="allSelects[{{pi}}].items[{{ci}}]"></image>
-					<text>{{cell.name}}</text>
+					<text class="wjitem">{{cell.name}}</text>
 				</view>
 			</view>
 		</view>
 		<!-- 我未下单 -->
-		<view class='detail-4' wx:if="{{isMyself && !orderId}}">
+		<view class='detail-4' wx:if="{{isMyself && !payStatus}}">
 			<text>支付{{activityInfo.money}}元,立即参与</text>
 			<text data-statu="open" bindtap='wjSubmit' class='submit' type='submit'>提交</text>
 		</view>
 		<!-- 我已下单,有次数 -->
-		<view class='detail-4' wx:if="{{isMyself && orderId && ableTime}}">
+		<view class='detail-4' wx:if="{{isMyself && payStatus!=0 && ableTime}}">
 			<text>还可邀{{ableTime}}人代抽</text>
 			<text data-statu="open" class='submit' open-data="share">邀请好友抽奖</text>
 		</view>
 		<!-- 我已下单,无次数 -->
-		<view class='detail-4' wx:if="{{isMyself && orderId && !ableTime}}">
+		<view class='detail-4' wx:if="{{isMyself && payStatus!=0 && !ableTime}}">
 			<text>还可邀0人代抽</text>
 			<text data-statu="open" class='submit' disabled="true" style="background: #ccc;">邀请好友抽奖</text>
 		</view>
@@ -72,7 +82,7 @@
 		<view class="pack_head {{isHead?'pack_head-on':''}}"></view>
 		<view class='inputGroup' style="padding-bottom: 60rpx">
 			<view class="drawer_content" style="margin-top:38rpx;">
-				<view class="top grid pack_grid">
+				<view class="top grid pack_grid" wx:if="{{activityInfo.carCheck==1}}">
 					<label class="title col-0 pack_label">车牌号：</label>
 					<input class="input_base input_h30 col-1" data-name="carNum" placeholder='请填写车牌号' bindinput="bindKeyInput" placeholder-style="color:#ff9f93;"></input>
 				</view>

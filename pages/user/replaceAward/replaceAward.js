@@ -30,8 +30,5 @@ Page({
       })
     }
 
-  },
-  onShareAppMessage: function (res) {
-    
   }
 })

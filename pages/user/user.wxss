@@ -15,6 +15,9 @@ page {
 .purchase-item .ac-item {
   margin: 0 auto;
   width: 90%;
+  max-height:4em;
+  overflow:hidden;
+  line-height:2em;  
 }
 
 .purchase-item .ac-item .price {

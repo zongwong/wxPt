@@ -28,21 +28,41 @@ page {
     height: 80rpx;
     align-items: center;
 }
-
+/* .detail-1 .bottom  .infowrapL{
+    overflow-x: hidden;
+    max-width: 70%;
+}
+.detail-1 .bottom  .infowrapR{
+    overflow-x: hidden;
+    max-width: 30%;
+} */
 .detail-1 .bottom .price {
-    font-size: 30rpx;
+    font-size: 28rpx;
     padding: 4rpx 20rpx;
     border: 2rpx solid #fff;
     border-radius: 8rpx;
     margin: 0 20rpx;
+    display:inline-block;
+    vertical-align:middle;
+    
 }
 
 .detail-1 .bottom .title {
     font-weight: 600;
+    white-space: nowrap;
+    display: inline-block;
+    max-width: 10em;
+    overflow: hidden;
+    vertical-align:middle;
 }
 
 .detail-1 .bottom .peple {
     margin-right: 20rpx;
+    white-space: nowrap;
+    display: inline-block;
+    max-width: 7em;
+    overflow: hidden;
+    vertical-align:middle;
 }
 
 .detail-2 {
@@ -148,7 +168,11 @@ page {
     box-sizing: border-box;
     border-top: 2rpx solid #f2f2f2;
 }
-
+.detail-4 text:first-child{
+    max-width: 12em;
+    white-space: nowrap;
+    overflow: hidden;
+}
 .detail-4 .submit {
     color: #fff;
     background-color: #6c4176;
@@ -383,4 +407,20 @@ page {
 
 .fromShow {
     opacity: 1;
+}
+
+.img-swiper,.slide-image{
+    width:100%;
+    height: 100%;
+}
+.wjitem{
+    width: calc(100% - 60rpx);
+    display: inline-block;
+    word-break: break-all;
+}
+.recordAwardName{
+    max-width: 10em;
+    overflow: hidden;
+    overflow: hidden;
+    white-space: nowrap;
 }
