@@ -493,7 +493,7 @@ Page({
         if (this.data.isRuning) {
             return false;
         }
-
+        console.log('代抽:'+that.data.orderId);
         utils.ajax('POST', 'api/hx/hxAwardDetail/replace', {
             orderId: that.data.orderId,
         }, function(res) {
@@ -537,6 +537,8 @@ Page({
                 })
             }
 
+        },function(res){
+            console.log(res);
         })
     },
     // 立即抽奖
