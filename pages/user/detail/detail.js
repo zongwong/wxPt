@@ -441,21 +441,20 @@ Page({
     // 代抽
     replaceGet: function () {
         let that = this;
-        if (this.data.isRuning) {
-            return false;
-        }
+        that.setData({
+          isRuning: true
+        })
         console.log('代抽:' + that.data.orderId);
         utils.ajax('POST', 'api/hx/hxAwardDetail/replace', {
             orderId: that.data.orderId,
         }, function (res) {
-            that.setData({
-                isRuning: true
-            })
+
             console.log(res)
             if (res.data.code == 0) {
                 // 代抽成功
                 wx.setStorageSync('chaiRecord', that.data.orderId + '&1');
                 that.setData({
+                    // isRuning: false,
                     isHelped: true
                 })
                 let data = res.data.data;
@@ -499,10 +498,6 @@ Page({
     // 立即抽奖
     getReward: function (e) {
         let formId = e.detail.formId;
-
-        if (this.data.isRuning) {
-            return false;
-        }
         if (+this.data.activityInfo.carCheck) {
             if (!this.data.carNum) {
                 wx.showModal({
@@ -521,13 +516,18 @@ Page({
             return false;
         }
 
+        if (this.data.isRuning) {
+            return false;
+        }
         // 代抽
         if (this.data.orderId && !this.data.isMyself) {
             this.replaceGet();
             return false;
         }
 
-
+        this.setData({
+          isRuning: true
+        })
         let that = this;
 
         utils.ajax('POST', 'api/hx/hxAwardDetail/openAward', {
@@ -536,9 +536,9 @@ Page({
             licensePlate: that.data.carNum || '',
             smsCode: that.data.vcode,
         }, function (res) {
-            that.setData({
-                isRuning: true
-            })
+            // that.setData({
+            //     isRuning: false
+            // })
             console.log(res)
             if (res.data.code == 0) {
 
