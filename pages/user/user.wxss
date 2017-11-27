@@ -18,6 +18,12 @@ page {
   max-height:4em;
   overflow:hidden;
   line-height:2em;  
+  display: -webkit-box;
+  word-break: break-all;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp:2;
+  text-overflow:ellipsis;
+  color: #F33535;
 }
 
 .purchase-item .ac-item .price {

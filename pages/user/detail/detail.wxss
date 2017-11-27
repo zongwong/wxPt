@@ -51,9 +51,10 @@ page {
     font-weight: 600;
     white-space: nowrap;
     display: inline-block;
-    max-width: 10em;
+    max-width: 12em;
     overflow: hidden;
     vertical-align:middle;
+    text-overflow: ellipsis;
 }
 
 .detail-1 .bottom .peple {

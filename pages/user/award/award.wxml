@@ -2,7 +2,7 @@
     <view class='congratulate'>恭喜您获得</view>
     <image class='img' mode='aspectFill' src='{{options.imgUrl}}'></image>
     <view class='goodTitle'>￥{{options.price}} {{options.awardName}}</view>
-    <view wx:if="{{options.shareCount!=0}}" class='invite'>您还有{{options.shareCount}}次邀请好友代您抽奖的机会!</view>
-    <button wx:if="{{options.shareCount!=0}}" open-type="share" class='btn-award'>邀请好友代抽</button>
+    <view wx:if="{{options.ableTime!=0}}" class='invite'>您还有{{options.ableTime}}次邀请好友代您抽奖的机会!</view>
+    <button wx:if="{{options.ableTime!=0}}" open-type="share" class='btn-award'>邀请好友代抽</button>
     <button bindtap='lookMine' class='btn-award' style="margin-top: 30rpx;background-color:#fff;border:2rpx solid #6C4176;color: #6C4176;">查看奖品</button>
 </view>

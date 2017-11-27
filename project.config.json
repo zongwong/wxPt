@@ -28,6 +28,12 @@
 					"name": "直达众筹页",
 					"pathName": "pages/purchase/immediately/immediately",
 					"query": "id=2&userId=14"
+				},
+				{
+					"id": 1,
+					"name": "代抽",
+					"pathName": "pages/user/detail/detail",
+					"query": "id=185&userId=753&originId=76&orderId=342&originName=荣宗王"
 				}
 			]
 		}

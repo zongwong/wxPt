@@ -24,31 +24,31 @@ App({
             }
         })
         
-        wx.clearStorageSync();
+        // wx.clearStorageSync();
         // wx.removeStorageSync('mydata');
-        this.toLogin();
+        // this.toLogin();
         //缓存
-        // try {
-        //     let mydata = wx.getStorageSync('mydata');
+        try {
+            let mydata = wx.getStorageSync('mydata');
 
-        //     if (mydata) {
-        //         const nowTime = new Date().getTime();
-        //         if (nowTime - mydata.time < 6 * 60 * 60 * 1000) { //缓存6小时
-        //             this.globalData.token = mydata.token;
-        //             this.globalData.userInfo = mydata.userInfo;
-        //             this.globalData.openid = mydata.openid;
-        //             this.globalData.memberId = mydata.memberId;
+            if (mydata) {
+                const nowTime = new Date().getTime();
+                if (nowTime - mydata.time < 6 * 60 * 60 * 1000) { //缓存6小时
+                    this.globalData.token = mydata.token;
+                    this.globalData.userInfo = mydata.userInfo;
+                    this.globalData.openid = mydata.openid;
+                    this.globalData.memberId = mydata.memberId;
 
-        //         } else {
-        //             wx.clearStorageSync()
-        //             this.toLogin();
-        //         }
-        //     } else {
-        //         this.toLogin();
-        //     }
-        // } catch (e) {
+                } else {
+                    wx.clearStorageSync()
+                    this.toLogin();
+                }
+            } else {
+                this.toLogin();
+            }
+        } catch (e) {
 
-        // }
+        }
     },
     toLogin: function(fn) {
         let that = this;

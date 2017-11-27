@@ -55,7 +55,7 @@
 		<!-- 我已下单,有次数 -->
 		<view class='detail-4' wx:if="{{isMyself && payStatus!=0 && ableTime}}">
 			<text>还可邀{{ableTime}}人代抽</text>
-			<text data-statu="open" class='submit' open-data="share">邀请好友抽奖</text>
+			<button data-statu="open" class='submit' open-type="share" style="margin:0;">邀请好友抽奖</button>
 		</view>
 		<!-- 我已下单,无次数 -->
 		<view class='detail-4' wx:if="{{isMyself && payStatus!=0 && !ableTime}}">
@@ -63,12 +63,12 @@
 			<text data-statu="open" class='submit' disabled="true" style="background: #ccc;">邀请好友抽奖</text>
 		</view>
 		<!-- 好友,已拆奖 -->
-		<view class='detail-4' wx:if="{{!isMyself && isHelped}}">
-			<text>活动结束/代抽次数为0/已拆</text>
+		<view class='detail-4' wx:if="{{!isMyself && payStatus!=0 && isHelped}}">
+			<text>{{originName}}邀您</text>
 			<text data-statu="open" class='submit' disabled="true" style="background: #ccc;">为Ta抽奖</text>
 		</view>
 		<!-- 好友,未拆奖 -->
-		<view class='detail-4' wx:if="{{!isMyself && !isHelped}}">
+		<view class='detail-4' wx:if="{{!isMyself && payStatus!=0 && !isHelped}}">
 			<text>{{originName}}邀您</text>
 			<text data-statu="open" bindtap='wjSubmit' class='submit'>为Ta抽奖</text>
 		</view>
