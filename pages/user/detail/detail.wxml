@@ -48,7 +48,7 @@
 		<!-- 我未下单 -->
 		<view class='detail-4' wx:if="{{isMyself && !payStatus}}">
 			<text>支付{{activityInfo.money}}元,立即参与</text>
-			<text  bindtap='wjSubmit' class='submit' type='submit'>提交</text>
+			<text  catchtap='wjSubmit' class='submit' type='submit'>提交</text>
 		</view>
 		<!-- 我已下单,有次数 -->
 		<view class='detail-4' wx:if="{{isMyself && payStatus!=0 && ableTime}}">
@@ -73,14 +73,14 @@
 		<!-- 好友,未拆奖 -->
 		<view class='detail-4' wx:if="{{ableTime && !isMyself && payStatus!=0 && !isHelped}}">
 			<text>{{originName}}邀您</text>
-			<text  bindtap='wjSubmit' class='submit'>为Ta抽奖</text>
+			<text  catchtap='wjSubmit' class='submit'>为Ta抽奖</text>
 		</view>
 	</view>
 </view>
 <!-- 弹框 -->
 <view class="drawer_screen" data-statu="close" wx:if="{{showModalStatus}}"></view>
 <form report-submit="true" bindsubmit="getReward">
-<view animation="{{animationData}}" class="drawer_box" wx:if="{{showModalStatus}}" >
+<view  class="drawer_box" wx:if="{{showModalStatus}}" >
 	<view class="from {{fromShow?'fromShow':''}}">
 		<view class="pack_head {{isHead?'pack_head-on':''}}"></view>
 		<view class='inputGroup' style="padding-bottom: 60rpx">

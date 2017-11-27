@@ -105,14 +105,19 @@ function userInfoCb(app){
 }
 //dirtime
 function dirtime(date,type){
-    const time = new Date(date).getTime();
+    if(type == 'begin'){
+        date+=' 00:00:00';
+    }else{
+        date+=' 23:59:59';
+    }
+    const time = new Date(date.replace(/\-/g, "/")).getTime();
     const now = new Date().getTime();
     let dir = now - time;
     console.log(dir)
     if(dir < 0 && type == 'begin'){
         return true;
     }
-    if(dir > 24*3600*1000 && type == 'end'){
+    if(dir >= 0 && type == 'end'){
         return true;
     }
     return false;

@@ -219,7 +219,7 @@ Page({
     onShow: function () {
         if (this.data.payStatus == 2) {
             //直接拆奖
-            this.createAnimation('open');
+            // this.createAnimation('open');
         }
     },
     //跳转->我的奖品
@@ -330,7 +330,7 @@ Page({
                 }
                 if (!that.data.isMyself) {
                     //代抽
-                    that.createAnimation('open');
+                    // that.createAnimation('open');
                 } else {
                     that.setData({
                         payStatus: data.payStatus
@@ -589,39 +589,35 @@ Page({
             }
         })
     },
-    //弹窗
-    powerDrawer: function (e) {
-        var currentStatu = e.currentTarget.dataset.statu;
-        this.createAnimation(currentStatu)
-    },
     createAnimation: function (currentStatu, callback) {
+        console.log(currentStatu);
         /* 动画部分 */
         // 第1步：创建动画实例   
-        var animation = wx.createAnimation({
-            duration: 200, //动画时长  
-            timingFunction: "linear", //线性  
-            delay: 0 //0则不延迟  
-        });
+        // var animation = wx.createAnimation({
+        //     duration: 200, //动画时长  
+        //     timingFunction: "linear", //线性  
+        //     delay: 0 //0则不延迟  
+        // });
 
-        // 第2步：这个动画实例赋给当前的动画实例  
-        this.animation = animation;
+        // // 第2步：这个动画实例赋给当前的动画实例  
+        // this.animation = animation;
 
-        // 第3步：执行第一组动画  .rotateX(-100)
-        animation.opacity(0).step();
+        // // 第3步：执行第一组动画  .rotateX(-100)
+        // animation.opacity(0).step();
 
-        // 第4步：导出动画对象赋给数据对象储存  
-        this.setData({
-            animationData: animation.export()
-        })
+        // // 第4步：导出动画对象赋给数据对象储存  
+        // this.setData({
+        //     animationData: animation.export()
+        // })
 
-        // 第5步：设置定时器到指定时候后，执行第二组动画  
-        setTimeout(function () {
-            // 执行第二组动画  
-            animation.opacity(1).step();
-            // 给数据对象储存的第一组动画，更替为执行完第二组动画的动画对象  
-            this.setData({
-                animationData: animation
-            })
+        // // 第5步：设置定时器到指定时候后，执行第二组动画  
+        // setTimeout(function () {
+        //     // 执行第二组动画  
+        //     animation.opacity(1).step();
+        //     // 给数据对象储存的第一组动画，更替为执行完第二组动画的动画对象  
+        //     this.setData({
+        //         animationData: animation
+        //     })
 
             //关闭  
             if (currentStatu == "close") {
@@ -629,7 +625,7 @@ Page({
                     showModalStatus: false
                 });
             }
-        }.bind(this), 200)
+        // }.bind(this), 200)
 
         // 显示  
         if (currentStatu == "open") {
@@ -707,16 +703,12 @@ Page({
             //     console.log('通知结果:')
             //     console.log(res)
             // })
-
         })
-
-
     },
     previewImg: function (e) {
         utils.qrcodeShow(e);
     },
     onShareAppMessage: function () {
-
         if (this.data.isMyself && this.data.orderId) {
             let myname = app.globalData.userInfo.nickName;
             let query = 'id=' + this.data.activityInfo.id + '&userId=' + this.data.userId + '&originId=' + this.data.originId + '&orderId=' + this.data.orderId + '&originName=' + myname;
@@ -726,14 +718,10 @@ Page({
                 imageUrl: this.data.activityInfo.imgUrl,
                 success: function (res) {
                     console.log('分享成功:' + query)
-                },
-                fail: function (res) {
-                    // 转发失败
                 }
             }
         } else {
             //默认分享
-
             let query = 'id=' + this.data.activityInfo.id + '&userId=' + this.data.userId + '&originId=';
             return {
                 path: '/pages/user/detail/detail?' + query,
@@ -744,4 +732,9 @@ Page({
             }
         }
     },
+    share:function(){
+        wx.showShareMenu({
+            withShareTicket: true
+          })
+    }
 })
