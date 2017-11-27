@@ -103,6 +103,20 @@ function userInfoCb(app){
         }
     } 
 }
+//dirtime
+function dirtime(date,type){
+    const time = new Date(date).getTime();
+    const now = new Date().getTime();
+    let dir = now - time;
+    console.log(dir)
+    if(dir < 0 && type == 'begin'){
+        return true;
+    }
+    if(dir > 24*3600*1000 && type == 'end'){
+        return true;
+    }
+    return false;
+}
 module.exports = {
     ajax: ajax,
     formatTime: formatTime,
@@ -111,5 +125,6 @@ module.exports = {
     getRandomArray: getRandomArray,
     getRandomArrayElement: getRandomArrayElement,
     phoneCallFn: phoneCallFn,
-    userInfoCb:userInfoCb
+    userInfoCb:userInfoCb,
+    dirtime:dirtime
 }

@@ -2,8 +2,6 @@
 <view class="container">
 	<view class="container-body">
 		<view class="detail-1" >
-
-
 			<swiper class='img-swiper' indicator-dots="false" autoplay="true">
 				<swiper-item wx:if="{{activityInfo.videoUrl!=''}}">
 					<video src="{{activityInfo.videoUrl}}" class="slide-image" objectFit="contain"></video>
@@ -50,27 +48,32 @@
 		<!-- 我未下单 -->
 		<view class='detail-4' wx:if="{{isMyself && !payStatus}}">
 			<text>支付{{activityInfo.money}}元,立即参与</text>
-			<text data-statu="open" bindtap='wjSubmit' class='submit' type='submit'>提交</text>
+			<text  bindtap='wjSubmit' class='submit' type='submit'>提交</text>
 		</view>
 		<!-- 我已下单,有次数 -->
 		<view class='detail-4' wx:if="{{isMyself && payStatus!=0 && ableTime}}">
 			<text>还可邀{{ableTime}}人代抽</text>
-			<button data-statu="open" class='submit' open-type="share" style="margin:0;">邀请好友抽奖</button>
+			<button  class='submit' open-type="share" style="margin:0;">邀请好友抽奖</button>
 		</view>
 		<!-- 我已下单,无次数 -->
 		<view class='detail-4' wx:if="{{isMyself && payStatus!=0 && !ableTime}}">
 			<text>还可邀0人代抽</text>
-			<text data-statu="open" class='submit' disabled="true" style="background: #ccc;">邀请好友抽奖</text>
+			<text  class='submit' disabled="true" style="background: #ccc;">邀请好友抽奖</text>
+		</view>
+		<!-- 没有次数 -->
+		<view class='detail-4' wx:if="{{!ableTime && !isMyself}}">
+			<text>活动代抽次数为0</text>
+			<text  class='submit' disabled="true" style="background: #ccc;">为Ta抽奖</text>
 		</view>
 		<!-- 好友,已拆奖 -->
 		<view class='detail-4' wx:if="{{!isMyself && payStatus!=0 && isHelped}}">
-			<text>{{originName}}邀您</text>
-			<text data-statu="open" class='submit' disabled="true" style="background: #ccc;">为Ta抽奖</text>
+			<text>您已拆过奖了</text>
+			<text  class='submit' disabled="true" style="background: #ccc;">为Ta抽奖</text>
 		</view>
 		<!-- 好友,未拆奖 -->
-		<view class='detail-4' wx:if="{{!isMyself && payStatus!=0 && !isHelped}}">
+		<view class='detail-4' wx:if="{{ableTime && !isMyself && payStatus!=0 && !isHelped}}">
 			<text>{{originName}}邀您</text>
-			<text data-statu="open" bindtap='wjSubmit' class='submit'>为Ta抽奖</text>
+			<text  bindtap='wjSubmit' class='submit'>为Ta抽奖</text>
 		</view>
 	</view>
 </view>

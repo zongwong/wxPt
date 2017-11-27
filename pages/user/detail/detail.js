@@ -113,48 +113,36 @@ Page({
                     that.setData({
                         activityInfo: data,
                         endTime: data.endTime,
-                        payStatus: data.payStatus
+                        beginTime: data.beginTime,
+                        payStatus: data.payStatus,
+                        ableTime:parseInt(data.ableTime)
                     });
-                    if (typeof data.ableTime != 'undefined' && data.ableTime) {
-                        that.setData({
-                            ableTime: parseInt(data.ableTime)
+
+                    // 时间
+                    let isEnd = utils.dirtime(that.data.endTime,'end');
+                    let isNobegin = utils.dirtime(that.data.beginTime,'begin');
+                    if(isEnd){
+                        wx.showModal({
+                            title:"提示",
+                            content:"活动已结束",
+                            complete:function(){
+                                wx.redirectTo({
+                                    url:'/pages/user/user'
+                                })
+                            }
                         })
                     }
-                    // if (!parseFloat(that.data.activityInfo.money)) { //0元博
-                    //     that.setData({
-                    //         payStatus: 1
-                    //     })
-                    // } 
-                    // 时间
-                    // let endtime = timeUtil.countDown(that.data.endTime);
-
-                    // if (!endtime) {
-                    //     wx.showModal({
-                    //         title: '提示',
-                    //         content: '时间错误',
-                    //         success: function(res) {
-                    //             wx.navigateTo({
-                    //                 url: '/pages/crowdfunding/crowdfunding'
-                    //             })
-                    //         }
-                    //     })
-                    // } else if (endtime === '活动已结束') {
-                    //     wx.showModal({
-                    //         title: '提示',
-                    //         content: '来晚啦,活动已结束~',
-                    //         success: function(res) {
-                    //             wx.navigateTo({
-                    //                 url: '/pages/crowdfunding/crowdfunding'
-                    //             })
-                    //         }
-                    //     })
-                    // } else {
-                    //     setInterval(function() {
-                    //         that.setData({
-                    //             timeCountDown: timeUtil.countDown(that.data.endTime)
-                    //         })
-                    //     }, 1000);
-                    // }
+                    if(isNobegin){
+                        wx.showModal({
+                            title:"提示",
+                            content:"活动开始时间:"+that.data.beginTime,
+                            complete:function(){
+                                wx.redirectTo({
+                                    url:'/pages/user/user'
+                                })
+                            }
+                        })
+                    }
 
                     // 中奖记录手机号处理
                     if (typeof data.details != 'undefined') {
@@ -271,6 +259,10 @@ Page({
     },
     // 问卷提交
     wjSubmit: function (event) {
+        if(!this.data.isMyself){
+            this.createAnimation('open');
+            return false;
+        }
         if (this.data.orderId && !this.data.payStatus) {
             if (!parseFloat(this.data.activityInfo.money)) {
                 this.createAnimation('open');
@@ -497,6 +489,7 @@ Page({
     },
     // 立即抽奖
     getReward: function (e) {
+        console.log(1)
         let formId = e.detail.formId;
         if (+this.data.activityInfo.carCheck) {
             if (!this.data.carNum) {
@@ -519,6 +512,7 @@ Page({
         if (this.data.isRuning) {
             return false;
         }
+        
         // 代抽
         if (this.data.orderId && !this.data.isMyself) {
             this.replaceGet();

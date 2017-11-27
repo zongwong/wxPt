@@ -21,7 +21,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 2,
 			"list": [
 				{
 					"id": 0,
@@ -34,6 +34,12 @@
 					"name": "代抽",
 					"pathName": "pages/user/detail/detail",
 					"query": "id=187&userId=753&originId=11&orderId=426&originName=王宗荣"
+				},
+				{
+					"id": 2,
+					"name": "代抽2",
+					"pathName": "pages/user/detail/detail",
+					"query": "id=187&userId=753&originId=76&orderId=444&originName=荣宗王"
 				}
 			]
 		}

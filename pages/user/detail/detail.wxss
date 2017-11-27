@@ -7,7 +7,7 @@ page {
 
 .container {
     padding: 30rpx 20rpx;
-    margin-bottom: 104rpx;
+    margin-bottom: 110rpx;
 }
 
 .detail-1 {
