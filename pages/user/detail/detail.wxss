@@ -240,9 +240,10 @@ page {
 }
 .pack_sms_wrap{
     position: relative;
-    width: 180rpx;
+    width: 200rpx;
 }
 .drawer_box .pack_sms {
+    width: 100%;
     margin: 0;
     padding: 0 20rpx;
     font-size: 28rpx;
@@ -409,7 +410,10 @@ page {
 .fromShow {
     opacity: 1;
 }
-
+.img-swiper{
+    background: #fff;
+    overflow: hidden;
+}
 .img-swiper,.slide-image{
     width:100%;
     height: 100%;

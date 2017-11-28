@@ -33,6 +33,8 @@ Page({
         fromShow: false,
         isRuning: false,
         myAwardInfo: {},
+        videoShow:false,
+        autoplay:true,
     },
     onLoad: function (options) {
         // originId区分我自己,payStatus区分支付,ableTime邀请次数,拆奖 记录本地openAward = orderId & true ,记录本地actId = orderId+actId
@@ -143,7 +145,11 @@ Page({
                             }
                         })
                     }
-
+                    if (data.videoUrl!='') {
+                        that.setData({
+                            videoShow:true
+                        })
+                    }
                     // 中奖记录手机号处理
                     if (typeof data.details != 'undefined') {
                         let awards = Array.from(data.details);
@@ -405,12 +411,12 @@ Page({
                 that.setData({
                     isDjs: true
                 })
-                let time = 10;
+                let time = 60;
                 let timer = setInterval(function () {
                     time -= 1;
 
                     that.setData({
-                        djsText: time + 's后重新获取'
+                        djsText: time + 's后重发'
                     })
                     if (time == 0) {
                         clearInterval(timer);
@@ -421,6 +427,26 @@ Page({
                     }
                 }, 1000);
             }
+        })
+    },
+    listenerVideo:function(){
+        this.setData({
+            videoShow:false
+        })
+    },
+    videoPlay:function(){
+        this.setData({
+            autoplay:false,
+        })
+    },
+    videoPause:function(){
+        this.setData({
+            autoplay:true
+        })
+    },
+    videoEnd:function(){
+        this.setData({
+            autoplay:true
         })
     },
     //表单绑定
@@ -439,6 +465,9 @@ Page({
         console.log('代抽:' + that.data.orderId);
         utils.ajax('POST', 'api/hx/hxAwardDetail/replace', {
             orderId: that.data.orderId,
+            mobile: that.data.mobile,
+            licensePlate: that.data.carNum || '',
+            smsCode: that.data.vcode,
         }, function (res) {
 
             console.log(res)
@@ -479,12 +508,21 @@ Page({
             } else {
                 wx.showModal({
                     title: '提示',
-                    content: '接口出错,打开调试看下'
+                    content: res.data.message
                 })
             }
 
-        }, function (res) {
+        }, function(res){
             console.log(res);
+            wx.showModal({
+                title: '提示',
+                content: '系统繁忙',
+                complete:function(){
+                    wx.navigateTo({
+                        url: '/pages/user/user'
+                    })
+                }
+            })
         })
     },
     // 立即抽奖
@@ -579,9 +617,20 @@ Page({
             } else {
                 wx.showModal({
                     title: '提示',
-                    content: '系统错误'
+                    content: res.data.message
                 })
             }
+        },function(res){
+            console.log(res);
+            wx.showModal({
+                title: '提示',
+                content: '系统繁忙',
+                complete:function(){
+                    wx.navigateTo({
+                        url: '/pages/user/user'
+                    })
+                }
+            })
         })
     },
     createAnimation: function (currentStatu, callback) {
@@ -617,7 +666,8 @@ Page({
             //关闭  
             if (currentStatu == "close") {
                 this.setData({
-                    showModalStatus: false
+                    showModalStatus: false,
+                    videoShow:true
                 });
             }
         }.bind(this), 200)
@@ -625,7 +675,8 @@ Page({
         // 显示  
         if (currentStatu == "open") {
             this.setData({
-                showModalStatus: true
+                showModalStatus: true,
+                videoShow:false
             });
         }
     },

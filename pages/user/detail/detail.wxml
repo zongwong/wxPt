@@ -2,9 +2,9 @@
 <view class="container">
 	<view class="container-body">
 		<view class="detail-1" >
-			<swiper class='img-swiper' indicator-dots="false" autoplay="true">
-				<swiper-item wx:if="{{activityInfo.videoUrl!=''}}">
-					<video src="{{activityInfo.videoUrl}}" class="slide-image" objectFit="contain"></video>
+			<swiper class='img-swiper' indicator-dots="false" autoplay="{{autoplay}}">
+				<swiper-item wx:if="{{videoShow}}">
+					<video src="{{activityInfo.videoUrl}}" class="slide-image" objectFit="contain" binderror="listenerVideo" bindplay="videoPlay" bindpause="videoPause" bindended="videoEnd"></video>
 				</swiper-item>
 				<swiper-item>
 					<image mode='aspectFill' src="{{activityInfo.imgUrl}}" class="slide-image" bindtap="previewImg" data-qrcode="{{activityInfo.imgUrl}}" />
@@ -39,8 +39,8 @@
 		<view class='detail-3'>
 			<view class='top' wx:for="{{allSelects}}" wx:for-item="parent" wx:for-index="pi" wx:key="parent.id">
 				<text class='title'>{{pi+1}}.({{parent.type==1?'单选':'多选'}}){{parent.question}}</text>
-				<view class='cell' wx:for="{{parent.items}}" wx:for-item="cell" wx:key="{{cell.id}}" wx:for-index="ci">
-					<image data-parentid="{{parent.id}}" data-parentindex="{{pi}}" data-type="{{parent.type}}" data-childindex="{{ci}}" data-check="{{cell.checked}}" bindtap='changeState' class='icon' src='{{cell.checked?ckeckImg:unckeckImg}}' data-set="allSelects[{{pi}}].items[{{ci}}]"></image>
+				<view class='cell' wx:for="{{parent.items}}" wx:for-item="cell" wx:key="{{cell.id}}" wx:for-index="ci" bindtap='changeState' data-parentid="{{parent.id}}" data-parentindex="{{pi}}" data-type="{{parent.type}}" data-childindex="{{ci}}" data-check="{{cell.checked}}" data-set="allSelects[{{pi}}].items[{{ci}}]">
+					<image   class='icon' src='{{cell.checked?ckeckImg:unckeckImg}}'></image>
 					<text class="wjitem">{{cell.name}}</text>
 				</view>
 			</view>
