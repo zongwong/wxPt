@@ -1,23 +1,23 @@
 <!--pages/index/index.wxml-->
 <view>
-    <navigator class="nav-item" url="/pages/draw/draw">
+    <view class="nav-item" bindtap="scanCode" data-url="/pages/draw/draw">
         <image class="icon-type" src="../../images/choujiangfull.png"></image>   
         <text class="nav-text">抽奖</text>
         <image class="icon-left" src="../../images/arrow-right.png"></image>
-    </navigator>
-    <navigator class="nav-item" url="/pages/purchase/purchase">
+    </view>
+    <view class="nav-item" bindtap="scanCode" data-url="/pages/purchase/purchase">
         <image class="icon-type" src="../../images/pintuanfull.png"></image>   
         <text class="nav-text">拼团</text>
         <image class="icon-left" src="../../images/arrow-right.png"></image>
-    </navigator>
-    <navigator class="nav-item" url="/pages/user/user">
+    </view>
+    <view class="nav-item" bindtap="scanCode" data-url="/pages/user/user">
         <image class="icon-type" src="../../images/userfull.png"></image>   
         <text class="nav-text">用户画像</text>
         <image class="icon-left" src="../../images/arrow-right.png"></image>
-    </navigator>
-    <navigator class="nav-item" url="/pages/crowdfunding/crowdfunding">
+    </view>
+    <view class="nav-item" bindtap="scanCode" data-url="/pages/crowdfunding/crowdfunding">
         <image class="icon-type" src="../../images/zhongchoufull.png"></image>   
         <text class="nav-text">众筹</text>
         <image class="icon-left" src="../../images/arrow-right.png"></image>
-    </navigator>
+    </view>
 </view>    

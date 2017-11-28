@@ -61,7 +61,7 @@
 			<text  class='submit' disabled="true" style="background: #ccc;">邀请好友抽奖</text>
 		</view>
 		<!-- 没有次数 -->
-		<view class='detail-4' wx:if="{{!ableTime && !isMyself}}">
+		<view class='detail-4' wx:if="{{!isMyself && !ableTime}}">
 			<text>活动代抽次数为0</text>
 			<text  class='submit' disabled="true" style="background: #ccc;">为Ta抽奖</text>
 		</view>
@@ -80,7 +80,7 @@
 <!-- 弹框 -->
 <view class="drawer_screen" data-statu="close" wx:if="{{showModalStatus}}"></view>
 <form report-submit="true" bindsubmit="getReward">
-<view  class="drawer_box" wx:if="{{showModalStatus}}" >
+<view animation="{{animationData}}"  class="drawer_box" wx:if="{{showModalStatus}}" >
 	<view class="from {{fromShow?'fromShow':''}}">
 		<view class="pack_head {{isHead?'pack_head-on':''}}"></view>
 		<view class='inputGroup' style="padding-bottom: 60rpx">
