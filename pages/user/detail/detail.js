@@ -129,7 +129,7 @@ Page({
                             content:"活动已结束",
                             complete:function(){
                                 wx.redirectTo({
-                                    url:'/pages/user/user'
+                                    url:'/pages/user/user?load=false'
                                 })
                             }
                         })
@@ -140,7 +140,7 @@ Page({
                             content:"活动开始时间:"+that.data.beginTime,
                             complete:function(){
                                 wx.redirectTo({
-                                    url:'/pages/user/user'
+                                    url:'/pages/user/user?load=false'
                                 })
                             }
                         })
@@ -513,6 +513,7 @@ Page({
             }
 
         }, function(res){
+            console.log('标记:接口调用出错')
             console.log(res);
             wx.showModal({
                 title: '提示',

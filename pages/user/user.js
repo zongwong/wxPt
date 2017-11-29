@@ -24,7 +24,17 @@ Page({
                     that.setData({
                         userId: userId
                     })
-                    that.fetchPurchaseData();
+                    if (typeof options.load === 'undefined') {
+                        that.fetchPurchaseData(function(data){
+                            if (typeof data != 'undefined' && data.length==1 ) {
+                                wx.navigateTo({
+                                    url:'/pages/user/detail/detail?id='+data[0].id+'&userId='+that.data.userId+'&originId='+app.globalData.memberId+'&orderId='
+                                })
+                            }
+                        });
+                    }else{
+                        that.fetchPurchaseData();
+                    }
                 }
             } catch (e) {
                 console.log(e)
@@ -36,7 +46,7 @@ Page({
         let that = this;
         app.scanFunc(that,that.fetchPurchaseData);
     },
-    fetchPurchaseData: function() {
+    fetchPurchaseData: function(fn) {
         if (this.data.isajaxLoad) {
             return false;
         }
@@ -61,6 +71,7 @@ Page({
             })
             app.loading('close');
             if (res.data.code == 0) {
+                fn && fn(res.data.data); 
                 if (typeof res.data.data === 'undefined') {
                     that.setData({
                         scrollEnd: true,

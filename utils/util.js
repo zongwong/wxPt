@@ -76,6 +76,7 @@ function ajax(type = 'get', url = "", data = {}, success, fail) {
             success(res);
         },
         fail: function(res) {
+            console.log('接口调用失败');
             fail(res);
         }
     })
