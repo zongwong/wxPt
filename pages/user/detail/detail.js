@@ -506,10 +506,15 @@ Page({
                     })
                 }
             } else {
-                wx.showModal({
-                    title: '提示',
-                    content: res.data.message
-                })
+                let msg = res.data.message;
+                console.log('接口200')
+                console.log(msg)
+                if (typeof msg == 'String') {                
+                    wx.showModal({
+                        title: '提示',
+                        content: msg
+                    })
+                }
             }
 
         }, function(res){
