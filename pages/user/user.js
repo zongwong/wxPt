@@ -63,7 +63,7 @@ Page({
         utils.ajax('GET', url, {
             pageNo: pageNo,
             pageSize: 5,
-            status: 1,
+            status: 0,
             userId: that.data.userId
         }, function(res) {
             that.setData({

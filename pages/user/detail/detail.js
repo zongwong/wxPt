@@ -765,7 +765,7 @@ Page({
             let myname = app.globalData.userInfo.nickName;
             let query = 'id=' + this.data.activityInfo.id + '&userId=' + this.data.userId + '&originId=' + this.data.originId + '&orderId=' + this.data.orderId + '&originName=' + myname;
             return {
-                title: myname + '邀请您代抽奖品',
+                title: myname + '正在参加'+this.data.activityInfo.name+'活动，邀请您代Ta抽奖！',
                 path: '/pages/user/detail/detail?' + query,
                 imageUrl: this.data.activityInfo.imgUrl,
                 success: function (res) {
@@ -776,6 +776,7 @@ Page({
             //默认分享
             let query = 'id=' + this.data.activityInfo.id + '&userId=' + this.data.userId + '&originId=';
             return {
+                title:this.data.activityInfo.name,
                 path: '/pages/user/detail/detail?' + query,
                 imageUrl: this.data.activityInfo.imgUrl,
                 success: function () {
