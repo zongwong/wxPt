@@ -161,10 +161,11 @@ Page({
                             let mobile;
                             if (typeof item.mobile != 'undefined') {
                                 mobile = item.mobile;
-                            }
-                            if (typeof item.member != 'undefined') {
-                                if (typeof item.member.mobile != 'undefined') {
-                                    mobile = item.member.mobile;
+                            }else{                            
+                                if (typeof item.member != 'undefined') {
+                                    if (typeof item.member.mobile != 'undefined') {
+                                        mobile = item.member.mobile;
+                                    }
                                 }
                             }
                             if (mobile.length !== 11) {

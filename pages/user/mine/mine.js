@@ -43,8 +43,7 @@ Page({
         }
         utils.ajax('get', url, {
             pageNo: pageNo,
-            pageSize: 5,
-            actId: 1
+            pageSize: 5
         }, function(res) {
             that.setData({
                 isajaxLoad: false,
