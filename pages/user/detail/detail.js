@@ -602,7 +602,8 @@ Page({
                         orderId: that.data.orderId,
                         userId: that.data.userId,
                         originId: that.data.originId,
-                        id: that.data.activityInfo.id
+                        id: that.data.activityInfo.id,
+                        shareImg: that.data.activityInfo.imgUrl
                     }
                     that.setData({
                         myAwardInfo: {

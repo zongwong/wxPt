@@ -21,7 +21,7 @@ Page({
         return {
             title: myname +'邀请您代抽奖品',
             path: '/pages/user/detail/detail?'+query,
-            imageUrl:this.data.options.imgUrl,
+            imageUrl:this.data.options.shareImg,
             success: function(res) {
                 console.log('分享成功:'+query)
             },
