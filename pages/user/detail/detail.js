@@ -266,6 +266,13 @@ Page({
     },
     // 问卷提交
     wjSubmit: function (event) {
+        if(this.data.activityInfo.status!=1){
+            wx.showModal({
+                title:'提示',
+                content:'活动已过期~',
+            })
+            return false;
+        }
         if(!this.data.isMyself){
             this.createAnimation('open');
             return false;
@@ -508,14 +515,13 @@ Page({
                 }
             } else {
                 let msg = res.data.message;
-                console.log('接口200')
-                console.log(msg)
-                if (typeof msg == 'String') {                
-                    wx.showModal({
-                        title: '提示',
-                        content: msg
-                    })
-                }
+                console.log('接口错误200')
+                console.log(msg)              
+                wx.showModal({
+                    title: '提示',
+                    content: '来晚了,活动已结束'
+                })
+                
             }
 
         }, function(res){
