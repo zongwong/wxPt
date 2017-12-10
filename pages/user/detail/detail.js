@@ -35,6 +35,7 @@ Page({
         myAwardInfo: {},
         videoShow:false,
         autoplay:true,
+        isEnd:false
     },
     onLoad: function (options) {
         // originId区分我自己,payStatus区分支付,ableTime邀请次数,拆奖 记录本地openAward = orderId & true ,记录本地actId = orderId+actId
@@ -121,16 +122,24 @@ Page({
                     });
 
                     // 时间
+                    if(data.status!=1){
+                        that.setData({
+                            isEnd:true
+                        })
+                    }
                     let isEnd = utils.dirtime(that.data.endTime,'end');
                     let isNobegin = utils.dirtime(that.data.beginTime,'begin');
+                    that.setData({
+                        isEnd:isEnd
+                    })
                     if(isEnd){
                         wx.showModal({
                             title:"提示",
                             content:"活动已结束",
                             complete:function(){
-                                wx.redirectTo({
-                                    url:'/pages/user/user?load=false'
-                                })
+                                // wx.redirectTo({
+                                //     url:'/pages/user/user?load=false'
+                                // })
                             }
                         })
                     }
