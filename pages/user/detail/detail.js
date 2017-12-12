@@ -122,16 +122,16 @@ Page({
                     });
 
                     // 时间
-                    if(data.status!=1){
-                        that.setData({
-                            isEnd:true
-                        })
-                    }
                     let isEnd = utils.dirtime(that.data.endTime,'end');
                     let isNobegin = utils.dirtime(that.data.beginTime,'begin');
                     that.setData({
                         isEnd:isEnd
                     })
+                    if(data.status!=1){
+                        that.setData({
+                            isEnd:true
+                        })
+                    }
                     if(isEnd){
                         wx.showModal({
                             title:"提示",
@@ -339,9 +339,7 @@ Page({
             actId: that.data.activityInfo.id,
             orderId: that.data.orderId,
         }, function (res) {
-            that.setData({
-                isAjax: true
-            })
+
             if (res.data.code == 0) {
                 //问卷提交成功
                 let data = res.data.data;
@@ -368,6 +366,10 @@ Page({
 
             }
 
+        },function(){
+            that.setData({
+                isAjax: false
+            })
         })
     },
     //获取微信支付参数
@@ -401,7 +403,7 @@ Page({
                 })
             },
             'fail': function (res) {
-
+                
             }
         })
     },

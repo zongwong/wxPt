@@ -70,8 +70,12 @@ Page({
                 })
                 return false;
             }
-
-            let newactivitylist = that.data.activitylist.concat(res.data.data);
+            let newactivitylist;
+            if(pageNo!=1){
+                newactivitylist = that.data.activitylist.concat(res.data.data);
+            }else{
+                newactivitylist = res.data.data;
+            }
             that.setData({
                 activitylist: newactivitylist
             });
