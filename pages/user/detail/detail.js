@@ -614,7 +614,9 @@ Page({
                         userId: that.data.userId,
                         originId: that.data.originId,
                         id: that.data.activityInfo.id,
-                        shareImg: that.data.activityInfo.imgUrl
+                        shareImg: that.data.activityInfo.imgUrl,
+                        title:that.data.activityInfo.name,
+                        money:that.data.activityInfo.money,
                     }
                     that.setData({
                         myAwardInfo: {
@@ -784,7 +786,7 @@ Page({
             let myname = app.globalData.userInfo.nickName;
             let query = 'id=' + this.data.activityInfo.id + '&userId=' + this.data.userId + '&originId=' + this.data.originId + '&orderId=' + this.data.orderId + '&originName=' + myname;
             return {
-                title: myname + '正在参加'+this.data.activityInfo.name+'活动，邀请您代Ta抽奖！',
+                title: myname + '正在参加"'+this.data.activityInfo.money+'块钱博'+this.data.activityInfo.name+'"活动，邀请您代Ta抽奖！',
                 path: '/pages/user/detail/detail?' + query,
                 imageUrl: this.data.activityInfo.imgUrl,
                 success: function (res) {
@@ -795,7 +797,7 @@ Page({
             //默认分享
             let query = 'id=' + this.data.activityInfo.id + '&userId=' + this.data.userId + '&originId=';
             return {
-                title:this.data.activityInfo.name,
+                title: myname + '正在参加"'+this.data.activityInfo.money+'块钱博'+this.data.activityInfo.name+'"活动，邀请您代Ta抽奖！',
                 path: '/pages/user/detail/detail?' + query,
                 imageUrl: this.data.activityInfo.imgUrl,
                 success: function () {
