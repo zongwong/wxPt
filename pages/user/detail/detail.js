@@ -476,7 +476,7 @@ Page({
         })
     },
     // 代抽
-    replaceGet: function () {
+    replaceGet: function (formId) {
         let that = this;
         that.setData({
           isRuning: true
@@ -487,6 +487,7 @@ Page({
             mobile: that.data.mobile,
             licensePlate: that.data.carNum || '',
             smsCode: that.data.vcode,
+            formId:formId
         }, function (res) {
 
             console.log(res)
@@ -583,7 +584,7 @@ Page({
         
         // 代抽
         if (this.data.orderId && !this.data.isMyself) {
-            this.replaceGet();
+            this.replaceGet(formId);
             return false;
         }
 
@@ -597,6 +598,7 @@ Page({
             mobile: that.data.mobile,
             licensePlate: that.data.carNum || '',
             smsCode: that.data.vcode,
+            formId:formId
         }, function (res) {
 
             console.log(res)
