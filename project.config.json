@@ -40,6 +40,13 @@
 					"name": "代抽2",
 					"pathName": "pages/user/detail/detail",
 					"query": "id=186&userId=753&originId=76&orderId=478&originName=荣宗王"
+				},
+				{
+					"id": 3,
+					"name": "二维码",
+					"pathName": "pages/user/detail/detail",
+					"query": "id=407&userId=1598",
+					"scene": "1025"
 				}
 			]
 		}
