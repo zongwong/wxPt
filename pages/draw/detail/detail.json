@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "幸运大转盘",
+  "navigationBarBackgroundColor": "#F3365E",
+  "backgroundColor": "#ffffff",
+  "enablePullDownRefresh": "true"
+}

@@ -1,0 +1,37 @@
+page {
+  background-color: #f2f2f2;
+  font-size: 32rpx;
+}
+
+.payComplete {
+  height: 300rpx;
+  padding: 80rpx;
+  background-color: #fff;
+}
+.payComplete .one{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.payComplete .pay-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 20rpx;
+}
+
+.payComplete .one .text {
+  color: #323232;
+}
+.payComplete .two{
+  text-align: center;
+  margin: 30rpx 0rpx 80rpx;
+  color: #999999;
+  font-size: 30rpx;
+}
+
+.payComplete .three .btn-search{
+  background-color: #FF7900;
+  color: #fff;
+  line-height: 80rpx;
+  font-size: 32rpx;
+}

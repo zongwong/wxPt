@@ -1,0 +1,11 @@
+<!--pages/crowdfunding/pay/pay.wxml-->
+<view class='payComplete'>
+  <view class='one'>
+    <image class='pay-icon' mode='aspectFit' src='../../../images/funding/payIcon.png'></image>
+    <text class='text'>已完成支付</text>
+  </view>
+  <view class='two'>已完成众筹!</view>
+  <view class='three'>
+    <button bindtap='searchOrder' class='btn-search'>查看订单</button>
+  </view>
+</view>

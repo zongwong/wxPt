@@ -1,0 +1,87 @@
+/* pages/crowdfunding/center/center.wxss */
+
+page {
+  font-size: 30rpx;
+  background-color: #f2f2f2;
+}
+
+.out {
+  height: 400rpx;
+  padding: 30rpx 30rpx 40rpx;
+  background-color: #fff;
+}
+
+.in {
+  height: 100%;
+  border-radius: 40rpx;
+  position: relative;
+  background-color: #262626;
+}
+
+.userinfo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  width: 100%;
+  top: 30%;
+  font-size: 34rpx;
+}
+
+.userinfo-avatar {
+  width: 85rpx;
+  height: 85rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  color: #aaa;
+}
+
+.cardinfo {
+  position: absolute;
+  bottom: 30rpx;
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  color: #e6c053;
+  margin: 0rpx 30rpx;
+  height:46rpx;
+  line-height: 46rpx;
+}
+
+.cardinfo text:first-child {
+  border: 2rpx solid #e6c053;
+  padding: 0 30rpx;
+  border-radius: 20rpx;
+  box-sizing: border-box;
+}
+
+.bottom {
+  margin-top: 20rpx;
+  background-color: #fff;
+  padding: 20rpx 40rpx;
+}
+
+.bottom .item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70rpx;
+}
+
+.bottom .item:first-child {
+  border-bottom: 2rpx solid #dedede;
+}
+
+.bottom .item .mid {
+  display: flex;
+  align-items: center;
+}
+
+.bottom .item .img {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 20rpx;
+}

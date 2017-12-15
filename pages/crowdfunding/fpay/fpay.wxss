@@ -1,0 +1,73 @@
+page {
+  background-color: #f2f2f2;
+  font-size: 32rpx;
+}
+
+.payComplete {
+  height: 200rpx;
+  padding: 80rpx;
+  background-color: #fff;
+}
+
+.payComplete .one {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.payComplete .pay-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 20rpx;
+}
+
+.payComplete .one .text {
+  color: #323232;
+}
+
+.payComplete .two {
+  text-align: center;
+  margin: 30rpx 0rpx 80rpx;
+  color: #999;
+  font-size: 30rpx;
+}
+
+.payComplete .three .btn-search {
+  background-color: #fff;
+  line-height: 50rpx;
+  font-size: 32rpx;
+  width: 50%;
+  color: #ff7900;
+  border: 2rpx solid #ff7900;
+}
+
+.friendPayAward {
+  background-color: #fff;
+  margin: 20rpx 0rpx;
+  padding: 30rpx;
+  display: flex;
+  align-items: center;
+}
+
+.friendPayAward .award-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 20rpx;
+}
+
+.awardActivity {
+  height: 450rpx;
+  padding: 30rpx;
+  background-color: #fff;
+}
+
+.awardActivity .activeImg {
+  width: 100%;
+  height: 360rpx;
+}
+
+.awardActivity .title {
+  display: inline-block;
+  line-height: 50rpx;
+  margin-bottom: 30rpx;
+}

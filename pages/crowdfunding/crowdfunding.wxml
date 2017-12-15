@@ -1,0 +1,31 @@
+<view class="container">
+    <!-- <scroll-view class="container-body" scroll-y="true" scroll-top="{{scrolltop}}"  bindscrolltolower="scrollLoading" style="height: 1300rpx;"> -->
+        <view class="container-body">
+        <view class="purchase-list">
+            <block wx:for="{{activitylist}}" wx:key="{{item.id}}">
+                <navigator class="purchase-item" url="./detail/detail?id={{item.id}}&userId={{userId}}" >
+                    <view class="purchase-item-img" >
+                        <image class='image' src="{{item.imgUrl}}" mode="aspectFill" binderror="imgError" data-err-img="activitylist[{{index}}]"></image>
+                        <text class='status'>众筹中</text>
+                    </view>
+                    <view class="purchase-item-text">
+                        <view class="purchase-item-title">{{item.zcGoods.name}}</view>
+                        <view class="purchase-item-info btn-group">
+                            <view class='left'>
+                                <text class="icon-price">￥{{item.zcGoods.price}}</text>
+                                <text class="icon-count">已售{{item.saleNum}}</text>
+                            </view>
+                            <view class='right'>
+                                <button type='warn' class='{{item.disabled?"btn-purchase-disabled":"btn-purchase"}}'  data-actid="{{item.id}}"><text style="vertical-align: middle;">马上众筹</text><text class="icon_left"></text></button>
+                            </view>
+                        </view>
+                    </view>
+                </navigator>
+            </block>
+        </view>
+        <view wx:if="{{scrollEnd}}" class="emptyData">^_^没有数据了</view>
+    </view>
+    <!-- </scroll-view> -->
+    <button bindtap='scanCode' class='aside_item aside_scan'></button>
+    <navigator class='aside_item aside_center' url="./center/center"></navigator>
+</view>
