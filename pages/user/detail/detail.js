@@ -526,6 +526,9 @@ Page({
                 }
             } else {
                 let msg = res.data.message;
+                that.setData({
+                    isRuning: false
+                })
                 console.log('接口错误200')
                 console.log(msg)              
                 wx.showModal({
@@ -538,6 +541,9 @@ Page({
         }, function(res){
             console.log('标记:接口调用出错')
             console.log(res);
+            that.setData({
+                isRuning: false
+            })
             wx.showModal({
                 title: '提示',
                 content: '系统繁忙',
@@ -646,9 +652,15 @@ Page({
                     title: '提示',
                     content: res.data.message
                 })
+                that.setData({
+                    isRuning: false
+                })
             }
         },function(res){
             console.log(res);
+            that.setData({
+                isRuning: false
+            })
             wx.showModal({
                 title: '提示',
                 content: '系统繁忙',
