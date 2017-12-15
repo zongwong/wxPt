@@ -1,26 +1,11 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/purchase/purchase",
-    "pages/purchase/center/center",
-    "pages/purchase/pay/pay",
-    "pages/purchase/paycomplete/paycomplate",
-    "pages/purchase/my/my",
-    "pages/purchase/immediately/immediately",
     "pages/user/user",
     "pages/user/detail/detail",
     "pages/user/mine/mine",
     "pages/user/award/award",
-    "pages/user/replaceAward/replaceAward",
-    "pages/draw/draw",
-    "pages/draw/detail/detail",
-    "pages/draw/mine/mine",
-    "pages/crowdfunding/crowdfunding",
-    "pages/crowdfunding/detail/detail",
-    "pages/crowdfunding/pay/pay",
-    "pages/crowdfunding/mine/mine",
-    "pages/crowdfunding/fpay/fpay",
-    "pages/crowdfunding/center/center"
+    "pages/user/replaceAward/replaceAward"
   ],
   "window": {
     "backgroundTextStyle": "dark",
