@@ -1,0 +1,32 @@
+<!--pages/purchase/purchase.wxml-->
+<view class="container">
+  <!-- <view class='header'>
+    <view bindtap='changeTab' data-type="award" class='tab'>
+      <text class='my myaward {{activeTab?"tab-active":""}}'>我的奖品</text>
+    </view>
+    <view bindtap='changeTab' data-type="draw" class='tab'>
+      <text class='my mydraw {{activeTab?"":"tab-active"}}'>我的抽奖</text>
+    </view>
+  </view> -->
+  <view class='myItems' wx:for="{{myitems}}" wx:key="{{item.id}}">
+    <view class='top'>
+      <view class='left'>
+        <image mode='aspectFill' class='qrcodeImg' src='{{qrcodeImg}}' data-qrcode='{{item.redeemCodeUrl}}' bindtap = 'previewCode'></image>
+        <text class='code'>{{item.redeemCode}}</text>
+      </view>
+      <view class='right'>
+        <text class='date'>{{item.createDate}}</text>
+      </view>
+    </view>
+    <view class='bottom'>
+      <view class='left'>
+        <image mode='aspectFill' class='myImg' src='{{item.awardImg}}' binderror="imgError" data-err-img="myitems[{{index}}]"></image>
+      </view>
+      <view class='right'>
+        <text class='right-1'>{{item.awardName}}</text>
+        <text class='right-2'>数量：{{item.awardNum}}</text>
+        <text class='right-3'>价值￥{{item.awardPrice}}</text>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,23 @@
+<view class="container-out" style="margin-top: 60rpx;">
+    <!--     <view class="circle" wx:for="{{circleList}}" wx:key="{{index}}" style="top:{{item.topCircle}}rpx;left:{{item.leftCircle}}rpx;background-color: {{(index%2==0)?colorCircleFirst:colorCircleSecond}};"></view> -->
+    <view class="container-in">
+        <view class="content-out" wx:for="{{awardList}}" wx:key="{{index}}" style="top:{{item.topAward}}rpx;left:{{item.leftAward}}rpx;background-color: {{(index==indexSelect)?colorAwardSelect:colorAwardDefault}};">
+            <image class="award-image" src="{{item.imageAward.imgUrl}}" binderror="imgError" data-err-img="awardList[{{index}}]"></image>
+        </view>
+        <view class="start-btn" bindtap="startGame">
+            <image src="../../../images/draw/btndraw.png" style="width: 100%;height: 100%;"></image>
+        </view>
+    </view>
+</view>
+<view class="description" style='background-image:url("{{descImg}}");'>
+    <view class='title' style="font-weight: bold;">{{activitylist.name}}</view>
+    <view class='desc'>说明：先抽先得，数量有限！每人可无条件获得{{activitylist.count}}次抽奖资格,每分享给1个朋友可再获得{{activitylist.shareCount}}次抽奖机会</view>
+    <view class='time'>时间：{{activitylist.beginTime}}-{{activitylist.endTime}}</view>
+</view>
+<view class='chanceCount'>（当前您还有<text class='count'>{{activitylist.memberCount}}</text>次机会）</view>
+<view class="wrap" style='background-color: #ffe144;padding: 54rpx 36rpx;'>
+    <view class='records' style='background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAsCAMAAABFXPg2AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA4ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDpjZGY2NWFiZC1jZTJjLTQ3ZTYtOWZhZi0xZDQxMjUyMGQ4M2QiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MUZCQjY1RjRDMjg3MTFFN0FFNkNGRTM3NjVCQzMxNkQiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MUZCQjY1RjNDMjg3MTFFN0FFNkNGRTM3NjVCQzMxNkQiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKE1hY2ludG9zaCkiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpkMWU1NGJmOC0wMWU0LTQyNTUtODMwMC00NmQ3MzgwZGFmOGEiIHN0UmVmOmRvY3VtZW50SUQ9ImFkb2JlOmRvY2lkOnBob3Rvc2hvcDozNzdjOGZhZi1lMTdkLTExN2EtYjZjOC1lNmNkMzQ1YzkwNjYiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz6exA2KAAAAb1BMVEX/9bf/9bb/8JX/8Jb/8Zf/9LL/9LP/9LH/9K3/8p7/8Zr/9bX/86z/8qT/9bT/8p//9LD/86f/8qX/8Zn/86v/8Zv/9K7/8qH/9bP/8qP/8Z3/9Kz/8Zz/9K//86X/86j/86n/8qL/8Zj/86r/86ai7K3BAAAA1ElEQVR42tTTSRKDIBAFUJoZBOdZE6PJ/c8YjVuaqmQV2X6o+l2PJmn+HPxdSyDBo5aMcXtv03DcmooxbgoRCoFMllHK5kGFUiC64ZTysVTh17k3lW2GWobjvi1M1tUiCVcDmdf1JBJksKMAoNl/nWhTSHohJDpmenusQ4n7FjFf0ONGUV8Crtp9+ewVEtuIL4HT1zsZrnb6Oqz54et0xPdCglIJkWI3dsFu9Rr75x/BqtTIhmqzHRv6UtEN9T9uaJlZVBD25ktUsM/ddBXBL3zfAgwAaf8LhkfLH1QAAAAASUVORK5CYII=) 0 0 repeat;'>
+        <view class='header'><text class='title'>中奖记录</text><text bindtap='goToMyAward' class='myaward'>我的奖品</text></view>
+        <view class='record' wx:for="{{awardsRecord}}" wx:key="{{item.id}}"><text class='tel'>{{item.memberName}}</text><text class='goodName'>{{item.awardName}}</text></view>
+    </view>
+</view>

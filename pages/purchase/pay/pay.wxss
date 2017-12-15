@@ -1,0 +1,128 @@
+page {
+    background-color: #f2f2f2;
+    color: #3e4245;
+    font-size: 30rpx;
+}
+
+.common {
+    background-color: #fff;
+    padding: 0 40rpx;
+}
+
+.common .one {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    height:70rpx;
+    line-height:70rpx;
+}
+
+.common .one:last-child {
+    border-bottom: none;
+}
+
+.detail .price {
+    color: #9a9a9a;
+}
+
+.inputgroup,
+.textgroup {
+    display: flex;
+    align-items: center;
+}
+
+.textgroup {
+    line-height: 33px;
+}
+
+.inputgroup .input {
+    display: inline-block;
+}
+
+.inputgroup .option {
+    display: block;
+    width: 33px;
+    height: 33px;
+    line-height: 30px;
+    text-align: center;
+    background-color: #e0e0e0;
+    color: #58595b;
+    font-size: 60rpx;
+}
+
+.inputgroup .option.none {
+    opacity: 0.7;
+}
+
+.inputgroup .numbershow {
+    margin: 0 20px;
+}
+
+.title {
+    background-color: #f2f2f2;
+    padding: 30rpx 40rpx;
+}
+
+.payway {
+    margin-bottom: 20rpx;
+}
+
+.payway .img {
+    width: 20px;
+    height: 20px;
+    position: relative;
+    top: 3px;
+    margin-right: 10px;
+}
+
+.payway .wechatIcon {
+    width: 19px;
+    height: 15.5px;
+    margin-right: 10px;
+}
+
+.payway .huiyuanIcon {
+    width: 13.5px;
+    height: 17.5px;
+    margin-left: 1.5px;
+    margin-right: 14px;
+}
+
+.payway .checkIcon {
+    width: 19.6px;
+    height: 13.6px;
+}
+
+.payway .one {
+    align-items: center;
+}
+.remarks{
+  margin-bottom: 46px;
+  padding-top: 40rpx;
+}
+.remarks .remark {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.remarks textarea {
+    height: 100px;
+    width: 90%;
+    padding: 10px;
+}
+
+.footer button {
+    background-color: #E02E24;
+    border-radius: 0;
+}
+
+.footer {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+.option.on{
+  color: #d8d8d8;background: #f2f2f2;
+}
