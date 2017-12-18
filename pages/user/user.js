@@ -11,6 +11,10 @@ Page({
         orderId:'',
     },
     onLoad: function(options) {
+        //扫码直达设一下userid
+        if(options.userid){
+            wx.setStorageSync('userId',options.userid);
+        }
         let that = this;
         utils.userInfoCb(app);
         app.tokenCheck(function() {

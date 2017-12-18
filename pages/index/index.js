@@ -9,18 +9,6 @@ Page({
     scanCode: function(event) {
         let that = this;
         let url = event.currentTarget.dataset.url;
-        // try {
-        //     let userId = wx.getStorageSync('userId');
-        //     console.log('userId:' + userId);
-        //     if (userId) {
-        //       wx.navigateTo({
-        //           url: url
-        //       })
-        //       return false;
-        //     }
-        // } catch (e) {
-        //     console.log(e)
-        // }
         wx.scanCode({
             success: (res) => {
                 let userId = res.result;
