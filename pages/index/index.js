@@ -11,7 +11,14 @@ Page({
         let url = event.currentTarget.dataset.url;
         wx.scanCode({
             success: (res) => {
-                let userId = res.result;
+                let userId;
+                if(res.path){
+                    userId = res.path.split('=')[1];
+                }
+                if(res.result){
+                    userId = res.result;
+                }
+                console.log(userId);
                 if (typeof userId !== 'undefined' && userId) {
                     wx.setStorageSync('userId', userId);
                     wx.navigateTo({
